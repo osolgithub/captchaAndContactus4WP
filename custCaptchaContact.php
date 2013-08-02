@@ -25,6 +25,12 @@ Author URI:http://www.outsource-online.net/
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 */
+/*
+This plugin enables captcha in login,forgot password,comment,registration forms
+Additionally ,this will add contactus form with captcha in wordpress
+just need to insert the code [cccontact] in a page where you want to show contact use form
+
+*/
 define('CUST_CAPTCHA_FOLDER',dirname(__FILE__));
 define('CUST_CAPTCHA_DIR_URL', plugin_dir_url(__FILE__));
 /* Hook to initalize the admin menu */
