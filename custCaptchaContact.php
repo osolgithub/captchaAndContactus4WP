@@ -64,7 +64,7 @@ function cust_captcha_disabled(){
 }
 function cust_catcha_html()
 {
-	return '<img src="'.get_bloginfo('wpurl') .'/wp-load.php?show_cust_captcha=true&rand='.rand().'" />';
+	return '<a href="http://www.outsource-online.net/osolmulticaptcha-simplest-php-captcha-for-html-forms.html"><img src="'.get_bloginfo('wpurl') .'/wp-load.php?show_cust_captcha=true&rand='.rand().'" /></a> ';
 }
 /* Captcha for login authentication starts here */ 
 
@@ -105,7 +105,7 @@ function cust_captcha_login_errors($errors){
 	if( isset( $_REQUEST['action'] ) && 'register' == $_REQUEST['action'] )
 		return($errors);
 	
-	if(get_option('cust_captcha_status') == 'enabled' && $_SESSION['OSOLmulticaptcha_keystring'] != $_REQUEST['OSOLmulticaptcha_keystring']){
+	if(get_option('cust_captcha_status') == 'enabled' &&  !verifyOSOLMultiCaptcha()){
 		return $errors.'<label id="capt_err" for="cust_captcha_code_error">'.__('Captcha confirmation error!', 'wpcaptchadomain').'</label>';
 	}
 	return $errors;
@@ -115,7 +115,7 @@ function cust_captcha_login_errors($errors){
 function include_cust_captcha_login_redirect($url){
 	
 	/* Captcha mismatch */
-	if(get_option('cust_captcha_status') == 'enabled' && (!isset($_REQUEST['OSOLmulticaptcha_keystring']) || $_SESSION['OSOLmulticaptcha_keystring'] != $_REQUEST['OSOLmulticaptcha_keystring'])){
+	if(get_option('cust_captcha_status') == 'enabled' && (!isset($_REQUEST['OSOLmulticaptcha_keystring']) || !verifyOSOLMultiCaptcha())){
 	//if(isset($_SESSION['captcha_code']) && isset($_REQUEST['captcha_code']) && $_SESSION['captcha_code'] != $_REQUEST['captcha_code']){
 		$_SESSION['captcha_error'] = __('Incorrect captcha confirmation!', 'wpcaptchadomain');
 		wp_clear_auth_cookie();
@@ -214,7 +214,7 @@ function include_cust_captcha_comment_post($comment) {
 
 	// captcha was matched
 	if($_SESSION['OSOLmulticaptcha_keystring'] == $_REQUEST['OSOLmulticaptcha_keystring']) return($comment);
-	elseif(get_option('cust_captcha_status') == 'enabled' && (!isset($_REQUEST['OSOLmulticaptcha_keystring']) || $_SESSION['OSOLmulticaptcha_keystring'] != $_REQUEST['OSOLmulticaptcha_keystring']))
+	elseif(get_option('cust_captcha_status') == 'enabled' && (!isset($_REQUEST['OSOLmulticaptcha_keystring']) || !verifyOSOLMultiCaptcha()))
 	{
 		wp_die( __('Error: Incorrect CAPTCHA. Press your browser\'s back button and try again.', 'wpcaptchadomain'));
 	}
@@ -262,7 +262,7 @@ function include_cust_captcha_register_post($login,$email,$errors) {
 	/*if ( isset( $_REQUEST['OSOLmulticaptcha_keystring'] ) && ($_SESSION['OSOLmulticaptcha_keystring'] == $_REQUEST['OSOLmulticaptcha_keystring'] )) {
 					// captcha was matched						
 	} else */
-	if(get_option('cust_captcha_status') == 'enabled' && (!isset($_REQUEST['OSOLmulticaptcha_keystring']) || $_SESSION['OSOLmulticaptcha_keystring'] != $_REQUEST['OSOLmulticaptcha_keystring']))
+	if(get_option('cust_captcha_status') == 'enabled' && (!isset($_REQUEST['OSOLmulticaptcha_keystring']) || !verifyOSOLMultiCaptcha()))
 	{
 		$errors->add('captcha_wrong', '<strong>'.__('ERROR', 'wpcaptchadomain').'</strong>: '.__('That CAPTCHA was incorrect.', 'wpcaptchadomain'));
 	}
@@ -279,7 +279,7 @@ function include_cust_captcha_register_validate($results) {
 	/*if ( isset( $_REQUEST['OSOLmulticaptcha_keystring'] ) && ($_SESSION['OSOLmulticaptcha_keystring'] == $_REQUEST['OSOLmulticaptcha_keystring'] )) {
 					// captcha was matched						
 	} else*/ 
-	if(get_option('cust_captcha_status') == 'enabled' && (!isset($_REQUEST['OSOLmulticaptcha_keystring']) || $_SESSION['OSOLmulticaptcha_keystring'] != $_REQUEST['OSOLmulticaptcha_keystring']))
+	if(get_option('cust_captcha_status') == 'enabled' && (!isset($_REQUEST['OSOLmulticaptcha_keystring']) || !verifyOSOLMultiCaptcha()))
 	{
 		$results['errors']->add('captcha_wrong', '<strong>'.__('ERROR', 'wpcaptchadomain').'</strong>: '.__('That CAPTCHA was incorrect.', 'wpcaptchadomain'));
 	}
@@ -323,7 +323,7 @@ function include_cust_captcha_lostpassword_post() {
 	/*if ( isset( $_REQUEST['OSOLmulticaptcha_keystring'] ) && ($_SESSION['OSOLmulticaptcha_keystring'] == $_REQUEST['OSOLmulticaptcha_keystring'] )) {
 		return;
 	} else {*/
-	if(get_option('cust_captcha_status') == 'enabled' && (!isset($_REQUEST['OSOLmulticaptcha_keystring']) || $_SESSION['OSOLmulticaptcha_keystring'] != $_REQUEST['OSOLmulticaptcha_keystring']))
+	if(get_option('cust_captcha_status') == 'enabled' && (!isset($_REQUEST['OSOLmulticaptcha_keystring']) || !verifyOSOLMultiCaptcha()))
 	{
 		wp_die( __( 'Error: Incorrect CAPTCHA. Press your browser\'s back button and try again.', 'wpcaptchadomain' ) );
 	}
@@ -348,6 +348,7 @@ function cust_captcha_contact_func( $atts ) {
 	$toMailSessionVar = 'toemail-'.$postid."_".$cccontact_unique_id;
 	$_SESSION[$toMailSessionVar] = $toemail;
 	ob_start();
+	cust_captcha_contact_validate_and_mail();
 	include(CUST_CAPTCHA_FOLDER.'/cccontact_form.php');
     $output_string=ob_get_contents();
     ob_end_clean();
@@ -355,20 +356,20 @@ function cust_captcha_contact_func( $atts ) {
 }
 function cccontact_validate_notify_form()
 {
-	$validation_result = '';
+	$validation_result = array();
 	$input_fields = array('subject','message','name','email');
 	foreach($input_fields as $field_name)
 	{
 		if(!isset($_REQUEST["cccontact_".$field_name]) || (trim($_REQUEST["cccontact_".$field_name]) == ''))
 		{
-			$validation_result .= $field_name ." should not be blank <br />";
+			$validation_result[] = $field_name ." should not be blank <br />";
 		}
 		
 	}
 		$emailFilter = "/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/";
 		if(!preg_match($emailFilter,$_REQUEST['cccontact_email']))
 		{
-			$validation_result .= "Please enter a valid from email <br />";
+			$validation_result[] = "Please enter a valid from email <br />";
 		}
 		
 		$phoneFilter = "/^([0-9_\.\-\s])+$/";
@@ -379,77 +380,178 @@ function cccontact_validate_notify_form()
 	return $validation_result;
 	
 }
-$validation_result = '';
-if(isset($_REQUEST['cccontact_action']) && $_REQUEST['cccontact_action'] == 'cust_captcha_contact_submit')
+
+add_action('wp_ajax_cccontact_validate_ajax', 'cust_captcha_contact_validate_contact_ajax');
+ 
+ function cust_captcha_contact_validate_contact_ajax() {
+    //Handle request then generate response using WP_Ajax_Response
+	$validation_result = cust_captcha_contact_validate_and_mail();
+	//echo  "</pre>".print_r($validation_result,true)."</pre>";
+		if(is_array($validation_result) && count($validation_result) > 0 )
+		{
+			//echo  "</pre>".print_r($_REQUEST,true)."</pre>";
+			die("{\"success\":0,\"message\":\"".(join("\r\n",$validation_result))."\"}");
+		}
+		die("{'success':'1'}");
+		return true;
+ }
+
+
+function add_ajaxurl_cdata_to_front(){ ?>
+	<script type="text/javascript"> //<![CDATA[
+		ajaxurl = '<?php echo admin_url( 'admin-ajax.php'); ?>';
+	//]]> </script>
+<?php }
+add_action( 'wp_head', 'add_ajaxurl_cdata_to_front', 1);
+ if (!is_admin()) add_action("wp_enqueue_scripts", "cccontact_jquery_enqueue", 11);
+function cccontact_jquery_enqueue() {
+   wp_deregister_script('jquery');
+   wp_register_script('jquery', "http" . ($_SERVER['SERVER_PORT'] == 443 ? "s" : "") . "://www.google.com/jsapi", false, null);
+   wp_enqueue_script('jquery');
+}
+function verifyOSOLMultiCaptcha()
 {
-	$validation_result = cccontact_validate_notify_form();
-	if($validation_result  != '')
+	//die("<pre>".print_r($_SESSION['OSOLmulticaptcha_keystring'],true)."</pre>");
+	if($verificationResult = in_array((get_option('OSOLMulticaptcha_caseInsensitive')=='1'?strtoupper($_REQUEST['OSOLmulticaptcha_keystring']):$_REQUEST['OSOLmulticaptcha_keystring']),$_SESSION['OSOLmulticaptcha_keystring']))
 	{
-		die($validation_result);
+		//if verification success remove the session val of that captcha so that bots dont misuse it
+		foreach($_SESSION['OSOLmulticaptcha_keystring'] as $key => $val)
+		{
+			if(strtoupper($_REQUEST['OSOLmulticaptcha_keystring']) == strtoupper($val))
+			{
+				unset($_SESSION['OSOLmulticaptcha_keystring'][$key]);
+			}
+		}
 	}
-																							
-	if ( isset( $_REQUEST['OSOLmulticaptcha_keystring'] ) && "" ==  $_REQUEST['OSOLmulticaptcha_keystring'] ) {
-		wp_die( __( 'Please complete the CAPTCHA.', 'wpcaptchadomain' ) );
-	}
-	if(!session_id()){
-		session_start();
-	}
-	// Check entered captcha
-	/*if ( isset( $_REQUEST['OSOLmulticaptcha_keystring'] ) && ($_SESSION['OSOLmulticaptcha_keystring'] == $_REQUEST['OSOLmulticaptcha_keystring'] )) {
-		return;
-	} else {*/
-	if(get_option('cust_captcha_status') == 'enabled' && (!isset($_REQUEST['OSOLmulticaptcha_keystring']) || $_SESSION['OSOLmulticaptcha_keystring'] != $_REQUEST['OSOLmulticaptcha_keystring']))
+	
+	return $verificationResult;
+}
+function cust_captcha_contact_validate_and_mail()
+{
+	$validation_result = array();
+	if((isset($_REQUEST['cccontact_action']) && $_REQUEST['cccontact_action']== 'cust_captcha_contact_submit') ||
+		(isset($_REQUEST['action']) && $_REQUEST['action']== 'cccontact_validate_ajax')												  
+														  )
 	{
+		//die("GGGG");
+		$validation_result = cccontact_validate_notify_form();
+		if(count($validation_result) > 0)
+		{
+			//die($validation_result);
+			if((!isset($_REQUEST['action']) || $_REQUEST['action'] != 'cccontact_validate_ajax')	)
+			{
+				echo "<center><h2>".__( $validation_result, 'wpcaptchadomain' )."!</h2></center>";
+			}
+			return $validation_result;
+		}
+																								
+		if ( isset( $_REQUEST['OSOLmulticaptcha_keystring'] ) && "" ==  $_REQUEST['OSOLmulticaptcha_keystring'] ) {
+			//wp_die( __( 'Please complete the CAPTCHA.', 'wpcaptchadomain' ) );
+			$captchaValidationFailMessage =  'Please complete the CAPTCHA.';
+			if((!isset($_REQUEST['action']) || $_REQUEST['action'] != 'cccontact_validate_ajax')	)
+			{
+				echo "<center><h2>".__($captchaValidationFailMessage, 'wpcaptchadomain' )."!</h2></center>";
+			}
+			else
+			{
+				$validation_result[] = $captchaValidationFailMessage;
+			}
+			return $validation_result;
+		}
+		if(!session_id()){
+			session_start();
+		}
+		// Check entered captcha
+		/*if ( isset( $_REQUEST['OSOLmulticaptcha_keystring'] ) && ($_SESSION['OSOLmulticaptcha_keystring'] == $_REQUEST['OSOLmulticaptcha_keystring'] )) {
+			return;
+		} else {*/
 		
-		wp_die( __( 'Error: Incorrect CAPTCHA. Press your browser\'s back button and try again.', 'wpcaptchadomain' ) );
+		if(get_option('cust_captcha_status') == 'enabled' && (!isset($_REQUEST['OSOLmulticaptcha_keystring']) || !verifyOSOLMultiCaptcha()))
+		{
+			//die($_REQUEST['OSOLmulticaptcha_keystring']."<pre>".print_r($_SESSION['OSOLmulticaptcha_keystring'],true)."</pre>");
+			//wp_die( __( 'Error: Incorrect CAPTCHA. Press your browser\'s back button and try again.', 'wpcaptchadomain' ) );
+			$captchaValidationFailMessage =  'Error: Incorrect CAPTCHA. ';
+			if((!isset($_REQUEST['action']) || $_REQUEST['action'] != 'cccontact_validate_ajax')	)
+			{
+				echo "<center><h2>".__($captchaValidationFailMessage."Press your browser's back button and try again.", 'wpcaptchadomain' )."!</h2></center>";
+			}
+			else
+			{
+				$validation_result[] = $captchaValidationFailMessage;
+			}
+			return $validation_result;
+		}
+		
+		
+		
+		$toMailSessionVar = $_REQUEST['cccontact_toMailSessionVar'];
+		$toemail = isset($_SESSION[$toMailSessionVar])?$_SESSION[$toMailSessionVar]:get_option('cust_captcha_contact_email');
+		//die($toMailSessionVar." : " .$_SESSION[$toMailSessionVar]. " : " .$toemail);
+			$summary =	"<br />\r\n Message:<br />\r\n".nl2br($_REQUEST['cccontact_message']);
+		
+			$subject = $_REQUEST['cccontact_subject'];
+			
+			$boundary = uniqid('np');
+			
+			 //$message = "This is a MIME encoded message."; 
+			 $message = 'This message was sent via PHP !' ;
+					   
+			 $message .= "\r\n\r\n--" . $boundary . "\r\n";
+			 $message .= "Content-type: text/plain;charset=utf-8\r\n\r\n";
+			 $message .= strip_tags($summary) . "\r\n\r\n" ;
+			
+			 $message .= "\r\n\r\n--" . $boundary . "\r\n";
+			 $message .= "Content-type: text/html;charset=utf-8\r\n\r\n";
+			 $message .= "<br />".$summary . "<br />" . "<br />" ;
+			
+			 $message .= "\r\n\r\n--" . $boundary . "--";
+			
+			
+			/*$message = 'This message was sent via PHP !' . "\r\n" .
+					   $summary . "\r\n" . "\r\n" .
+					   '<br />From <a href=\"'.$realestate_base.'\">'.$realestate_base."</a>". "\r\n";*/
+			
+			// To send HTML mail, the Content-type header must be set
+			$headers  = 'MIME-Version: 1.0' . "\r\n";
+			//$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			$headers .= "Content-Type: multipart/alternative;boundary=" . $boundary . "\r\n";
+			
+			// Additional headers
+			$headers .= 'From: "'.$_REQUEST['cccontact_name'].'" <'.$_REQUEST['cccontact_email'].'>' . "\r\n" .
+					   //'Cc: "Outsource Online Internet Solutions" <office@outsource-online.net>' . "\r\n" .
+					   'X-Mailer: PHP-' . phpversion() . "\r\n";
+			//die("$toemail, $subject, $message, $headers");
+			if (@mail($toemail, $subject, $message, $headers)) {
+			  //wp_die( __('mail sent Successfully!' . "\n"));//.'to '.$to
+			   $mailSendStatus = "Thank you for contacting us!";
+			   
+			    if((!isset($_REQUEST['action']) || $_REQUEST['action'] != 'cccontact_validate_ajax')	)
+				{
+					echo "<center><h2>".__($mailSendStatus, 'wpcaptchadomain' )."!</h2></center>";
+				}
+				else
+				{
+					$validation_result[] = $mailSendStatus;
+				}
+			}
+			else {
+			  //wp_die( __('mail() Failure!.contact site admin' . "\n"));
+			   //echo "<center><h2>".__("Can't send mail because of system failure!.contact site admin\n")."</h2></center>";return;
+			   $mailSendStatus = "Not able to send mail because of system failure!.contact site admin";
+			   
+			    if((!isset($_REQUEST['action']) || $_REQUEST['action'] != 'cccontact_validate_ajax')	)
+				{
+					echo "<center><h2>".__($mailSendStatus, 'wpcaptchadomain' )."!</h2></center>";
+				}
+				else
+				{
+					$validation_result[] = $mailSendStatus;
+				}
+				return $validation_result;
+			}
+			
 	}
-	
-	
-	
-	$toMailSessionVar = $_REQUEST['cccontact_toMailSessionVar'];
-	$toemail = isset($_SESSION[$toMailSessionVar])?$_SESSION[$toMailSessionVar]:get_option('cust_captcha_contact_email');
-	//die($toMailSessionVar." : " .$_SESSION[$toMailSessionVar]. " : " .$toemail);
-		$summary =	"<br />\r\n Message:<br />\r\n".nl2br($_REQUEST['cccontact_message']);
-	
-		$subject = $_REQUEST['cccontact_subject'];
-		
-		$boundary = uniqid('np');
-		
-		 //$message = "This is a MIME encoded message."; 
-		 $message = 'This message was sent via PHP !' ;
-				   
-		 $message .= "\r\n\r\n--" . $boundary . "\r\n";
-		 $message .= "Content-type: text/plain;charset=utf-8\r\n\r\n";
-		 $message .= strip_tags($summary) . "\r\n\r\n" ;
-		
-		 $message .= "\r\n\r\n--" . $boundary . "\r\n";
-		 $message .= "Content-type: text/html;charset=utf-8\r\n\r\n";
-		 $message .= "<br />".$summary . "<br />" . "<br />" ;
-		
-		 $message .= "\r\n\r\n--" . $boundary . "--";
-		
-		
-		/*$message = 'This message was sent via PHP !' . "\r\n" .
-				   $summary . "\r\n" . "\r\n" .
-				   '<br />From <a href=\"'.$realestate_base.'\">'.$realestate_base."</a>". "\r\n";*/
-		
-		// To send HTML mail, the Content-type header must be set
-		$headers  = 'MIME-Version: 1.0' . "\r\n";
-		//$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-		$headers .= "Content-Type: multipart/alternative;boundary=" . $boundary . "\r\n";
-		
-		// Additional headers
-		$headers .= 'From: "'.$_REQUEST['cccontact_name'].'" <'.$_REQUEST['cccontact_email'].'>' . "\r\n" .
-				   //'Cc: "Outsource Online Internet Solutions" <office@outsource-online.net>' . "\r\n" .
-				   'X-Mailer: PHP-' . phpversion() . "\r\n";
-		//die("$toemail, $subject, $message, $headers");
-		if (@mail($toemail, $subject, $message, $headers)) {
-		  wp_die( __('mail sent Successfully!' . "\n"));//.'to '.$to
-		}
-		else {
-		  wp_die( __('mail() Failure!.contact site admin' . "\n"));
-		}
-		
+	return true;
 }
 
 
@@ -473,6 +575,24 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'cust_captcha_contact_em
 {
 	if (is_admin()) require_once(ABSPATH . 'wp-includes/pluggable.php');
 	if(!is_super_admin()){die('should be logged in as admin to update contact email');}
+	update_option('cust_captcha_contact_email',$_REQUEST['cust_captcha_contact_email']);
+}
+if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'cust_captcha_options_submit')
+{
+	if (is_admin()) require_once(ABSPATH . 'wp-includes/pluggable.php');
+	if(!is_super_admin()){die('should be logged in as admin to update captcha settings');}
+	foreach($_REQUEST as $requestVar => $requestVarVal)
+	{
+		if(preg_match("@OSOLMulticaptcha_(.+)@",$requestVar))
+		{
+			update_option($requestVar,$requestVarVal);
+		}
+	}
+	if(!isset($_REQUEST['OSOLMulticaptcha_caseInsensitive']))
+	{
+		update_option('OSOLMulticaptcha_caseInsensitive',0);
+	}
+	
 	update_option('cust_captcha_contact_email',$_REQUEST['cust_captcha_contact_email']);
 }
 /* admin pages section ends here */

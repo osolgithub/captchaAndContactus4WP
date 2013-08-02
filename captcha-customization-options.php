@@ -75,23 +75,28 @@ $captcha = new OSOLmulticaptcha();
 						  font-family:verdana;
 						}
 						</style>
+                        <form id="form1" name="form1" method="post" action="">
                         <ul>
   <li>
+  	<?php $OSOLMulticaptcha_bgColor = get_option('OSOLMulticaptcha_bgColor') != ''?get_option('OSOLMulticaptcha_bgColor'):"#2c8007";?>
     <label id="jform_params_bgColor-lbl" for="jform_params_bgColor" title="">Background Color</label>
-    <input name="jform[params][bgColor]" id="jform_params_bgColor" value="#2c8007" size="25" type="text" />
+    <input name="OSOLMulticaptcha_bgColor" id="jform_params_bgColor" value="<?php echo $OSOLMulticaptcha_bgColor;?>" size="25" type="text" />
   </li>
 </ul>
 <ul>
   <li>
+  	<?php $OSOLMulticaptcha_textColor = get_option('OSOLMulticaptcha_textColor') != ''?get_option('OSOLMulticaptcha_textColor'):"#ffffff";?>
     <label id="jform_params_textColor-lbl" for="jform_params_textColor" title="">Text Color</label>
-    <input name="jform[params][textColor]" id="jform_params_textColor" value="#ffffff" size="25" type="text" />
+    <input name="OSOLMulticaptcha_textColor" id="jform_params_textColor" value="<?php echo $OSOLMulticaptcha_textColor;?>" size="25" type="text" />
   </li>
 </ul>
 <ul>
   <li>
+  <?php $OSOLMulticaptcha_white_noise_density = get_option('OSOLMulticaptcha_white_noise_density') != ''?get_option('OSOLMulticaptcha_white_noise_density'):"0";?>
     <label id="jform_params_white_noise_density-lbl" for="jform_params_white_noise_density" title="">Noise in BG color</label>
-    <select name="jform[params][white_noise_density]" id="jform_params_white_noise_density">
-	<option selected="selected" value="0">0</option>
+    <select name="OSOLMulticaptcha_white_noise_density" id="jform_params_white_noise_density">
+    <option  selected="selected" value="<?php echo $OSOLMulticaptcha_white_noise_density;?>"><?php echo $OSOLMulticaptcha_white_noise_density;?></option>
+    <option value="0">0</option>
 	<option value="0.1">0.1</option>
 	<option value="0.2">0.2</option>
 	<option value="0.3">0.3</option>
@@ -100,17 +105,20 @@ $captcha = new OSOLmulticaptcha();
 </ul>
 <ul>
   <li>
+  	<?php $OSOLMulticaptcha_black_noise_density = get_option('OSOLMulticaptcha_black_noise_density') != ''?get_option('OSOLMulticaptcha_black_noise_density'):"0";?>
     <label id="jform_params_black_noise_density-lbl" for="jform_params_black_noise_density" title="">Noise in Text color</label>
-    <select name="jform[params][black_noise_density]" id="jform_params_black_noise_density">
-	<option selected="selected" value="0">0</option>
+    <select name="OSOLMulticaptcha_black_noise_density" id="jform_params_black_noise_density">
+	<option  selected="selected" value="<?php echo $OSOLMulticaptcha_black_noise_density;?>"><?php echo $OSOLMulticaptcha_black_noise_density;?></option>
+    <option value="0">0</option>
 	<option value="0.1">0.1</option>
 	<option value="0.2">0.2</option>
 	<option value="0.3">0.3</option>
 </select>
   </li>
 </ul>
+<?php $OSOLMulticaptcha_fontFile = get_option('OSOLMulticaptcha_fontFile') != ''?get_option('OSOLMulticaptcha_fontFile'):$captcha->font_ttf;?>
 <?php
-		    $defaultFont = $captcha->font_ttf;//'AdLibBT.TTF';
+		    $defaultFont = $OSOLMulticaptcha_fontFile;//$captcha->font_ttf;//'AdLibBT.TTF';
 			$ttfPath =dirname(__FILE__)."/utils/ttfs"."/";
 			$ttfsAvailable = "";
 			if ($handle = opendir($ttfPath)) {
@@ -137,16 +145,20 @@ $captcha = new OSOLmulticaptcha();
 		?>
 <ul>
   <li>
+  	<?php $OSOLMulticaptcha_allowedSymbols = get_option('OSOLMulticaptcha_allowedSymbols') != ''?get_option('OSOLMulticaptcha_allowedSymbols'):$captcha->symbolsToUse;?>
+
     <label id="jform_params_allowedSymbols-lbl" for="jform_params_allowedSymbols" title="">Allowed Symbols</label>
-    <input name="jform[params][allowedSymbols]" id="jform_params_allowedSymbols" value="<?php echo $captcha->symbolsToUse;?>" size="50" type="text" />
+    <input name="OSOLMulticaptcha_allowedSymbols" id="jform_params_allowedSymbols" value="<?php echo $captcha->symbolsToUse;?>" size="50" type="text" />
   </li>
 </ul>
 <ul>
   <li>
+  <?php $OSOLMulticaptcha_imageFunction = get_option('OSOLMulticaptcha_imageFunction') != ''?get_option('OSOLMulticaptcha_imageFunction'):'Adv';?>
     <label id="jform_params_imageFunction-lbl" for="jform_params_imageFunction" title="">Select Letter Type</label>
-    <select name="jform[params][imageFunction]" id="jform_params_imageFunction" class="" aria-invalid="false">
-	<option value="Plane">Plane letters</option>
-	<option selected="selected" value="Adv">Distorted letters</option>
+    <select name="OSOLMulticaptcha_imageFunction" id="jform_params_imageFunction" class="" aria-invalid="false">
+	<option selected="selected" value="<?php echo $OSOLMulticaptcha_imageFunction;?>"><?php echo $OSOLMulticaptcha_imageFunction=='Adv'?'Distorted letters':'Plane letters';?></option>
+    <option value="Plane">Plane letters</option>
+	<option  value="Adv">Distorted letters</option>
 </select>
   </li>
 </ul>
@@ -154,7 +166,7 @@ $captcha = new OSOLmulticaptcha();
 <ul>
   <li>
     <label id="jform_params_fontFile-lbl" for="jform_params_fontFile" title="">Select font</label>
-    <select id="jform_params_fontFile" name="jform[params][fontFile]" class="" aria-invalid="false">
+    <select id="jform_params_fontFile" name="OSOLMulticaptcha_fontFile" class="" aria-invalid="false">
 		
   <?php echo $ttfsAvailable;?>
 	</select>
@@ -162,21 +174,24 @@ $captcha = new OSOLmulticaptcha();
 </ul>
 <ul>
   <li>
+  	<?php $OSOLMulticaptcha_letterSize = get_option('OSOLMulticaptcha_letterSize') != ''?get_option('OSOLMulticaptcha_letterSize'):36;?>
     <label id="jform_params_letterSize-lbl" for="jform_params_letterSize" title="">Select letter size</label>
-    <select name="jform[params][letterSize]" id="jform_params_letterSize">
-	<option value="24">24</option>
-	<option selected="selected" value="36">36</option>
+    <select name="OSOLMulticaptcha_letterSize" id="jform_params_letterSize">
+	<option selected="selected" value="<?php echo $OSOLMulticaptcha_letterSize;?>"><?php echo $OSOLMulticaptcha_letterSize;?></option>
+    <option value="24">24</option>
+	<option  value="36">36</option>
 	<option value="48">48</option>
 	<option value="72">72</option>
 </select>
   </li>
+  <li><label id="jform_params_caseInsensitive-lbl" for="jform_params_caseInsensitive" title="">Case Insensitive Checking:</label><input type="checkbox" id="jform_params_caseInsensitive" name="OSOLMulticaptcha_caseInsensitive" value="1" <?php echo get_option('OSOLMulticaptcha_caseInsensitive') == 1?"checked=\"checked\"":'';?>/></li>
 </ul>
 <?php }
 else
 {
 	
 	?>
-    <ul>
+  <ul>
         <li>
        <h1> To use more options, save required fonts(.TTF/.OTF)s in the folder utils/ttfs</h1>
         Adanced options available with ttfs are 
@@ -186,10 +201,10 @@ else
             <li>Font</li>
             <li>Letter size</li>
         </ol>
-        <input type="hidden" id="jform_params_imageFunction" name="jform[params][imageFunction]" value="<?php echo $captcha->imageFunction;?>" />
-        <input type="hidden" id="jform_params_allowedSymbols" name="jform[params][allowedSymbols]" value="<?php echo $captcha->symbolsToUse;?>" />
-        <input type="hidden" id="jform_params_fontFile"  name="jform[params][fontFile]" value="<?php echo $defaultFont;?>" />
-        <input type="hidden" id="jform_params_letterSize"  name="jform[params][letterSize]" value="<?php echo $captcha->font_size;?>" />
+        <input type="hidden" id="jform_params_imageFunction" name="OSOLMulticaptcha_imageFunction" value="<?php echo $captcha->imageFunction;?>" />
+        <input type="hidden" id="jform_params_allowedSymbols" name="OSOLMulticaptcha_allowedSymbols" value="<?php echo $captcha->symbolsToUse;?>" />
+        <input type="hidden" id="jform_params_fontFile"  name="OSOLMulticaptcha_fontFile" value="<?php echo $defaultFont;?>" />
+        <input type="hidden" id="jform_params_letterSize"  name="OSOLMulticaptcha_letterSize" value="<?php echo $captcha->font_size;?>" />
        </li>
       </ul>
     
@@ -205,3 +220,6 @@ else
     <span onmouseover="javascript:previewOSOLCaptcha(event,OSOLCaptchPreviewHTML())" onmouseout="javascript:hidePreviewOSOLCaptcha()"> Hover Mouse here to preview Captcha with entered settings </span></li>
 </ul>
                         
+                         <input name="Submit" type="submit" value="Save Options" />
+                         <input type="hidden" name="action" value="cust_captcha_options_submit" />
+</form>
