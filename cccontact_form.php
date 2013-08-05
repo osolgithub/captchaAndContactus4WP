@@ -44,6 +44,7 @@ function cccontact_validate_ajax()
 	   }
 	);*/
 	jQuery("#cccontact_submit_loader").css("display", "block");
+	//alert(ajaxurl);
 	jQuery.ajax({
          type : "post",
          //dataType : json,
@@ -65,15 +66,15 @@ function cccontact_validate_ajax()
       })   ;
 	return false;
 }
-google.load("jquery", "1");
-google.setOnLoadCallback(function(){
+/*google.load("jquery", "1");
+google.setOnLoadCallback(function(){*/
 jQuery(document).ready(function() {
 // Handler for .ready() called.
-	$('form#cccontact_form').attr('onsubmit', 'return cccontact_validate_ajax();');
+	jQuery('form#cccontact_form').attr('onsubmit', 'return cccontact_validate_ajax();');
 	//alert('cccontact_form');
 	
 });
-});
+//});
 
 </script>
 <form id="cccontact_form" name="form1" method="post" action="">
