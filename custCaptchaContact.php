@@ -26,9 +26,16 @@ Author URI:http://www.outsource-online.net/
 
 */
 /*
-This plugin enables captcha in login,forgot password,comment,registration forms
-Additionally ,this will add contactus form with captcha in wordpress
+Adds OSOLMulticaptcha (http://www.outsource-online.net/osolmulticaptcha-simplest-php-captcha-for-html-forms.html ) to wordpress forms for registration,login,forgot password and comment.
+
+Additionally ,this will enable admin to add contact us form with the same captcha in any wordpress page
 just need to insert the code [cccontact] in a page where you want to show contact use form
+
+Requirements
+PHP GD Library must be available in the server
+safe mode must be turned off
+
+The above requirements are default settings in most PHP hosts.however if the captcha isnt showing up you need to check those settings
 
 */
 define('CUST_CAPTCHA_FOLDER',dirname(__FILE__));
