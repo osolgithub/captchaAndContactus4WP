@@ -29,8 +29,15 @@ else
 			//die("<pre>".print_r($captcha,true)."</pre>");
 }
 		
-		$captcha->displayCaptcha();
-		$_SESSION['OSOLmulticaptcha_keystring'][] = $captcha->keystring;
+		$keystring = $captcha->displayCaptcha();
+		if(isset($_REQUEST['OSOLmulticaptcha_inst']) && $_REQUEST['OSOLmulticaptcha_inst'] != '')
+		{
+			$_SESSION['OSOLmulticaptcha_keystring'][$_REQUEST['OSOLmulticaptcha_inst']] = $keystring;//
+		}
+		else
+		{
+			$_SESSION['OSOLmulticaptcha_keystring'][] = $keystring;//$captcha->keystring;
+		}
 		if(count($_SESSION['OSOLmulticaptcha_keystring']) >3)//maximum 3 captcha allowed per page otherwise bots will misuse
 		{
 			$_SESSION['OSOLmulticaptcha_keystring'] = array_slice($_SESSION['OSOLmulticaptcha_keystring'],-3);

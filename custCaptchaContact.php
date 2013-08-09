@@ -77,7 +77,14 @@ function cust_captcha_disabled(){
 }
 function cust_catcha_html()
 {
-	return '<a href="http://www.outsource-online.net/osolmulticaptcha-simplest-php-captcha-for-html-forms.html"><img src="'.get_bloginfo('wpurl') .'/wp-load.php?show_cust_captcha=true&rand='.rand().'" /></a> ';
+if(!isset($GLOBALS['OSOLMultiCaptcha_inst']))
+{
+	$GLOBALS['OSOLMultiCaptcha_inst'] = -1;
+	cccontact_jquery_enqueue();
+	add_ajaxurl_cdata_to_front();
+}
+$GLOBALS['OSOLMultiCaptcha_inst']++;
+	return '<a class="osol_cccaptcha_a" href="http://www.outsource-online.net/osolmulticaptcha-simplest-php-captcha-for-html-forms.html"><img class="osol_cccaptcha" src="'.get_bloginfo('wpurl') .'/wp-load.php?show_cust_captcha=true&rand='.rand().'&OSOLmulticaptcha_inst='.$GLOBALS['OSOLMultiCaptcha_inst'].'" /></a> &nbsp;<a href="javascript:refreshOSOLMultiCaptchaImage('.$GLOBALS['OSOLMultiCaptcha_inst'].');"><img src="'.CUST_CAPTCHA_DIR_URL.'/utils/refresh.gif" onmouseover="this.src=animated_refresh_image" onmouseout="this.src=static_refresh_image" title="Refresh" /></a> ';
 }
 /* Captcha for login authentication starts here */ 
 
@@ -414,12 +421,26 @@ add_action('wp_ajax_nopriv_cccontact_validate_ajax', 'cust_captcha_contact_valid
 function add_ajaxurl_cdata_to_front(){ ?>
 	<script type="text/javascript"> //<![CDATA[
 		ajaxurl = '<?php echo admin_url( 'admin-ajax.php'); ?>';
+		static_refresh_image = '<?php echo CUST_CAPTCHA_DIR_URL;?>/utils/refresh.gif';
+		animated_refresh_image = '<?php echo CUST_CAPTCHA_DIR_URL;?>/utils/refresh-animated.gif';
+		function getOSOLMultiCaptchaURL()
+		{
+			osolMultiCaptchaURL = '<?php echo get_bloginfo('wpurl'); ?>/wp-load.php?show_cust_captcha=true&rand='+ new Date().getTime();
+			return osolMultiCaptchaURL;
+		}
+		function refreshOSOLMultiCaptchaImage(captchaInst)
+		{
+			newURL = getOSOLMultiCaptchaURL()+'&OSOLmulticaptcha_inst='+captchaInst;
+			
+			//alert(jQuery('img.osol_cccaptcha')[0].src);
+			jQuery('img.osol_cccaptcha')[captchaInst].src = newURL
+		}
 	//]]> </script>
 <?php }
-add_action( 'wp_head', 'add_ajaxurl_cdata_to_front', 1);
+//add_action( 'wp_head', 'add_ajaxurl_cdata_to_front', 1);
  //if (!is_admin()) 
  {
-	 add_action("wp_enqueue_scripts", "cccontact_jquery_enqueue", 11);
+	 //add_action("wp_enqueue_scripts", "cccontact_jquery_enqueue", 11);
 	 //die("<pre>".print_r($_REQUEST,true)."</pre>");
  }
 function cccontact_jquery_enqueue() {
