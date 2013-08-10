@@ -440,14 +440,12 @@ function add_ajaxurl_cdata_to_front(){ ?>
 //add_action( 'wp_head', 'add_ajaxurl_cdata_to_front', 1);
  //if (!is_admin()) 
  {
- //load jquery in wp_head for contact page sincer jQuery(document).ready is used 
+ //load jquery in wp_head for contact page since jQuery(document).ready is used 
 	 add_action("wp_enqueue_scripts", "cccontact_jquery_enqueue", 11);
 	 //die("<pre>".print_r($_REQUEST,true)."</pre>");
  }
 function cccontact_jquery_enqueue() {
-   wp_deregister_script('jquery');
-   //wp_register_script('jquery', "http" . ($_SERVER['SERVER_PORT'] == 443 ? "s" : "") . "://www.google.com/jsapi", false, null);
-   wp_register_script('jquery', get_bloginfo('wpurl') . "/wp-includes/js/jquery/jquery.js", false, null);
+
    wp_enqueue_script('jquery');
 }
 function verifyOSOLMultiCaptcha()
