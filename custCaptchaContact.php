@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Customizable Captcha and contact us plugin
+Plugin Name: Customizable Captcha and contact us
 Plugin URI: http://www.outsource-online.net/
-Description: Plugin to add captch to core wordpress forms and additional option for contact us page. From Sreekanth Dayanand(Outsource Online Internet Solutions)
+Description: Plugin to add captcha to core wordpress forms and additional option for contact us page.Just need to insert the code [cccontact] in a page where you want to show contact us form. 
 Version:  1.0
 Author: Sreekanth Dayanand
 Author URI:http://www.outsource-online.net/
@@ -29,7 +29,7 @@ Author URI:http://www.outsource-online.net/
 Adds OSOLMulticaptcha (http://www.outsource-online.net/osolmulticaptcha-simplest-php-captcha-for-html-forms.html ) to wordpress forms for registration,login,forgot password and comment.
 
 Additionally ,this will enable admin to add contact us form with the same captcha in any wordpress page
-just need to insert the code [cccontact] in a page where you want to show contact use form
+just need to insert the code [cccontact] in a page where you want to show contact us form
 
 Requirements
 PHP GD Library must be available in the server
@@ -77,14 +77,14 @@ function cust_captcha_disabled(){
 }
 function cust_catcha_html()
 {
-if(!isset($GLOBALS['OSOLMultiCaptcha_inst']))
-{
-	$GLOBALS['OSOLMultiCaptcha_inst'] = -1;
-	cccontact_jquery_enqueue();
-	add_ajaxurl_cdata_to_front();
-}
-$GLOBALS['OSOLMultiCaptcha_inst']++;
-	return '<a class="osol_cccaptcha_a" href="http://www.outsource-online.net/osolmulticaptcha-simplest-php-captcha-for-html-forms.html"><img class="osol_cccaptcha" src="'.get_bloginfo('wpurl') .'/wp-load.php?show_cust_captcha=true&rand='.rand().'&OSOLmulticaptcha_inst='.$GLOBALS['OSOLMultiCaptcha_inst'].'" /></a> &nbsp;<a href="javascript:refreshOSOLMultiCaptchaImage('.$GLOBALS['OSOLMultiCaptcha_inst'].');"><img src="'.CUST_CAPTCHA_DIR_URL.'/utils/refresh.gif" onmouseover="this.src=animated_refresh_image" onmouseout="this.src=static_refresh_image" title="Refresh" /></a> ';
+	if(!isset($GLOBALS['OSOLMultiCaptcha_inst']))
+	{
+		$GLOBALS['OSOLMultiCaptcha_inst'] = -1;
+		cccontact_jquery_enqueue();
+		add_ajaxurl_cdata_to_front();
+	}
+	$GLOBALS['OSOLMultiCaptcha_inst']++;
+		return '<a class="osol_cccaptcha_a" href="http://www.outsource-online.net/osolmulticaptcha-simplest-php-captcha-for-html-forms.html"><img class="osol_cccaptcha" src="'.admin_url( 'admin-ajax.php').'?action=cccontact_display_captcha&rand='.rand().'&OSOLmulticaptcha_inst='.$GLOBALS['OSOLMultiCaptcha_inst'].'" /></a> &nbsp;<a href="javascript:refreshOSOLMultiCaptchaImage('.$GLOBALS['OSOLMultiCaptcha_inst'].');"><img src="'.CUST_CAPTCHA_DIR_URL.'/utils/refresh.gif" onmouseover="this.src=animated_refresh_image" onmouseout="this.src=static_refresh_image" title="Refresh" /></a> ';
 }
 /* Captcha for login authentication starts here */ 
 
@@ -400,10 +400,18 @@ function cccontact_validate_notify_form()
 	return $validation_result;
 	
 }
+add_action('wp_ajax_cccontact_display_captcha', 'cust_captcha_display_captcha');
+add_action('wp_ajax_nopriv_cccontact_display_captcha', 'cust_captcha_display_captcha');
 
 add_action('wp_ajax_cccontact_validate_ajax', 'cust_captcha_contact_validate_contact_ajax');
 add_action('wp_ajax_nopriv_cccontact_validate_ajax', 'cust_captcha_contact_validate_contact_ajax');
- 
+ function cust_captcha_display_captcha()
+ {
+	//if(isset($_REQUEST['show_cust_captcha']) && $_REQUEST['show_cust_captcha'] == 'true')
+	{
+		require_once(CUST_CAPTCHA_FOLDER."/displayCaptcha.php");
+	}
+ }
  function cust_captcha_contact_validate_contact_ajax() {
     //Handle request then generate response using WP_Ajax_Response
 	$validation_result = cust_captcha_contact_validate_and_mail();
@@ -425,7 +433,8 @@ function add_ajaxurl_cdata_to_front(){ ?>
 		animated_refresh_image = '<?php echo CUST_CAPTCHA_DIR_URL;?>/utils/refresh-animated.gif';
 		function getOSOLMultiCaptchaURL()
 		{
-			osolMultiCaptchaURL = '<?php echo get_bloginfo('wpurl'); ?>/wp-load.php?show_cust_captcha=true&rand='+ new Date().getTime();
+			
+			osolMultiCaptchaURL = '<?php echo admin_url( 'admin-ajax.php'); ?>?action=cccontact_display_captcha&rand='+ new Date().getTime();
 			return osolMultiCaptchaURL;
 		}
 		function refreshOSOLMultiCaptchaImage(captchaInst)
@@ -606,10 +615,7 @@ function cust_captcha_contact_settings()
 {
 	require_once(CUST_CAPTCHA_FOLDER."/contact-customization-options.php");
 }
-if(isset($_REQUEST['show_cust_captcha']) && $_REQUEST['show_cust_captcha'] == 'true')
-{
-	require_once(CUST_CAPTCHA_FOLDER."/displayCaptcha.php");
-}
+
 if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'cust_captcha_contact_email_submit')
 {
 	if (is_admin()) require_once(ABSPATH . 'wp-includes/pluggable.php');

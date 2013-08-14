@@ -49,7 +49,7 @@ $captcha = new OSOLmulticaptcha();
 							{
 								qVars = qVars +formFields[i]+'='+encodeURIComponent($(formFieldPrefix+i).value)+'&';
 							}
-							return imageURL = '<?php echo get_bloginfo('wpurl') ;?>/wp-load.php?show_cust_captcha=true&'+qVars;;
+							return imageURL = '<?php echo admin_url( 'admin-ajax.php'); ?>?action=cccontact_display_captcha&'+qVars;;
 						}
 						function OSOLCaptchPreviewHTML()
 						{
