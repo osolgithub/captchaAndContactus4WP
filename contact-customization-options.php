@@ -1,5 +1,5 @@
 <?php
-defined('OSOLMulticaptcha_FOLDER') or die('Direct access not permitted');
+defined('CUST_CAPTCHA_FOLDER') or die('Direct access not permitted');
 
 ?>
 <script>

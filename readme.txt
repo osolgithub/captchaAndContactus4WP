@@ -38,6 +38,8 @@ An answer to that question.
 3. screenshot-3-post-comment.png
 4. screenshot-4-lost-password.png
 5. screenshot-5-contact-us-form.png
+6. screenshot-6-admin-captcha-settings.png
+7. screenshot-6-admin-contact-form-settings.png
 
 == Changelog ==
 
