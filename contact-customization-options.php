@@ -23,11 +23,11 @@ function confirm_email()
 </script>
 <form id="form1" name="form1" method="post" action="" onsubmit="return confirm_email();">
   <label>Contact Email
-    <input type="text" name="OSOLMulticaptcha_contact_email" id="OSOLMulticaptcha_contact_email" value="<?php echo get_option('OSOLMulticaptcha_contact_email'); ?>" />
+    <input type="text" name="cust_captcha_contact_email" id="OSOLMulticaptcha_contact_email" value="<?php echo get_option('cust_captcha_contact_email'); ?>" />
    
   </label> <br />
   <label>Submit
     <input type="submit" name="OSOLMulticaptcha_contact_button" id="OSOLMulticaptcha_contact_button" value="Submit" />
   </label>
-  <input type="hidden" name="action" value="OSOLMulticaptcha_contact_email_submit" />
+  <input type="hidden" name="action" value="cust_captcha_contact_email_submit" />
 </form>

@@ -3,7 +3,7 @@
 Plugin Name: Customizable Captcha and contact us
 Plugin URI: http://www.outsource-online.net/
 Description: Plugin to add captcha to core wordpress forms and additional option for contact us page.Just need to insert the code [cccontact] in a page where you want to show contact us form. 
-Version:  1.0
+Version:  1.0.2
 Author: Sreekanth Dayanand
 Author URI:http://www.outsource-online.net/
 
@@ -38,607 +38,195 @@ safe mode must be turned off
 The above requirements are default settings in most PHP hosts.however if the captcha isnt showing up you need to check those settings
 
 */
+// short code for this plugin will be 'osolwpccc'. To be used in 'load_plugin_textdomain' and text translation functions. This line is not mandatory but useful for future reference for developers , while modifying the plugin
+//replace all wpcaptchadomain
 define('CUST_CAPTCHA_FOLDER',dirname(__FILE__));
 define('CUST_CAPTCHA_DIR_URL', plugin_dir_url(__FILE__));
-/* Hook to initalize the admin menu */
-add_action('admin_menu', 'cust_captcha_contact_plugin_menu');
+// auto load Helpers/Frontend.php while calling new \OSOLCCC\Helpers\Frontend() 
+if(!function_exists('version_compare') || version_compare(phpversion(), '5.1.0', '<'))die("Minimum version required for 'Customizable Captcha and contact us' plugin is 5.1.0");
+spl_autoload_register(function ($class) {
+	// project-specific namespace prefix
+	$prefix = 'OSOLCCC\\';	
+	// base directory for the namespace prefix
+	$base_dir = dirname(__FILE__).DIRECTORY_SEPARATOR.'MVC/';
+	//die($class . " " . str_replace($prefix,'',$class));
+	// does the class use the namespace prefix?
+	$len = strlen($prefix);
+	if (strncmp($prefix, $class, $len) !== 0) {
+		// no, move to the next registered autoloader
+		return;
+	}	
+	// get the relative class name
+	$relative_class = substr($class, $len);
+	// replace the namespace prefix with the base directory, replace namespace
+	// separators with directory separators in the relative class name, append
+	// with .php
+	$mappedFile = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+	try {
+		if (file_exists($mappedFile)) {
+			require $mappedFile;
+		}
+		else
+		{
+			//die('<p style="background:#f00">ERROR!!!!! file : '.$mappedFile. " does not exist to autoload for ".$class ."</p>");
+			//throw new CustomException('ERROR!!!!! file : '.$mappedFile. " does not exist to autoload for ".$class );
+			throw new Exception('ERROR!!!!! file : '.$mappedFile. " does not exist to autoload for ".$class );
+		}
+	}
+	catch (Exception $e) {
+	  //display custom message
+	  $debug_trace = debug_backtrace();
+	  $fileAndLineno = "file : {$debug_trace[1]['file']} , Line #: {$debug_trace[1]['line']}";
+	  echo $e->getMessage() . $fileAndLineno;
+	}
+});
+
+require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'OSOLmulticaptcha.php');
+$OSOLCCC_Frontend_inst = \OSOLCCC\Hooks\Frontend::getInstance();
+$OSOLCCC_Admin_inst = \OSOLCCC\Hooks\Admin::getInstance();
+$OSOLCCC_CommonClass_inst = \OSOLCCC\Hooks\Common::getInstance();
+
+$GLOBALS['OSOLMulticaptcha_gdprCompliantNoCookie'] = get_option('OSOLMulticaptcha_gdprCompliantNoCookie');
+
+
+
+/* Hook to store the plugin status, triggered when plugin is activated and deactivated */
+register_activation_hook(__FILE__, [$OSOLCCC_Admin_inst,'on_cust_captcha_enabled']);
+register_deactivation_hook(__FILE__, [$OSOLCCC_Admin_inst,'on_cust_captcha_disabled']);
+
+/*Hook to internationalize*/
+load_plugin_textdomain('osolwpccc', false, dirname( plugin_basename(__FILE__)).'/languages');
+
+/* 
+// see all functions hooked to 'wp_footer'
+add_action('wp', function () {
+    echo '<pre>';
+    print_r($GLOBALS['wp_filter']['wp_footer']);
+    echo '</pre>';
+    exit;
+}); */
+//add_action\('([^']+)',\s*'([^']+)'  replace with add_action('\1',[$OSOL_CCC_HandlerFrontEnd_inst,'\2']
+
 /* Hook to initialize sessions */
-add_action('init', 'cust_captcha_init_sessions');
+add_action('init', [$OSOLCCC_Frontend_inst,'init4Frontend']);// init for admin is 'admin_init' hook
+function osolwpccc_custom_javascript() {
+    ?>
+        <script>
+          // your javscript code goes here
+		  console.log('osolwpccc_custom_javascript')
+        </script>
+    <?php
+}
+add_action('wp_head', 'osolwpccc_custom_javascript');
+add_action("wp_enqueue_scripts", [$OSOLCCC_CommonClass_inst,"cccontact_jquery_enqueue"], 11);//load jquery in wp_head for contact page since jQuery(document).ready is used 
+add_action( 'wp_footer', [$OSOLCCC_CommonClass_inst,'add_ccc_onload'] ); // For front-end to call refresh captcha
 
-/* Hook to store the plugin status */
-register_activation_hook(__FILE__, 'cust_captcha_enabled');
-register_deactivation_hook(__FILE__, 'cust_captcha_disabled');
 
-function cust_captcha_contact_plugin_menu() {
-	add_options_page('Customiazable Captcha and contact us plugin:Captcha settings', 'Captcha Settings', 'manage_options', 'cust-captcha-settings', 'cust_captcha_settings');
-	
-	add_options_page('Customiazable Captcha and contact us plugin:Contact page settings', 'Contact page settings', 'manage_options', 'cust-contact-settings', 'cust_captcha_contact_settings');
-	
-
-	
-}
-function cust_captcha_init_sessions(){
-	if(!session_id()){
-		session_start();
-	}
-	load_plugin_textdomain('wpcaptchadomain', false, dirname( plugin_basename(__FILE__)).'/languages');
-	
-	
-}
-function cust_captcha_enabled(){
-	update_option('cust_captcha_status', 'enabled');
-	if(get_option('cust_captcha_contact_email') == '')
-	{
-		update_option('cust_captcha_contact_email',get_option('admin_email'));
-	}
-}
-function cust_captcha_disabled(){
-	update_option('cust_captcha_status', 'disabled');
-}
-function cust_catcha_html()
-{
-	if(!isset($GLOBALS['OSOLMultiCaptcha_inst']))
-	{
-		$GLOBALS['OSOLMultiCaptcha_inst'] = -1;
-		cccontact_jquery_enqueue();
-		add_ajaxurl_cdata_to_front();
-	}
-	$GLOBALS['OSOLMultiCaptcha_inst']++;
-		return '<a class="osol_cccaptcha_a" href="http://www.outsource-online.net/osolmulticaptcha-simplest-php-captcha-for-html-forms.html"><img class="osol_cccaptcha" src="'.admin_url( 'admin-ajax.php').'?action=cccontact_display_captcha&rand='.rand().'&OSOLmulticaptcha_inst='.$GLOBALS['OSOLMultiCaptcha_inst'].'" /></a> &nbsp;<a href="javascript:refreshOSOLMultiCaptchaImage('.$GLOBALS['OSOLMultiCaptcha_inst'].');"><img src="'.CUST_CAPTCHA_DIR_URL.'/utils/refresh.gif" onmouseover="this.src=animated_refresh_image" onmouseout="this.src=static_refresh_image" title="Refresh" /></a> ';
-}
 /* Captcha for login authentication starts here */ 
 
-$login_captcha = get_option('cust_captcha_login');
+$login_captcha = get_option('OSOLMulticaptcha_cust_captcha_login');
 //if($login_captcha == 'yes')
-if(get_option('cust_captcha_status') ==  'enabled')
+if(get_option('cust_captcha_status') ==  'enabled' && ($login_captcha == 'yes'))
 {
-	add_action('login_form', 'include_cust_captcha_login');
-	add_filter('login_errors','cust_captcha_login_errors');
-
-
-	add_filter( 'login_redirect', 'include_cust_captcha_login_redirect', 10, 3 );	
+	add_action('login_form',[$OSOLCCC_Frontend_inst,'include_cust_captcha_login'] );
+	add_filter('login_errors',[$OSOLCCC_Frontend_inst,'cust_captcha_login_errors']);
+	add_filter( 'login_redirect', [$OSOLCCC_Frontend_inst,'include_cust_captcha_login_redirect'], 10, 3 );	
 }
-/* Function to include captcha for login form */
-function include_cust_captcha_login(){
-	echo '<p class="login-form-captcha">
-			<label for="captcha"><b>'. __('Captcha', 'wpcaptchadomain').' </b></label>
-			<span class="required">*</span>
-			<div style="clear:both;"></div>
-			'.cust_catcha_html().'
-			<div style="clear:both;"></div>';
-			
-	/* Will retrieve the get varibale and prints a message from url if the captcha is wrong */
-	if(isset($_GET['captcha']) && $_GET['captcha'] == 'confirm_error' ) {
-		echo '<label style="color:#FF0000;" id="cust_capt_err" for="cust_captcha_code_error">'.$_SESSION['captcha_error'].'</label><div style="clear:both;"></div>';;
-		$_SESSION['captcha_error'] = '';
-	}
-	
-	echo '<label for="OSOLmulticaptcha_keystring">'.__('Type the text displayed above', 'wpcaptchadomain').':</label>
-			<input id="OSOLmulticaptcha_keystring" name="OSOLmulticaptcha_keystring" size="15" type="text" tabindex="30" />
-			</p>';
-	return true;
-}
-
-/* Hook to find out the errors while logging in */
-function cust_captcha_login_errors($errors){
-	//die('die statement executed at function cust_captcha_login_errors IN '.__FILE__);
-	if( isset( $_REQUEST['action'] ) && 'register' == $_REQUEST['action'] )
-		return($errors);
-	
-	if(get_option('cust_captcha_status') == 'enabled' &&  !verifyOSOLMultiCaptcha()){
-		return $errors.'<label id="capt_err" for="cust_captcha_code_error">'.__('Captcha confirmation error!', 'wpcaptchadomain').'</label>';
-	}
-	return $errors;
-}
-
-/* Hook to redirect after captcha confirmation */
-function include_cust_captcha_login_redirect($url){
-	
-	/* Captcha mismatch */
-	if(get_option('cust_captcha_status') == 'enabled' && (!isset($_REQUEST['OSOLmulticaptcha_keystring']) || !verifyOSOLMultiCaptcha())){
-	//if(isset($_SESSION['captcha_code']) && isset($_REQUEST['captcha_code']) && $_SESSION['captcha_code'] != $_REQUEST['captcha_code']){
-		$_SESSION['captcha_error'] = __('Incorrect captcha confirmation!', 'wpcaptchadomain');
-		wp_clear_auth_cookie();
-		return $_SERVER["REQUEST_URI"]."/?captcha='confirm_error'";
-	}
-	/* Captcha match: take to the admin panel */
-	else{
-		return home_url('/wp-admin/');	
-	}
-}
-
-/* <!-- Captcha for login authentication ends here --> */
+/* Captcha for login authentication ends here */ 
 
 
 
-/* Captcha for Comments ends here */
-$comment_captcha = get_option('cust_captcha_comments');
+
+
+/* Captcha for Comments starts here */
+$comment_captcha = get_option('OSOLMulticaptcha_cust_captcha_comments');
 //if($comment_captcha == 'yes'){
-if(get_option('cust_captcha_status') ==  'enabled')
+if(get_option('cust_captcha_status') ==  'enabled' && ($comment_captcha == 'yes'))
 {
 	global $wp_version;
 	if( version_compare($wp_version,'3','>=') ) { // wp 3.0 +
-		add_action( 'comment_form_after_fields', 'include_cust_captcha_comment_form_wp3', 1 );
-		add_action( 'comment_form_logged_in_after', 'include_cust_captcha_comment_form_wp3', 1 );
+		add_action( 'comment_form_after_fields', [$OSOLCCC_Frontend_inst,'include_cust_captcha_comment_form_wp3'], 1 );
+		add_action( 'comment_form_logged_in_after', [$OSOLCCC_Frontend_inst,'include_cust_captcha_comment_form_wp3'], 1 );
 	}	
 	// for WP before WP 3.0
-	add_action( 'comment_form', 'include_cust_captcha_comment_form' );	
-	add_filter( 'preprocess_comment', 'include_cust_captcha_comment_post' );
+	add_action( 'comment_form', [$OSOLCCC_Frontend_inst,'include_cust_captcha_comment_form'] );	
+	add_filter( 'preprocess_comment', [$OSOLCCC_Frontend_inst,'include_cust_captcha_comment_post'] );
 }
+/* Captcha for Comments ends here */
 
-/* Function to include captcha for comments form */
-function include_cust_captcha_comment_form(){
-	/*$c_registered = get_option('wpcaptcha_registered');
-	if ( is_user_logged_in() && $c_registered == 'yes') {
-		return true;
-	}*/
-	echo '<p class="comment-form-captcha">
-		<label for="captcha"><b>'. __('Captcha', 'wpcaptchadomain').' </b></label>
-		<span class="required">*</span>
-		<div style="clear:both;"></div>
-		'.cust_catcha_html().'
-		<div style="clear:both;"></div>
-		<label for="OSOLmulticaptcha_keystring">'.__('Type the text displayed above', 'wpcaptchadomain').':</label>
-		<input id="OSOLmulticaptcha_keystring" name="OSOLmulticaptcha_keystring" size="15" type="text" />
-		<div style="clear:both;"></div>
-		</p>';
-	return true;
-}
 
-/* Function to include captcha for comments form > wp3 */
-function include_cust_captcha_comment_form_wp3(){
-	/*$c_registered = get_option('wpcaptcha_registered');
-	if ( is_user_logged_in() && $c_registered == 'yes') {
-		return true;
-	}*/
-	
-	echo '<p class="comment-form-captcha">
-		<label for="captcha"><b>'. __('Captcha', 'wpcaptchadomain').' </b></label>
-		<span class="required">*</span>
-		<div style="clear:both;"></div>
-		'.cust_catcha_html().'
-		<div style="clear:both;"></div>
-		<label for="OSOLmulticaptcha_keystring">'.__('Type the text displayed above', 'wpcaptchadomain').':</label>
-		<input id="OSOLmulticaptcha_keystring" name="OSOLmulticaptcha_keystring" size="15" type="text" />
-		<div style="clear:both;"></div>
-		</p>';
-		
-	remove_action( 'comment_form', 'include_cust_captcha_comment_form' );
-	
-	return true;
-}
 
-// this function checks captcha posted with the comment
-function include_cust_captcha_comment_post($comment) {	
-	/*$c_registered = get_option('wpcaptcha_registered');
-	if (is_user_logged_in() && $c_registered == 'yes') {
-		return $comment;
-	}*/
-
-	// skip captcha for comment replies from the admin menu
-	if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'replyto-comment' &&
-	( check_ajax_referer( 'replyto-comment', '_ajax_nonce', false ) || check_ajax_referer( 'replyto-comment', '_ajax_nonce-replyto-comment', false ) ) ) {
-		// skip capthca
-		return $comment;
-	}
-
-	// Skip captcha for trackback or pingback
-	if ( $comment['comment_type'] != '' && $comment['comment_type'] != 'comment' ) {
-		 // skip captcha
-		 return $comment;
-	}
-	
-	// If captcha is empty
-	if(empty($_REQUEST['OSOLmulticaptcha_keystring']))
-		wp_die( __('CAPTCHA cannot be empty.', 'wpcaptchadomain' ) );
-
-	// captcha was matched
-	if($_SESSION['OSOLmulticaptcha_keystring'] == $_REQUEST['OSOLmulticaptcha_keystring']) return($comment);
-	elseif(get_option('cust_captcha_status') == 'enabled' && (!isset($_REQUEST['OSOLmulticaptcha_keystring']) || !verifyOSOLMultiCaptcha()))
-	{
-		wp_die( __('Error: Incorrect CAPTCHA. Press your browser\'s back button and try again.', 'wpcaptchadomain'));
-	}
-} 
 
 /* <!-- Captcha for Comments authentication ends here --> */
 
 
 
 // Add captcha in the register form
-$register_captcha = get_option('wpcaptcha_register');
+$register_captcha = get_option('OSOLMulticaptcha_cust_captcha_register');
 //if($register_captcha == 'yes'){
-if(get_option('cust_captcha_status') ==  'enabled')
+if(get_option('cust_captcha_status') ==  'enabled' && ($register_captcha == 'yes'))
 {
 
-	add_action('register_form', 'include_cust_captcha_register');
-	add_action( 'register_post', 'include_cust_captcha_register_post', 10, 3 );
-	add_action( 'signup_extra_fields', 'include_cust_captcha_register' );
-	add_filter( 'wpmu_validate_user_signup', 'include_cust_captcha_register_validate' );
+	add_action('register_form',[$OSOLCCC_Frontend_inst,'include_cust_captcha_register'] );// add captcha html in register form
+	add_action( 'register_post', [$OSOLCCC_Frontend_inst,'include_cust_captcha_register_post'], 10, 3 );// perform plugin specific actions upon user registration
+	
+	add_action( 'signup_extra_fields', [$OSOLCCC_Frontend_inst,'include_cust_captcha_register'] );// add captcha html in register form
+	add_filter( 'wpmu_validate_user_signup', [$OSOLCCC_Frontend_inst,'include_cust_captcha_register_validate'] );// perform validation of captcha
 }
 
-/* Function to include captcha for register form */
-function include_cust_captcha_register($default){
-	echo '<p class="register-form-captcha">	
-			<label for="captcha"><b>'. __('Captcha', 'wpcaptchadomain').' </b></label>
-			<span class="required">*</span>
-			<div style="clear:both;"></div>
-			'.cust_catcha_html().'
-			<div style="clear:both;"></div>
-			<label for="OSOLmulticaptcha_keystring">'.__('Type the text displayed above', 'wpcaptchadomain').':</label>
-			<input id="OSOLmulticaptcha_keystring" name="OSOLmulticaptcha_keystring" size="15" type="text" />
-			</p>';
-	return true;
-}
-
-/* This function checks captcha posted with registration */
-function include_cust_captcha_register_post($login,$email,$errors) {
-
-	// If captcha is blank - add error
-	if ( isset( $_REQUEST['OSOLmulticaptcha_keystring'] ) && "" ==  $_REQUEST['OSOLmulticaptcha_keystring'] ) {
-		$errors->add('captcha_blank', '<strong>'.__('ERROR', 'wpcaptchadomain').'</strong>: '.__('Please complete the CAPTCHA.', 'wpcaptchadomain'));
-		return $errors;
-	}
-
-	/*if ( isset( $_REQUEST['OSOLmulticaptcha_keystring'] ) && ($_SESSION['OSOLmulticaptcha_keystring'] == $_REQUEST['OSOLmulticaptcha_keystring'] )) {
-					// captcha was matched						
-	} else */
-	if(get_option('cust_captcha_status') == 'enabled' && (!isset($_REQUEST['OSOLmulticaptcha_keystring']) || !verifyOSOLMultiCaptcha()))
-	{
-		$errors->add('captcha_wrong', '<strong>'.__('ERROR', 'wpcaptchadomain').'</strong>: '.__('That CAPTCHA was incorrect.', 'wpcaptchadomain'));
-	}
-  return($errors);
-} 
-/* End of the function include_cust_captcha_register_post */
-
-function include_cust_captcha_register_validate($results) {
-	if ( isset( $_REQUEST['OSOLmulticaptcha_keystring'] ) && "" ==  $_REQUEST['OSOLmulticaptcha_keystring'] ) {
-		$results['errors']->add('captcha_blank', '<strong>'.__('ERROR', 'wpcaptchadomain').'</strong>: '.__('Please complete the CAPTCHA.', 'wpcaptchadomain'));
-		return $results;
-	}
-
-	/*if ( isset( $_REQUEST['OSOLmulticaptcha_keystring'] ) && ($_SESSION['OSOLmulticaptcha_keystring'] == $_REQUEST['OSOLmulticaptcha_keystring'] )) {
-					// captcha was matched						
-	} else*/ 
-	if(get_option('cust_captcha_status') == 'enabled' && (!isset($_REQUEST['OSOLmulticaptcha_keystring']) || !verifyOSOLMultiCaptcha()))
-	{
-		$results['errors']->add('captcha_wrong', '<strong>'.__('ERROR', 'wpcaptchadomain').'</strong>: '.__('That CAPTCHA was incorrect.', 'wpcaptchadomain'));
-	}
-  return($results);
-}
-/* End of the function include_cust_captcha_register_validate */
 
 
-$lost_captcha = get_option('wpcaptcha_lost');
+
+
+$lost_captcha = get_option('OSOLMulticaptcha_cust_captcha_lost');
 // Add captcha into lost password form
 //if($lost_captcha == 'yes'){
-if(get_option('cust_captcha_status') ==  'enabled')
+if(get_option('cust_captcha_status') ==  'enabled' && ($lost_captcha == 'yes'))
 {
 	add_action( 'lostpassword_form', 'include_cust_captcha_lostpassword' );
 	add_action( 'lostpassword_post', 'include_cust_captcha_lostpassword_post', 10, 3 );
 }
 
-/* Function to include captcha for lost password form */
-function include_cust_captcha_lostpassword($default){
-	echo '<p class="lost-form-captcha">
-		<label for="captcha"><b>'. __('Captcha', 'wpcaptchadomain').' </b></label>
-		<span class="required">*</span>
-		<div style="clear:both;"></div>
-		'.cust_catcha_html().'
-		<div style="clear:both;"></div>
-		<label for="OSOLmulticaptcha_keystring">'.__('Type the text displayed above', 'wpcaptchadomain').':</label>
-		<input id="OSOLmulticaptcha_keystring" name="OSOLmulticaptcha_keystring" size="15" type="text" />
-		</p>';	
-}
 
-function include_cust_captcha_lostpassword_post() {
-	if( isset( $_REQUEST['user_login'] ) && "" == $_REQUEST['user_login'] )
-		return;
-
-	// If captcha doesn't entered
-	if ( isset( $_REQUEST['OSOLmulticaptcha_keystring'] ) && "" ==  $_REQUEST['OSOLmulticaptcha_keystring'] ) {
-		wp_die( __( 'Please complete the CAPTCHA.', 'wpcaptchadomain' ) );
-	}
-	
-	// Check entered captcha
-	/*if ( isset( $_REQUEST['OSOLmulticaptcha_keystring'] ) && ($_SESSION['OSOLmulticaptcha_keystring'] == $_REQUEST['OSOLmulticaptcha_keystring'] )) {
-		return;
-	} else {*/
-	if(get_option('cust_captcha_status') == 'enabled' && (!isset($_REQUEST['OSOLmulticaptcha_keystring']) || !verifyOSOLMultiCaptcha()))
-	{
-		wp_die( __( 'Error: Incorrect CAPTCHA. Press your browser\'s back button and try again.', 'wpcaptchadomain' ) );
-	}
-}
-
-
-
-//***********************************************CONTACT US PART
-// [cccontact toEmail="abc@bcd.com" linkToModal="yes" cccontact_unique_id="1"]
-
-add_shortcode( 'cccontact', 'cust_captcha_contact_func' );
-function cust_captcha_contact_func( $atts ) {
-	extract( shortcode_atts( array(
-		'toemail' => get_option('cust_captcha_contact_email'),
-		'linktomodal' => 'no',
-		'cccontact_unique_id' => '-1'
-	), $atts ) );
-	if(!session_id()){
-		session_start();
-	}
-	$postid = get_the_ID();
-	$toMailSessionVar = 'toemail-'.$postid."_".$cccontact_unique_id;
-	$_SESSION[$toMailSessionVar] = $toemail;
-	ob_start();
-	cust_captcha_contact_validate_and_mail();
-	include(CUST_CAPTCHA_FOLDER.'/cccontact_form.php');
-    $output_string=ob_get_contents();
-    ob_end_clean();
-	return $output_string;//"cccontact :".$toemail." , ".$linktomodal." ,$toMailSessionVar";
-}
-function cccontact_validate_notify_form()
-{
-	$validation_result = array();
-	$input_fields = array('subject','message','name','email');
-	foreach($input_fields as $field_name)
-	{
-		if(!isset($_REQUEST["cccontact_".$field_name]) || (trim($_REQUEST["cccontact_".$field_name]) == ''))
-		{
-			$validation_result[] = $field_name ." should not be blank <br />";
-		}
-		
-	}
-		$emailFilter = "/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/";
-		if(!preg_match($emailFilter,$_REQUEST['cccontact_email']))
-		{
-			$validation_result[] = "Please enter a valid from email <br />";
-		}
-		
-		$phoneFilter = "/^([0-9_\.\-\s])+$/";
-		/*if(!preg_match($phoneFilter,$_REQUEST['phone']))
-		{
-			$validation_result .= "Please enter a valid phone number <br />";
-		}*/
-	return $validation_result;
-	
-}
-add_action('wp_ajax_cccontact_display_captcha', 'cust_captcha_display_captcha');
-add_action('wp_ajax_nopriv_cccontact_display_captcha', 'cust_captcha_display_captcha');
-
-add_action('wp_ajax_cccontact_validate_ajax', 'cust_captcha_contact_validate_contact_ajax');
-add_action('wp_ajax_nopriv_cccontact_validate_ajax', 'cust_captcha_contact_validate_contact_ajax');
- function cust_captcha_display_captcha()
- {
-	//if(isset($_REQUEST['show_cust_captcha']) && $_REQUEST['show_cust_captcha'] == 'true')
-	{
-		require_once(CUST_CAPTCHA_FOLDER."/displayCaptcha.php");
-	}
- }
- function cust_captcha_contact_validate_contact_ajax() {
-    //Handle request then generate response using WP_Ajax_Response
-	$validation_result = cust_captcha_contact_validate_and_mail();
-	//echo  "</pre>".print_r($validation_result,true)."</pre>";
-		if(is_array($validation_result) && count($validation_result) > 0 )
-		{
-			//echo  "</pre>".print_r($_REQUEST,true)."</pre>";
-			die("{\"success\":0,\"message\":\"".(join("\r\n",$validation_result))."\"}");
-		}
-		die("{'success':'1'}");
-		return true;
- }
-
-
-function add_ajaxurl_cdata_to_front(){ ?>
-	<script type="text/javascript"> //<![CDATA[
-		ajaxurl = '<?php echo admin_url( 'admin-ajax.php'); ?>';
-		static_refresh_image = '<?php echo CUST_CAPTCHA_DIR_URL;?>/utils/refresh.gif';
-		animated_refresh_image = '<?php echo CUST_CAPTCHA_DIR_URL;?>/utils/refresh-animated.gif';
-		function getOSOLMultiCaptchaURL()
-		{
-			
-			osolMultiCaptchaURL = '<?php echo admin_url( 'admin-ajax.php'); ?>?action=cccontact_display_captcha&rand='+ new Date().getTime();
-			return osolMultiCaptchaURL;
-		}
-		function refreshOSOLMultiCaptchaImage(captchaInst)
-		{
-			newURL = getOSOLMultiCaptchaURL()+'&OSOLmulticaptcha_inst='+captchaInst;
-			
-			//alert(jQuery('img.osol_cccaptcha')[0].src);
-			jQuery('img.osol_cccaptcha')[captchaInst].src = newURL
-		}
-	//]]> </script>
-<?php }
-//add_action( 'wp_head', 'add_ajaxurl_cdata_to_front', 1);
- //if (!is_admin()) 
- {
- //load jquery in wp_head for contact page since jQuery(document).ready is used 
-	 add_action("wp_enqueue_scripts", "cccontact_jquery_enqueue", 11);
-	 //die("<pre>".print_r($_REQUEST,true)."</pre>");
- }
-function cccontact_jquery_enqueue() {
-
-   wp_enqueue_script('jquery');
-}
-function verifyOSOLMultiCaptcha()
-{
-	//die("<pre>".print_r($_SESSION['OSOLmulticaptcha_keystring'],true)."</pre>");
-	if($verificationResult = in_array((get_option('OSOLMulticaptcha_caseInsensitive')=='1'?strtoupper($_REQUEST['OSOLmulticaptcha_keystring']):$_REQUEST['OSOLmulticaptcha_keystring']),$_SESSION['OSOLmulticaptcha_keystring']))
-	{
-		//if verification success remove the session val of that captcha so that bots dont misuse it
-		foreach($_SESSION['OSOLmulticaptcha_keystring'] as $key => $val)
-		{
-			if(strtoupper($_REQUEST['OSOLmulticaptcha_keystring']) == strtoupper($val))
-			{
-				unset($_SESSION['OSOLmulticaptcha_keystring'][$key]);
-			}
-		}
-	}
-	
-	return $verificationResult;
-}
-function cust_captcha_contact_validate_and_mail()
-{
-	$validation_result = array();
-	if((isset($_REQUEST['cccontact_action']) && $_REQUEST['cccontact_action']== 'cust_captcha_contact_submit') ||
-		(isset($_REQUEST['action']) && $_REQUEST['action']== 'cccontact_validate_ajax')												  
-														  )
-	{
-		//die("GGGG");
-		$validation_result = cccontact_validate_notify_form();
-		if(count($validation_result) > 0)
-		{
-			//die($validation_result);
-			if((!isset($_REQUEST['action']) || $_REQUEST['action'] != 'cccontact_validate_ajax')	)
-			{
-				echo "<center><h2>".__( $validation_result, 'wpcaptchadomain' )."!</h2></center>";
-			}
-			return $validation_result;
-		}
-																								
-		if ( isset( $_REQUEST['OSOLmulticaptcha_keystring'] ) && "" ==  $_REQUEST['OSOLmulticaptcha_keystring'] ) {
-			//wp_die( __( 'Please complete the CAPTCHA.', 'wpcaptchadomain' ) );
-			$captchaValidationFailMessage =  'Please complete the CAPTCHA.';
-			if((!isset($_REQUEST['action']) || $_REQUEST['action'] != 'cccontact_validate_ajax')	)
-			{
-				echo "<center><h2>".__($captchaValidationFailMessage, 'wpcaptchadomain' )."!</h2></center>";
-			}
-			else
-			{
-				$validation_result[] = $captchaValidationFailMessage;
-			}
-			return $validation_result;
-		}
-		if(!session_id()){
-			session_start();
-		}
-		// Check entered captcha
-		/*if ( isset( $_REQUEST['OSOLmulticaptcha_keystring'] ) && ($_SESSION['OSOLmulticaptcha_keystring'] == $_REQUEST['OSOLmulticaptcha_keystring'] )) {
-			return;
-		} else {*/
-		
-		if(get_option('cust_captcha_status') == 'enabled' && (!isset($_REQUEST['OSOLmulticaptcha_keystring']) || !verifyOSOLMultiCaptcha()))
-		{
-			//die($_REQUEST['OSOLmulticaptcha_keystring']."<pre>".print_r($_SESSION['OSOLmulticaptcha_keystring'],true)."</pre>");
-			//wp_die( __( 'Error: Incorrect CAPTCHA. Press your browser\'s back button and try again.', 'wpcaptchadomain' ) );
-			$captchaValidationFailMessage =  'Error: Incorrect CAPTCHA. ';
-			if((!isset($_REQUEST['action']) || $_REQUEST['action'] != 'cccontact_validate_ajax')	)
-			{
-				echo "<center><h2>".__($captchaValidationFailMessage."Press your browser's back button and try again.", 'wpcaptchadomain' )."!</h2></center>";
-			}
-			else
-			{
-				$validation_result[] = $captchaValidationFailMessage;
-			}
-			return $validation_result;
-		}
-		
-		
-		
-		$toMailSessionVar = $_REQUEST['cccontact_toMailSessionVar'];
-		$toemail = isset($_SESSION[$toMailSessionVar])?$_SESSION[$toMailSessionVar]:get_option('cust_captcha_contact_email');
-		//die($toMailSessionVar." : " .$_SESSION[$toMailSessionVar]. " : " .$toemail);
-			$summary =	"<br />\r\n Message:<br />\r\n".nl2br($_REQUEST['cccontact_message']);
-		
-			$subject = $_REQUEST['cccontact_subject'];
-			
-			$boundary = uniqid('np');
-			
-			 //$message = "This is a MIME encoded message."; 
-			 $message = 'This message was sent via PHP !' ;
-					   
-			 $message .= "\r\n\r\n--" . $boundary . "\r\n";
-			 $message .= "Content-type: text/plain;charset=utf-8\r\n\r\n";
-			 $message .= strip_tags($summary) . "\r\n\r\n" ;
-			
-			 $message .= "\r\n\r\n--" . $boundary . "\r\n";
-			 $message .= "Content-type: text/html;charset=utf-8\r\n\r\n";
-			 $message .= "<br />".$summary . "<br />" . "<br />" ;
-			
-			 $message .= "\r\n\r\n--" . $boundary . "--";
-			
-			
-			/*$message = 'This message was sent via PHP !' . "\r\n" .
-					   $summary . "\r\n" . "\r\n" .
-					   '<br />From <a href=\"'.$realestate_base.'\">'.$realestate_base."</a>". "\r\n";*/
-			
-			// To send HTML mail, the Content-type header must be set
-			$headers  = 'MIME-Version: 1.0' . "\r\n";
-			//$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-			$headers .= "Content-Type: multipart/alternative;boundary=" . $boundary . "\r\n";
-			
-			// Additional headers
-			$headers .= 'From: "'.$_REQUEST['cccontact_name'].'" <'.$_REQUEST['cccontact_email'].'>' . "\r\n" .
-					   //'Cc: "Outsource Online Internet Solutions" <office@outsource-online.net>' . "\r\n" .
-					   'X-Mailer: PHP-' . phpversion() . "\r\n";
-			//die("$toemail, $subject, $message, $headers");
-			if (@mail($toemail, $subject, $message, $headers)) {
-			  //wp_die( __('mail sent Successfully!' . "\n"));//.'to '.$to
-			   $mailSendStatus = "Thank you for contacting us!";
-			   
-			    if((!isset($_REQUEST['action']) || $_REQUEST['action'] != 'cccontact_validate_ajax')	)
-				{
-					echo "<center><h2>".__($mailSendStatus, 'wpcaptchadomain' )."!</h2></center>";
-				}
-				else
-				{
-					$validation_result[] = $mailSendStatus;
-				}
-			}
-			else {
-			  //wp_die( __('mail() Failure!.contact site admin' . "\n"));
-			   //echo "<center><h2>".__("Can't send mail because of system failure!.contact site admin\n")."</h2></center>";return;
-			   $mailSendStatus = "Not able to send mail because of system failure!.contact site admin";
-			   
-			    if((!isset($_REQUEST['action']) || $_REQUEST['action'] != 'cccontact_validate_ajax')	)
-				{
-					echo "<center><h2>".__($mailSendStatus, 'wpcaptchadomain' )."!</h2></center>";
-				}
-				else
-				{
-					$validation_result[] = $mailSendStatus;
-				}
-				return $validation_result;
-			}
-			
-	}
-	return true;
-}
-
-
+/* frontend  hooks and filters ends here */
+ 
 
 
 //***********************ADMIN SECTION**************************
 /* admin pages section */
-function cust_captcha_settings()
-{
-	require_once(CUST_CAPTCHA_FOLDER."/captcha-customization-options.php");
-}
-function cust_captcha_contact_settings()
-{
-	require_once(CUST_CAPTCHA_FOLDER."/contact-customization-options.php");
-}
 
-if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'cust_captcha_contact_email_submit')
-{
-	if (is_admin()) require_once(ABSPATH . 'wp-includes/pluggable.php');
-	if(!is_super_admin()){die('should be logged in as admin to update contact email');}
-	update_option('cust_captcha_contact_email',$_REQUEST['cust_captcha_contact_email']);
-}
-if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'cust_captcha_options_submit')
-{
-	if (is_admin()) require_once(ABSPATH . 'wp-includes/pluggable.php');
-	if(!is_super_admin()){die('should be logged in as admin to update captcha settings');}
-	foreach($_REQUEST as $requestVar => $requestVarVal)
-	{
-		if(preg_match("@OSOLMulticaptcha_(.+)@",$requestVar))
-		{
-			update_option($requestVar,$requestVarVal);
-		}
-	}
-	if(!isset($_REQUEST['OSOLMulticaptcha_caseInsensitive']))
-	{
-		update_option('OSOLMulticaptcha_caseInsensitive',0);
-	}
-	
-	update_option('cust_captcha_contact_email',$_REQUEST['cust_captcha_contact_email']);
-}
+// hook for initing admin, mainly processing forms, loading thickbox etc
+add_action('admin_init', [$OSOLCCC_Admin_inst,'init4Admin']);
+/* Hook to initalize the admin menu */
+add_action('admin_menu', [$OSOLCCC_Admin_inst,'show_cust_captcha_contact_plugin_menu']);
+
+add_action( 'admin_footer',  [$OSOLCCC_CommonClass_inst,'add_ccc_onload'] ); // For back-end  to call refresh captcha			
+add_action("admin_enqueue_scripts", [$OSOLCCC_CommonClass_inst,"cccontact_jquery_enqueue"], 11);//load jquery in wp_head for contact page since jQuery(document).ready is used 
 /* admin pages section ends here */
+
+
+
+//******************************* CAPTCHA AND CONTACT US FORM HOOKS
+
+
+//***********************************************display captcha hooks 
+//https://developer.wordpress.org/reference/hooks/wp_ajax_action/ 
+// depending on wether logged in or not, the following hooks gets triggered when calling url contains action=cccontact_cccontact_display_captcha
+add_action('wp_ajax_cccontact_display_captcha', [$OSOLCCC_CommonClass_inst,'cust_captcha_display_captcha']);// executed when logged in
+add_action('wp_ajax_nopriv_cccontact_display_captcha', [$OSOLCCC_CommonClass_inst,'cust_captcha_display_captcha']);// executed when logged out
+
+//***********************************************CONTACT US PART
+// [cccontact toEmail="abc@bcd.com" linkToModal="yes" cccontact_unique_id="1"]
+
+add_shortcode( 'cccontact', [$OSOLCCC_Frontend_inst,'cust_captcha_contact_func'] );
+
+//echo "HI Captcha";
+//https://developer.wordpress.org/reference/hooks/wp_ajax_action/ 
+// the following hook gets triggered when calling url contains action=cccontact_tb_show_modal
+add_action('wp_ajax_cccontact_tb_show_modal' , [$OSOLCCC_Frontend_inst,'cccontact_tb_show_modal']);// executed when logged in
+add_action('wp_ajax_nopriv_cccontact_tb_show_modal', [$OSOLCCC_Frontend_inst,'cccontact_tb_show_modal'] ); // executed when logged out
+
+// the following hook gets triggered when calling url contains action=cccontact_validate_ajax
+add_action('wp_ajax_cccontact_validate_ajax', [$OSOLCCC_Frontend_inst,'cust_captcha_contact_validate_contact_ajax']);// executed when logged in
+add_action('wp_ajax_nopriv_cccontact_validate_ajax', [$OSOLCCC_Frontend_inst,'cust_captcha_contact_validate_contact_ajax']);// executed when logged out
 ?>

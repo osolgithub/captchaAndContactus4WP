@@ -23,14 +23,14 @@ For captcha with Cookie
 ---------------------------
 //simplest way to show captcha
 session_start();
-$captcha = new OSOLmulticaptcha();
+$captcha = \OSOLCCC\ExtraClasses\OSOLmulticaptcha::getInstance();
 $captcha->displayCaptcha();
 $_SESSION['OSOLmulticaptcha_keystring'] = $captcha->keystring;
 
 For captcha without Cookie
 ---------------------------
 
-		$captcha = new OSOLmulticaptcha();
+		$captcha = \OSOLCCC\ExtraClasses\OSOLmulticaptcha::getInstance();
 		$captchaEncryptionKey = "SomeRandomKey";// IMPORTANT ****** YOU MUST SET A CUSTOM VALUE FOR YOUR SITE
 		$captcha->setCaptchaEncryptionKey($captchaEncryptionKey);
 		$returnImgObj = true;
@@ -54,7 +54,7 @@ For captcha without Cookie
 		
 	To verify Catpcha 
 	-----------------
-	$captcha = new OSOLmulticaptcha();
+	$captcha = \OSOLCCC\ExtraClasses\OSOLmulticaptcha::getInstance();
 	$captchaText2Check = isset($_POST['keystring'])?$_POST['keystring']:"";
 	$encryptedCaptchaString = isset($_POST['captchaEncypted'])?$_POST['captchaEncypted']:"";
 	if(trim($captchaText2Check) != "" && $captcha->isCaptchaCorrect($captchaText2Check, $encryptedCaptchaString))
@@ -65,10 +65,14 @@ For captcha without Cookie
 	{
 		//chaptcha text entered is not correct
 	}
+
+instantiation 
+\OSOLCCC\ExtraClasses\OSOLmulticaptcha::getInstance() 	
 */
 #namespace OSOLHelpers;
 #namespace OSOLUtils\Helpers;
-class OSOLmulticaptcha{
+namespace OSOLCCC\ExtraClasses;
+class OSOLmulticaptcha extends \OSOLCCC\SingletonParent{
 	
 	var $imageFunction = "Adv";
 	var $font_size = 24;
@@ -91,7 +95,7 @@ class OSOLmulticaptcha{
 	
 	
 	
-	public function __construct()
+	protected function __construct()
 	{
 		$this->OSOL_Captcha_CONFIG = array(
 									'withoutSession' => true,

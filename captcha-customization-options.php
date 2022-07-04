@@ -77,6 +77,12 @@ $captcha = new OSOLmulticaptcha();
 						</style>
                         <form id="form1" name="form1" method="post" action="">
                         <ul>
+						<li><label id="jform_params_caseInsensitive-lbl" for="jform_params_caseInsensitive" title="">GDPR Compliant(No Cookie):</label><input type="checkbox" id="jform_params_gdprCompliantNoCookie" name="OSOLMulticaptcha_gdprCompliantNoCookie" value="1" <?php echo get_option('OSOLMulticaptcha_gdprCompliantNoCookie') == 1?"checked=\"checked\"":'';?>/></li>
+  <li>
+  	<?php $OSOLCaptchaEncryptionKey = get_option('OSOLCaptchaEncryptionKey') != ''?get_option('OSOLCaptchaEncryptionKey'):"YourUniqueEncryptionKey";?>
+    <label id="jform_params_bgColor-lbl" for="jform_params_encryptionKey" title="">Encryption Key</label>
+    <input name="OSOLCaptchaEncryptionKey" id="jform_params_encryptionKey" value="<?php echo $OSOLCaptchaEncryptionKey;?>" size="25" type="text" />
+  </li>
   <li>
   	<?php $OSOLMulticaptcha_bgColor = get_option('OSOLMulticaptcha_bgColor') != ''?get_option('OSOLMulticaptcha_bgColor'):"#2c8007";?>
     <label id="jform_params_bgColor-lbl" for="jform_params_bgColor" title="">Background Color</label>
@@ -218,6 +224,42 @@ else
     <label id="jform_params__-lbl" for="jform_params__">Preview Captcha</label>
     <div id="ToolTip"></div>
     <span onmouseover="javascript:previewOSOLCaptcha(event,OSOLCaptchPreviewHTML())" onmouseout="javascript:hidePreviewOSOLCaptcha()"> Hover Mouse here to preview Captcha with entered settings </span></li>
+   <li>
+   	<label id="jform_params__cust_captcha_login" for="cust_captcha_login">Show captcha In Login form</label>
+    <div id="jform_params__cust_captcha_login">
+    	<input type="radio" name="OSOLMulticaptcha_cust_captcha_login" id="captcha_login_lbl_yes" value="yes" <?php if(get_option('OSOLMulticaptcha_cust_captcha_login') == 'yes'){?>checked="checked"<?php } ?> /><label id="captcha_login_lbl_yes_id" for="captcha_login_lbl_yes">yes</label>
+        <input type="radio" name="OSOLMulticaptcha_cust_captcha_login" id="captcha_login_lbl_no" value="no" <?php if(get_option('OSOLMulticaptcha_cust_captcha_login') != 'yes'){?>checked="checked"<?php } ?> /><label id="captcha_login_lbl_no_id" for="captcha_login_lbl_no">no</label>
+    </div>
+    
+    
+   </li>
+   <li>
+   	<label id="jform_params_cust_captcha_comments" for="cust_captcha_comments">Show captcha In Comments form</label>
+    <div id="cust_captcha_comments">
+    	<input type="radio" name="OSOLMulticaptcha_cust_captcha_comments" id="captcha_comments_lbl_yes" value="yes" <?php if(get_option('OSOLMulticaptcha_cust_captcha_comments') == 'yes'){?>checked="checked"<?php } ?> /><label id="captcha_comments_lbl_yes_id" for="captcha_comments_lbl_yes">yes</label>
+        <input type="radio" name="OSOLMulticaptcha_cust_captcha_comments" id="captcha_comments_lbl_no" value="no" <?php if(get_option('OSOLMulticaptcha_cust_captcha_comments') != 'yes'){?>checked="checked"<?php } ?> /><label id="captcha_comments_lbl_no_id" for="captcha_comments_lbl_no">no</label>
+    </div>
+    
+    
+   </li>
+   <li>
+   	<label id="jform_params__cust_captcha_register" for="cust_captcha_register">Show captcha In Register form</label>
+    <div id="cust_captcha_register">
+    	<input type="radio" name="OSOLMulticaptcha_cust_captcha_register" id="captcha_register_lbl_yes" value="yes" <?php if(get_option('OSOLMulticaptcha_cust_captcha_register') == 'yes'){?>checked="checked"<?php } ?> /><label id="captcha_register_lbl_yes_id" for="captcha_register_lbl_yes">yes</label>
+        <input type="radio" name="OSOLMulticaptcha_cust_captcha_register" id="captcha_register_lbl_no" value="no" <?php if(get_option('OSOLMulticaptcha_cust_captcha_register') != 'yes'){?>checked="checked"<?php } ?> /><label id="captcha_register_lbl_no_id" for="captcha_register_lbl_no">no</label>
+    </div>
+    
+    
+   </li>
+   <li>
+   	<label id="jform_params__cust_captcha_lost" for="cust_captcha_lost">Show captcha In Lost password form</label>
+    <div id="cust_captcha_lost">
+    	<input type="radio" name="OSOLMulticaptcha_cust_captcha_lost" id="captcha_lost_lbl_yes" value="yes" <?php if(get_option('OSOLMulticaptcha_cust_captcha_lost') == 'yes'){?>checked="checked"<?php } ?> /><label id="captcha_lost_lbl_yes_id" for="captcha_lost_lbl_yes">yes</label>
+        <input type="radio" name="OSOLMulticaptcha_cust_captcha_lost" id="captcha_lost_lbl_no" value="no" <?php if(get_option('OSOLMulticaptcha_cust_captcha_lost') != 'yes'){?>checked="checked"<?php } ?> /><label id="captcha_lost_lbl_no_id" for="captcha_lost_lbl_no">no</label>
+    </div>
+    
+    
+   </li>
 </ul>
                         
                          <input name="Submit" type="submit" value="Save Options" />

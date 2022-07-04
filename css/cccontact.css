@@ -1,0 +1,22 @@
+#cccontact_form input[type="text"],
+#cccontact_form  input[type="password"],
+#cccontact_form  textarea {
+    background: none;
+    border: 1px solid #000;
+    font-weight: bold;
+    padding: 0px;
+}
+#cccontact_form input[type="submit"],#cccontact_form  button,#cccontact_form  .button,#cccontact_form  input#submit {
+    background:  #f9f9f9;
+    border: 1px solid #333;
+    color: #000;
+    cursor: pointer;
+    font-family: arial;
+    font-size: 16px;
+    font-weight: 700;
+    height: 32px;
+    letter-spacing: -1px;
+    padding: 2px 10px;
+    text-shadow: 0 1px 2px #111111;
+    text-transform: uppercase;
+}
