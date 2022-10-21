@@ -183,8 +183,8 @@ $lost_captcha = get_option('OSOLMulticaptcha_cust_captcha_lost');
 //if($lost_captcha == 'yes'){
 if(get_option('cust_captcha_status') ==  'enabled' && ($lost_captcha == 'yes'))
 {
-	add_action( 'lostpassword_form', 'include_cust_captcha_lostpassword' );
-	add_action( 'lostpassword_post', 'include_cust_captcha_lostpassword_post', 10, 3 );
+	add_action( 'lostpassword_form', [$OSOLCCC_Frontend_inst,'include_cust_captcha_lostpassword'] );
+	add_action( 'lostpassword_post', [$OSOLCCC_Frontend_inst,'include_cust_captcha_lostpassword_post'], 10, 3 );
 }
 
 

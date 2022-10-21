@@ -136,26 +136,36 @@ Class Common extends \OSOLCCC\SingletonParent{
 			?>
 			function refreshOSOLMultiCaptchaImage()
 			{
-				var time =  new Date().getTime();
-				var url = getOSOLMultiCaptchaURL();
-				var xhr = new XMLHttpRequest()
-			  
-				  xhr.open('GET', url, true);
-				  xhr.addEventListener('readystatechange', function(e) {
-					if (xhr.readyState == 4 && xhr.status == 200) {
-					  // Done. Inform the user
-								 let xhrResponse = JSON.parse(xhr.responseText);
-								  var captchaEncypted = document.querySelector("#OSOLmulticaptcha_captchaEncypted");
-								  var osolCaptchaImage = document.querySelector(".osol_cccaptcha");
-								  captchaEncypted.value = xhrResponse.captchaEncypted;
-								  osolCaptchaImage.src = "data:image/png;base64," + xhrResponse.imageContent;
-					}
-					else if (xhr.readyState == 4 && xhr.status != 200) {
-					  // Error. Inform the user
-					}
-				  })
-				  
-				  xhr.send(null)
+				
+				var captchaEncypted = document.querySelector("#OSOLmulticaptcha_captchaEncypted");
+				var osolCaptchaImage = document.querySelector(".osol_cccaptcha");
+				  if(captchaEncypted ==  null)
+				  {
+					  console.log("captchaEncypted is not seen.");
+				  }
+				  else
+				  {
+					  var time =  new Date().getTime();
+					  var url = getOSOLMultiCaptchaURL();
+					  var xhr = new XMLHttpRequest()
+					  xhr.open('GET', url, true);
+					  xhr.addEventListener('readystatechange', function(e) {
+						if (xhr.readyState == 4 && xhr.status == 200) {
+						  // Done. Inform the user
+									 let xhrResponse = JSON.parse(xhr.responseText);
+									  /* var captchaEncypted = document.querySelector("#OSOLmulticaptcha_captchaEncypted");
+									  var osolCaptchaImage = document.querySelector(".osol_cccaptcha"); */
+									  captchaEncypted.value = xhrResponse.captchaEncypted;
+									  
+									  osolCaptchaImage.src = "data:image/png;base64," + xhrResponse.imageContent;
+						}
+						else if (xhr.readyState == 4 && xhr.status != 200) {
+						  // Error. Inform the user
+						}
+					  })
+				 
+					xhr.send(null)
+				  }
 			}
 			<?php
 			}

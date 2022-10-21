@@ -1,3 +1,39 @@
+## Stable Tag 0.9
+
+### 08-10-2022
+
+1. corrected bug in MVC/ExtraClasses/OSOLMultiCaptcha.php by appropriately setting `$this->fontPNGLocation`
+```
+$this->fontPNGLocation = realpath(dirname(__FILE__).$this->DS.'..'.$this->DS.'..'.$this->DS)
+```
+2. Fixed bug in MVC/Views/ContactusView.php adding a slash to stdClass
+```
+$var2Display = new \stdClass();
+```
+3. in custCaptchaContact.php changed 
+```
+	add_action( 'lostpassword_form', 'include_cust_captcha_lostpassword' );
+	add_action( 'lostpassword_post', 'include_cust_captcha_lostpassword_post', 10, 3 );
+```
+to
+```
+	add_action( 'lostpassword_form', [$OSOLCCC_Frontend_inst,'include_cust_captcha_lostpassword'] );
+	add_action( 'lostpassword_post', [$OSOLCCC_Frontend_inst,'include_cust_captcha_lostpassword_post'], 10, 3 );
+```
+
+4. in MVC/Views/ContactusView.php
+added inside `function getCaptchaBlockHTML($forForm = "login")`
+```
+		$REQUEST_URI = filter_input(INPUT_SERVER, 'REQUEST_URI'); 
+		//echo $REQUEST_URI . " pos is ". strpos( $REQUEST_URI, '/wp-login.php' ). "<br />";
+		if( false !== strpos( $REQUEST_URI, '/wp-login.php' ) ) //in wp-login.php hooks ie "add_action( 'admin_footer', & add_action( 'wp_footer'," down work since there is no  <footer>
+		{ 
+			$OSOLCCC_CommonClass_inst = \OSOLCCC\Hooks\Common::getInstance();
+			$OSOLCCC_CommonClass_inst->add_ajaxurl_cdata_to_front();
+			$OSOLCCC_CommonClass_inst->add_ccc_onload();
+		}
+```
+5. in MVC/Hooks/Common.php changed `function refreshOSOLMultiCaptchaImage()` so ajax call for captcha image is made only when required
 ## Stable Tag 0.8
 
 ### Made more OOP

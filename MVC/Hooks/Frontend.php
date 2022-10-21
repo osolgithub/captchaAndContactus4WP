@@ -258,7 +258,7 @@ Class Frontend extends \OSOLCCC\SingletonParent{
 			'linktomodal' => 'no',
 			'cccontact_unique_id' => '-1'
 		), $atts ) );
-		if($GLOBALS['OSOLMulticaptcha_gdprCompliantNoCookie'])
+		if(!$GLOBALS['OSOLMulticaptcha_gdprCompliantNoCookie'])
 		{
 			if(!session_id()){
 				session_start();

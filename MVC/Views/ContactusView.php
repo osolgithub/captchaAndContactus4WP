@@ -43,6 +43,14 @@ Class ContactusView extends \OSOLCCC\SingletonParent{
      */
 	function getCaptchaBlockHTML($forForm = "login")
 	{
+		$REQUEST_URI = filter_input(INPUT_SERVER, 'REQUEST_URI'); 
+		//echo $REQUEST_URI . " pos is ". strpos( $REQUEST_URI, '/wp-login.php' ). "<br />";
+		if( false !== strpos( $REQUEST_URI, '/wp-login.php' ) ) //in wp-login.php hooks ie "add_action( 'admin_footer', & add_action( 'wp_footer'," down work since there is no  <footer>
+		{ 
+			$OSOLCCC_CommonClass_inst = \OSOLCCC\Hooks\Common::getInstance();
+			$OSOLCCC_CommonClass_inst->add_ajaxurl_cdata_to_front();
+			$OSOLCCC_CommonClass_inst->add_ccc_onload();
+		}
 		return  '<p class="' . $forForm . '-form-captcha">
 				<label for="captcha"><b>'. __('Captcha', 'osolwpccc').' </b></label>
 				<span class="required">*</span>
@@ -153,7 +161,7 @@ Class ContactusView extends \OSOLCCC\SingletonParent{
 			$imageContent = ob_get_contents();
 			ob_end_clean(); 
 			
-			$var2Display = new stdClass();
+			$var2Display = new \stdClass();
 			$var2Display->captchaEncypted = $captcha->getEncryptedCaptchaString();
 			$var2Display->imageContent = base64_encode($imageContent);
 			die(json_encode($var2Display));
