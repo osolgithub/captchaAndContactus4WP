@@ -1,0 +1,46 @@
+Git https://github.com/osolgithub/captchaAndContactus4WP
+branch OOP
+documentation branch : gh-pages
+Documentation reference: 
+Source ref at https://github.com/osolgithub/php-paginator
+Documentation ref at : https://osolgithub.github.io/php-paginator/
+Local development folder : D:\projects\tests\phpCMSs\wordpress\wordpressTests\wp-content\plugins\captchaAndContactus4WP-OOP
+QFE: http://localhost/pjt/MyContributions/osolcontributions/quickfileexplorer/master/?folder_to_select=D:\projects\tests\phpCMSs\wordpress\wordpressTests\wp-content\plugins\captchaAndContactus4WP-OOP
+Local Git folder : D:\projects\MyContributions\osolcontributions\captchaAndContactus4WP\captchaAndContactus4WP_OOP
+http://localhost/pjt/MyContributions/osolcontributions/quickfileexplorer/master/?folder_to_select=D%3A%5Cprojects%5CMyContributions%5Cosolcontributions%5CcaptchaAndContactus4WP%5CcaptchaAndContactus4WP_OOP&datepickerFrom=Tue+Jul+05+2022&datepickerTo=&exclude_paths=cache%2Clog%2CThumbs.db%2Csvn%2Czip%2C.git&search_only_if_matches=
+
+WP SVN development folder : D:\projects\MyContributions\wordpress\captchaAndContactUs
+Documentation Specific
+## File Paths of Project
+wordpress plugin development folder : D:\projects\tests\phpCMSs\wordpress\wordpressTests\wp-content\plugins\captchaAndContactus4WP-OOP
+
+Worpress URL : http://localhost/pjt/tests/phpCMSs/wordpress/wordpressTests/wp-login.php
+Git Path (branch OOP) : https://github.com/osolgithub/captchaAndContactus4WP/tree/OOP
+
+doxygen Output Folder : D:\projects\tests\phpCMSs\wordpress\captchaAndContactus4WP-OOPdocumentation
+documentation URL : http://localhost/pjt/tests/phpCMSs/wordpress/captchaAndContactus4WP-OOPdocumentation/html/
+
+Documentation to github steps
+http://www.outsource-online.net/blog/2022/10/17/documentation-from-scratch/
+
+http://www.outsource-online.net/blog/2022/06/13/git-command-line-tutorials/#git_html_pages
+
+
+```
+set documentationFolder="D:\projects\tests\phpCMSs\wordpress\captchaAndContactus4WP-OOPdocumentation\html"
+set gitURL="https://github.com/osolgithub/captchaAndContactus4WP.git"
+cd /d %documentationFolder%
+git init
+git checkout -b gh-pages
+git add . && git commit -m "First commit to upload html"
+git remote add origin %gitURL%
+git push -u origin gh-pages
+
+```
+
+visit 
+https://github.com/osolgithub/captchaAndContactus4WP/tree/gh-pages
+
+&
+
+https://osolgithub.github.io/captchaAndContactus4WP/

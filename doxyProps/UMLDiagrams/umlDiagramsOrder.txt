@@ -1,0 +1,22 @@
+1. Use case diagram(Main & Sub systems)
+2. High level use case descriptions
+3. Identify Domain, Control & boundary Objects
+4. Sequence Diagram
+5. Extended use case descriptions
+6. Activity Diagrams
+7. Collaboration diagrams
+8. Flow charts
+9. Class diagrams
+
+[UML Diagrams Overview](https://www.uml-diagrams.org/uml-25-diagrams.html)
+[PUML Editor](https://plantuml.com/)
+
+1. [Use case diagram](https://www.uml-diagrams.org/use-case-diagrams.html)(Main & Sub systems) : Use case diagrams are usually referred to as [behavior diagrams](https://www.uml-diagrams.org/uml-25-diagrams.html#behavior-diagram) used to describe a set of actions (use cases) that some system or systems ([subject](https://www.uml-diagrams.org/use-case-subject.html)) should or can perform in collaboration with one or more external users of the system ([actors](https://www.uml-diagrams.org/use-case-actor.html)). Each use case should provide some observable and valuable result to the actors or other stakeholders of the system.
+2. High level use case descriptions
+3. Identify Domain, Control & boundary Objects
+4. Sequence Diagram : The sequence -> is used to draw a message between two participants. Participants do not have to be explicitly declared.
+5. Extended use case descriptions
+6. Activity Diagrams
+7. Collaboration diagrams
+8. Flow charts : may use <http://flowchart.js.org/>
+9. Class diagrams :( will be done by doxygen)

@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Customizable Captcha and contact us
+Plugin Name: Captcha and Contact Us Forms for Wordpress
 Plugin URI: http://www.outsource-online.net/
 Description: Plugin to add captcha to core wordpress forms and additional option for contact us page.Just need to insert the code [cccontact] in a page where you want to show contact us form. 
 Version:  1.0.2
@@ -25,24 +25,89 @@ Author URI:http://www.outsource-online.net/
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 */
-/*
+// the above block is for wordpress to detect and assimilate this plugin as part of its system
+// below block is for doxygen
+/**
+@mainpage Captcha and Contact Us Forms for Wordpress
 Adds OSOLMulticaptcha (http://www.outsource-online.net/osolmulticaptcha-simplest-php-captcha-for-html-forms.html ) to wordpress forms for registration,login,forgot password and comment.
 
 Additionally ,this will enable admin to add contact us form with the same captcha in any wordpress page
 just need to insert the code [cccontact] in a page where you want to show contact us form
 
-Requirements
+@par Requirements
 PHP GD Library must be available in the server
 safe mode must be turned off
 
 The above requirements are default settings in most PHP hosts.however if the captcha isnt showing up you need to check those settings
 
+@date 21st October 2022
+@copyright {This project is released under the GNU Public License.}
+@author Sreekanth Dayanand
+@note short code for this plugin will be 'osolwpccc'. To be used in 'load_plugin_textdomain' and text translation functions. This line is not mandatory but useful for future reference for developers , while modifying the plugin
 */
-// short code for this plugin will be 'osolwpccc'. To be used in 'load_plugin_textdomain' and text translation functions. This line is not mandatory but useful for future reference for developers , while modifying the plugin
+/**
+* @file custCaptchaContact.php
+* @brief Bootstrap file for this plugin. 
+* @details Starting point of the project.\n
+* This file bootstraps the operations of this project\n
+* This documentation is shown because *file* tag is used.\n
+* This will appear under  Main Project &gt;&gt; Files &gt;&gt; File List &gt;&gt; thisFileName \n
+\par Hooks Used:
+hooks are extracted with
+//add_action\('([^']+)',\s*'([^']+)'  replace with add_action('\1',[$OSOL_CCC_HandlerFrontEnd_inst,'\2']
+//add_action\('([^']+)',([^/\r\n]+)
+**add_action hooks**
+	1. add_action('wp', function () {	// see all functions hooked to 'wp_footer'			
+	2. add_action('init',// init for admin is 'admin_init' hook				
+	3. add_action'wp_head',				
+	4. add_action'wp_enqueue_scripts',//load jquery in wp_head for contact page since jQuery(document).ready is used				
+	5. add_action( 'wp_footer', [$OSOLCCC_CommonClass_inst,'add_ccc_onload'] ); // For front-end to call refresh captcha				
+	6. add_action'login_form',				
+	7. add_action( 'comment_form_after_fields', [$OSOLCCC_Frontend_inst,'include_cust_captcha_comment_form_wp3'], 1 );				
+	8. add_action( 'comment_form_logged_in_after', [$OSOLCCC_Frontend_inst,'include_cust_captcha_comment_form_wp3'], 1 );				
+	9. add_action( 'comment_form', [$OSOLCCC_Frontend_inst,'include_cust_captcha_comment_form'] );				
+	10. add_action'register_form',// add captcha html in register form				
+	11. add_action( 'register_post', [$OSOLCCC_Frontend_inst,'include_cust_captcha_register_post'], 10, 3 );// perform plugin specific actions upon user registration				
+	12. add_action( 'signup_extra_fields', [$OSOLCCC_Frontend_inst,'include_cust_captcha_register'] );// add captcha html in register form				
+	13. add_action( 'lostpassword_form', [$OSOLCCC_Frontend_inst,'include_cust_captcha_lostpassword'] );				
+	14. add_action( 'lostpassword_post', [$OSOLCCC_Frontend_inst,'include_cust_captcha_lostpassword_post'], 10, 3 );				
+	15. add_action'admin_init',				
+	16. add_action'admin_menu',				
+	17. add_action( 'admin_footer',  [$OSOLCCC_CommonClass_inst,'add_ccc_onload'] ); // For back-end  to call refresh captcha				
+	18. add_action'admin_enqueue_scripts',//load jquery in wp_head for contact page since jQuery(document).ready is used				
+	19. add_action'wp_ajax_cccontact_display_captcha',// executed when logged in				
+	20. add_action'wp_ajax_nopriv_cccontact_display_captcha',// executed when logged out				
+	21. add_action('wp_ajax_cccontact_tb_show_modal' , [$OSOLCCC_Frontend_inst,'cccontact_tb_show_modal']);// executed when logged in				
+	22. add_action'wp_ajax_nopriv_cccontact_tb_show_modal',// executed when logged out				
+	23. add_action'wp_ajax_cccontact_validate_ajax',// executed when logged in				
+	24. add_action'wp_ajax_nopriv_cccontact_validate_ajax',// executed when logged out	
+**add_filter hooks **
+	1. add_filter('login_errors',[$OSOLCCC_Frontend_inst,'cust_captcha_login_errors']);
+	2. add_filter( 'login_redirect', [$OSOLCCC_Frontend_inst,'include_cust_captcha_login_redirect'], 10, 3 );	
+	3. add_filter( 'preprocess_comment', [$OSOLCCC_Frontend_inst,'include_cust_captcha_comment_post'] );
+	4. add_filter( 'wpmu_validate_user_signup', [$OSOLCCC_Frontend_inst,'include_cust_captcha_register_validate'] );// perform validation of captcha
+* @warning without *file* tag, non class files are not documented\n
+* Also no global variables will be documented
+*
+*/
+
 //replace all wpcaptchadomain
 define('CUST_CAPTCHA_FOLDER',dirname(__FILE__));
 define('CUST_CAPTCHA_DIR_URL', plugin_dir_url(__FILE__));
-// auto load Helpers/Frontend.php while calling new \OSOLCCC\Helpers\Frontend() 
+// auto load Helpers/Frontend.php while calling new \OSOLCCC\Helpers\Frontend()
+/*! \fn osolAutoLoadRegisterCalled() 
+ *  \brief Dummy function to mention **spl_autoload_register(function ($class)** is called.
+ * After registering this autoload function with SPL, the following line
+ * would cause the function to attempt to load the \Foo\Bar\Baz\Qux class
+ * from /path/to/project/src/Baz/Qux.php:
+ *
+ *      new \Foo\Bar\Baz\Qux;
+ *
+ *  \param function Function that maps called classes to appropriate source files.
+ *  \exception std::fileNotFound No such file check the spelling of {$class}.
+ *  \return void.
+ */
+ function osolAutoLoadRegisterCalled(){} 
 if(!function_exists('version_compare') || version_compare(phpversion(), '5.1.0', '<'))die("Minimum version required for 'Customizable Captcha and contact us' plugin is 5.1.0");
 spl_autoload_register(function ($class) {
 	// project-specific namespace prefix
@@ -86,10 +151,46 @@ $OSOLCCC_Frontend_inst = \OSOLCCC\Hooks\Frontend::getInstance();
 $OSOLCCC_Admin_inst = \OSOLCCC\Hooks\Admin::getInstance();
 $OSOLCCC_CommonClass_inst = \OSOLCCC\Hooks\Common::getInstance();
 
+
+/**
+*  @brief Determines wether captcha is enabled, ie to be shown in forms
+*  @details
+    It is set in admin panel, in "Captcha Settings"
+*/
+$GLOBALS['OSOLMulticaptcha_captcha_enabled'] = get_option('cust_captcha_status');
+
+/**
+*  @brief Determines wether captcha should be based on session/cookie(default) or GDPR Compliant
+*  @details
+    It is set in admin panel, in "Captcha Settings"
+*/
 $GLOBALS['OSOLMulticaptcha_gdprCompliantNoCookie'] = get_option('OSOLMulticaptcha_gdprCompliantNoCookie');
 
 
-
+/**
+*  @brief Determines wether captcha is enabled in login form
+*  @details
+    It is set in admin panel, in "Captcha Settings"
+*/
+$login_captcha = get_option('OSOLMulticaptcha_cust_captcha_login');
+/**
+*  @brief Determines wether captcha is enabled in comment form
+*  @details
+    It is set in admin panel, in "Captcha Settings"
+*/
+$comment_captcha = get_option('OSOLMulticaptcha_cust_captcha_comments');
+/**
+*  @brief Determines wether captcha is enabled in sign up form
+*  @details
+    It is set in admin panel, in "Captcha Settings"
+*/
+$register_captcha = get_option('OSOLMulticaptcha_cust_captcha_register');
+/**
+*  @brief Determines wether captcha is enabled in loas password form
+*  @details
+    It is set in admin panel, in "Captcha Settings"
+*/
+$lost_captcha = get_option('OSOLMulticaptcha_cust_captcha_lost');
 /* Hook to store the plugin status, triggered when plugin is activated and deactivated */
 register_activation_hook(__FILE__, [$OSOLCCC_Admin_inst,'on_cust_captcha_enabled']);
 register_deactivation_hook(__FILE__, [$OSOLCCC_Admin_inst,'on_cust_captcha_disabled']);
@@ -122,11 +223,9 @@ add_action("wp_enqueue_scripts", [$OSOLCCC_CommonClass_inst,"cccontact_jquery_en
 add_action( 'wp_footer', [$OSOLCCC_CommonClass_inst,'add_ccc_onload'] ); // For front-end to call refresh captcha
 
 
-/* Captcha for login authentication starts here */ 
+/* Captcha for login authentication starts here */
 
-$login_captcha = get_option('OSOLMulticaptcha_cust_captcha_login');
-//if($login_captcha == 'yes')
-if(get_option('cust_captcha_status') ==  'enabled' && ($login_captcha == 'yes'))
+if($GLOBALS['OSOLMulticaptcha_captcha_enabled'] ==  'enabled' && ($login_captcha == 'yes'))
 {
 	add_action('login_form',[$OSOLCCC_Frontend_inst,'include_cust_captcha_login'] );
 	add_filter('login_errors',[$OSOLCCC_Frontend_inst,'cust_captcha_login_errors']);
@@ -139,9 +238,8 @@ if(get_option('cust_captcha_status') ==  'enabled' && ($login_captcha == 'yes'))
 
 
 /* Captcha for Comments starts here */
-$comment_captcha = get_option('OSOLMulticaptcha_cust_captcha_comments');
 //if($comment_captcha == 'yes'){
-if(get_option('cust_captcha_status') ==  'enabled' && ($comment_captcha == 'yes'))
+if($GLOBALS['OSOLMulticaptcha_captcha_enabled'] ==  'enabled' && ($comment_captcha == 'yes'))
 {
 	global $wp_version;
 	if( version_compare($wp_version,'3','>=') ) { // wp 3.0 +
@@ -164,7 +262,7 @@ if(get_option('cust_captcha_status') ==  'enabled' && ($comment_captcha == 'yes'
 // Add captcha in the register form
 $register_captcha = get_option('OSOLMulticaptcha_cust_captcha_register');
 //if($register_captcha == 'yes'){
-if(get_option('cust_captcha_status') ==  'enabled' && ($register_captcha == 'yes'))
+if($GLOBALS['OSOLMulticaptcha_captcha_enabled'] ==  'enabled' && ($register_captcha == 'yes'))
 {
 
 	add_action('register_form',[$OSOLCCC_Frontend_inst,'include_cust_captcha_register'] );// add captcha html in register form
@@ -178,10 +276,10 @@ if(get_option('cust_captcha_status') ==  'enabled' && ($register_captcha == 'yes
 
 
 
-$lost_captcha = get_option('OSOLMulticaptcha_cust_captcha_lost');
+
 // Add captcha into lost password form
 //if($lost_captcha == 'yes'){
-if(get_option('cust_captcha_status') ==  'enabled' && ($lost_captcha == 'yes'))
+if($GLOBALS['OSOLMulticaptcha_captcha_enabled'] ==  'enabled' && ($lost_captcha == 'yes'))
 {
 	add_action( 'lostpassword_form', [$OSOLCCC_Frontend_inst,'include_cust_captcha_lostpassword'] );
 	add_action( 'lostpassword_post', [$OSOLCCC_Frontend_inst,'include_cust_captcha_lostpassword_post'], 10, 3 );

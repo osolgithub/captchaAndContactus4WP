@@ -1,0 +1,19 @@
+@startuml wp_captcha_contact_plugin
+left to right direction
+skinparam packageStyle rectangle
+actor user
+user<|--admin:<<extends>>
+
+rectangle wordpress{
+  usecase "plugin" as UC1
+  usecase "captcha verification" as vc1
+  usecase "form pages" as fp1
+  admin-->UC1:<<step 1 installs>>
+  user-- (fp1): visits
+  user-- (vc1): on submit
+  
+  (UC1) .> (fp1) : <<1. plugin inserts captcha in>>
+  (UC1) .> (vc1) : 2. <<does>>
+
+}
+@enduml

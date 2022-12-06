@@ -1,9 +1,11 @@
 <!-- Replace ^[^#]([\r\n]*) with blank to make a template. In note pad you can also use `negative lookahead` ^(?!") -->
-# Short Description
+# Wordpress Plugin Development
+
+## Short Description
 
 Wordpress is prefered CMS for sites with `Pages` and `Blogs`
 
-# Detailed Description
+## Detailed Description
 
 ### Types of extensions possible
 
@@ -12,7 +14,7 @@ Plugins can
 1. Show Custom Functionalities in `Pages` and `Blogs`. See `add_shortcode` below
 2. Extend/Replace Core funtionalities with `hooks`
 
-# How system identifies extension
+## How system identifies extension
 
 [Header Requirements](https://developer.wordpress.org/plugins/plugin-basics/header-requirements/)
 ```
@@ -41,7 +43,7 @@ Plugins can
  // short code for this plugin will be 'osolwpccc'.This line is not mandatory but useful for future reference for developers , while modifying the plugin
 ```
 
-# Frontend
+## Frontend
 
 ### Detecting activation
 
@@ -325,7 +327,7 @@ printf(
 ```
 
 If you have more than one placeholder in a string, it is recommended that you use argument swapping. In this case, single quotes (') around the string are mandatory because double quotes (") will tell php to interpret the $s as the s variable, which is not what we want.
-
+****
 ```
 printf(
 			// translators: 1: Name of a city 2: ZIP code 
@@ -355,7 +357,7 @@ urchinTracker();
 </script>
 ```
 
-# Backend
+## Backend
 
 ### Adding configuration pages
 
@@ -371,7 +373,7 @@ add_action('admin_menu',
 1. is_admin()
 2. is_super_admin()
 
-# Crons
+## Crons
 
 [refer](https://developer.wordpress.org/plugins/cron/)
  With WP-Cron, all scheduled tasks are put into a queue and will run at the next opportunity (meaning the next page load). So while you can’t be 100% sure when your task will run, you can be 100% sure that it will run eventually.
@@ -400,16 +402,16 @@ Use phpMyAdmin to deactivate all plugins with the following steps.
 1. In the table wp_options, under the option_name column (field) find the active_plugins row
 2. Change the option_value field to: a:0:{}
 
-# Disabling extensions without removing settings
+## Disabling extensions without removing settings
 
 1. Rename `plugins` folder to `plugins.hold`
 2. Login to Admin >> Plugins . This will disable all plugins.
 
-# Show "Briefly unavailable for scheduled maintenance. Check back in a minute"
+## Show "Briefly unavailable for scheduled maintenance. Check back in a minute"
 
 Place a file named `.maintenance` in the blog base folder (folder that contains the wp-admin folder)
 
-# Debugging 
+## Debugging 
 
 [Debugging](https://wordpress.org/support/article/debugging-in-wordpress/)
 
@@ -432,10 +434,10 @@ if(!defined('WP_DEBUG'))
 }
 ```
 
-# Troubleshooting
+## Troubleshooting
 
 [Troubleshooting](https://wordpress.org/support/article/faq-troubleshooting/)
 
 
-# Templating
+## Templating
 

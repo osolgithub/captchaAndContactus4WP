@@ -1,59 +1,54 @@
 <?php
-# OSOLMulticaptcha version 1.0
+/**
+* \class OSOLCCC::ExtraClasses::OSOLmulticaptcha
+*  \brief     Shows captcha image based on parameters/default configuration
+*\details This comes in OSOLCCC::ExtraClasses\n.
+Class that handles the functionality to display captcha. Important for displaying captcha.
 
-/* ===================================================
-* @author
-* Name: Sreekanth Dayanand, www.outsource-online.net
-* Email: joomla@outsource-online.net
-* Url: http://www.outsource-online.net
-* ===================================================
-* @copyright (C) 2012,2013 Sreekanth Dayanand, Outsource Online (www.outsource-online.net). All rights reserved.
-* @license see http://www.gnu.org/licenses/gpl-2.0.html  GNU/GPL.
-* You can use, redistribute this file and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation.
-*If you use this software as a part of own sofware, you must leave copyright notices intact or add OSOLMulticaptcha copyright notices to own.
-*/
+\par System requirements: 
+PHP 5.3.1 + w/ GD
+Open  `previewCaptcha.php` in browser for customization
 
-# System requirements: PHP 5.3.1 + w/ GD
-# Open  previewCaptcha.php in browser for customization
-/*
+\par instantiation 
+```
+\OSOLCCC\ExtraClasses\OSOLmulticaptcha::getInstance() 	
+```
 
-For captcha with Cookie
----------------------------
-//simplest way to show captcha
-session_start();
-$captcha = \OSOLCCC\ExtraClasses\OSOLmulticaptcha::getInstance();
-$captcha->displayCaptcha();
-$_SESSION['OSOLmulticaptcha_keystring'] = $captcha->keystring;
-
-For captcha without Cookie
----------------------------
-
-		$captcha = \OSOLCCC\ExtraClasses\OSOLmulticaptcha::getInstance();
-		$captchaEncryptionKey = "SomeRandomKey";// IMPORTANT ****** YOU MUST SET A CUSTOM VALUE FOR YOUR SITE
-		$captcha->setCaptchaEncryptionKey($captchaEncryptionKey);
-		$returnImgObj = true;
-		$captchaImgObj = $captcha->displayCaptcha($returnImgObj);
-		ob_start();
-		imagepng($captchaImgObj);
-		$imageContent = ob_get_contents();
-		ob_end_clean(); 
+\par For captcha with Cookie
+Use the following code
+```
+	//simplest way to show captcha
+	session_start();
+	$captcha = \OSOLCCC\ExtraClasses\OSOLmulticaptcha::getInstance();
+	$captcha->displayCaptcha();
+	$_SESSION['OSOLmulticaptcha_keystring'] = $captcha->keystring;
+```
+\par For captcha without Cookie
+Use the following code
+```
+	$captcha = \OSOLCCC\ExtraClasses\OSOLmulticaptcha::getInstance();
+	$captchaEncryptionKey = "SomeRandomKey";// IMPORTANT  YOU MUST SET A CUSTOM VALUE FOR YOUR SITE
+	$captcha->setCaptchaEncryptionKey($captchaEncryptionKey);
+	$returnImgObj = true;
+	$captchaImgObj = $captcha->displayCaptcha($returnImgObj);
+	ob_start();
+	imagepng($captchaImgObj);
+	$imageContent = ob_get_contents();
+	ob_end_clean();
+	$var2Display = new stdClass();
+	$var2Display->captchaEncypted = $captcha->getEncryptedCaptchaString();
+	$var2Display->imageContent = base64_encode($imageContent);
+	die(json_encode($var2Display));
+```
 		
-		$var2Display = new stdClass();
-		$var2Display->captchaEncypted = $captcha->getEncryptedCaptchaString();
-		$var2Display->imageContent = base64_encode($imageContent);
-		die(json_encode($var2Display));
-		
-		
-		&
-		The above json variable is received by frontend via AJAX and used to set the following
-		echo '<img src="data:image/png;base64,' . $imageContent . '" />';
-		<input type="hidden" name="captchaEncypted" id="captchaEncypted" value="" >
+
+<em>The above json variable is received by frontend via AJAX and used to set the following</em> \n
+echo '<img src="data:image/png;base64,' . $imageContent . '" />';
+<input type="hidden" name="captchaEncypted" id="captchaEncypted" value="" >
 		
 		
-	To verify Catpcha 
-	-----------------
+\par To verify Catpcha 
+```
 	$captcha = \OSOLCCC\ExtraClasses\OSOLmulticaptcha::getInstance();
 	$captchaText2Check = isset($_POST['keystring'])?$_POST['keystring']:"";
 	$encryptedCaptchaString = isset($_POST['captchaEncypted'])?$_POST['captchaEncypted']:"";
@@ -65,12 +60,22 @@ For captcha without Cookie
 	{
 		//chaptcha text entered is not correct
 	}
-
-instantiation 
-\OSOLCCC\ExtraClasses\OSOLmulticaptcha::getInstance() 	
+```
+*  \author    Sreekanth Dayanand
+ *  \author    [Outsource Online Internet Solutions](https://www.outsource-online.net)
+ *  \version   0.0.1
+ *  \date      2022-2032
+ *  \pre 
+ 1. PHP 7+ is required
+ 2. If not autoloaded, Class Files must be explicitly included
+ 
+ *  \bug       No bugs found till July,2022.
+ *  \warning   Improper use can crash your application\n
+ $captchaEncryptionKey = "SomeRandomKey";// IMPORTANT  YOU MUST SET A CUSTOM VALUE FOR YOUR SITE
+ *  \copyright GNU Public License.
 */
-#namespace OSOLHelpers;
-#namespace OSOLUtils\Helpers;
+
+
 namespace OSOLCCC\ExtraClasses;
 class OSOLmulticaptcha extends \OSOLCCC\SingletonParent{
 	
@@ -94,7 +99,12 @@ class OSOLmulticaptcha extends \OSOLCCC\SingletonParent{
 	protected $OSOL_Captcha_CONFIG;
 	
 	
-	
+	/**
+    *Returns Singleton instance
+    *@param none no input parameter
+    *@return void 
+	test description
+    **/
 	protected function __construct()
 	{
 		$this->OSOL_Captcha_CONFIG = array(
@@ -135,6 +145,12 @@ class OSOLmulticaptcha extends \OSOLCCC\SingletonParent{
 	{
 		$this->OSOL_Captcha_CONFIG['captchaEncryptionKey'] = $captchaEncryptionKey;
 	}
+	/**
+    *displays captcha based on paramenter passed
+    *@public
+    *@param boolean returnImgObj
+    *@return string (captcha value if with cookie/ json string if without cookie)
+    **/
 	public function displayCaptcha($returnImgObj = false)
 	{
 		
