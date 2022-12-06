@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.4"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Captcha and Contact Us Forms for Wordpress: ContactusView Class Reference</title>
+<title>Captcha and Contact Us Forms for Wordpress: SingletonParent Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -73,7 +73,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('class_contactus_view.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('class_o_s_o_l_c_c_c_1_1_singleton_parent.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -92,23 +92,53 @@ $(document).ready(function(){initNavTree('class_contactus_view.html',''); initRe
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">ContactusView Class Reference</div></div>
+  <div class="headertitle"><div class="title">SingletonParent Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Parent class to initiate and return singleton instances for any subclass.<br  />
+.  
+ <a href="class_o_s_o_l_c_c_c_1_1_singleton_parent.html#details">More...</a></p>
+<div class="dynheader">
+Inheritance diagram for SingletonParent:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_o_s_o_l_c_c_c_1_1_singleton_parent.png" usemap="#SingletonParent_map" alt=""/>
+  <map id="SingletonParent_map" name="SingletonParent_map">
+<area href="class_o_s_o_l_c_c_c_1_1_extra_classes_1_1_o_s_o_lmulticaptcha.html" title="Shows captcha image based on parameters/default configuration." alt="OSOLmulticaptcha" shape="rect" coords="0,56,117,80"/>
+  </map>
+</div></div>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section author"><dt>Author</dt><dd>Name: Sreekanth Dayanand, www.outsource-online.net Email: <a href="#" onclick="location.href='mai'+'lto:'+'joo'+'ml'+'a@o'+'ut'+'sou'+'rc'+'e-o'+'nl'+'ine'+'.n'+'et'; return false;">jooml<span class="obfuscator">.nosp@m.</span>a@ou<span class="obfuscator">.nosp@m.</span>tsour<span class="obfuscator">.nosp@m.</span>ce-o<span class="obfuscator">.nosp@m.</span>nline<span class="obfuscator">.nosp@m.</span>.net</a> </dd></dl>
-<h1><a class="anchor" id="autotoc_md32"></a>
-Url: http://www.outsource-online.net</h1>
-<dl class="section copyright"><dt>Copyright</dt><dd>(C) 2012,2013 Sreekanth Dayanand, Outsource Online (www.outsource-online.net). All rights reserved. @license see <a href="http://www.gnu.org/licenses/gpl-2.0.html">http://www.gnu.org/licenses/gpl-2.0.html</a> GNU/GPL. You can use, redistribute this file and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation. If you use this software as a part of own sofware, you must leave copyright notices intact or add OSOLMulticaptcha copyright notices to own. </dd></dl>
+<div class="textblock"><p >Parent class to initiate and return singleton instances for any subclass.<br  />
+. </p>
+<p >This documentation is written in <a class="el" href="class_o_s_o_l_c_c_c_1_1_singleton_parent.html" title="Parent class to initiate and return singleton instances for any subclass. .">OSOLCCC::SingletonParent</a> under <em>class</em> tag<br  />
+ And will be shown in Main Project &gt;&gt; Data Structures &gt;&gt; Nampespace &gt;&gt; thisClassName</p>
+<p >Which ever class needs to be made singleton may subclass it<br  />
+</p><dl class="section user"><dt>Usage:</dt><dd><div class="fragment"><div class="line"><span class="comment">//assuming class OSOLCCC::ExtraClasses::OSOLmulticaptcha extends SingletonParent</span></div>
+<div class="line">$captcha = OSOLCCC::ExtraClasses::OSOLmulticaptcha::getInstance();</div>
+</div><!-- fragment --> </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Sreekanth Dayanand </dd>
+<dd>
+<a href="https://www.outsource-online.net">Outsource Online Internet Solutions</a> </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>0.0.1 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2022-2032 </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd><ol type="1">
+<li>PHP 7+ is required</li>
+<li>If not autoloaded, Class Files must be explicitly included</li>
+</ol>
+</dd></dl>
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000002">Bug:</a></b></dt><dd>No bugs found till July,2022. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Improper use can crash your application </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>GNU Public License. </dd></dl>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
-<li>MVC/Views/ContactusView.php</li>
+<li>MVC/SingletonParent.php</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="class_contactus_view.html">ContactusView</a></li>
+    <li class="navelem"><a class="el" href="class_o_s_o_l_c_c_c_1_1_singleton_parent.html">SingletonParent</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
   </ul>
 </div>

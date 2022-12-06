@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['wordpressplugindevelopment_0',['wordpressPluginDevelopment',['../md_wordpress_plugin_development.html',1,'']]]
+  ['frontend_2ephp_0',['Frontend.php',['../_frontend_8php.html',1,'']]]
 ];

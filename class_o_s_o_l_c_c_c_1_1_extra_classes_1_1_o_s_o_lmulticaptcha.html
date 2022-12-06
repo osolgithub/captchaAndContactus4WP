@@ -100,20 +100,25 @@ $(document).ready(function(){initNavTree('class_o_s_o_l_c_c_c_1_1_extra_classes_
   <div class="headertitle"><div class="title">OSOLmulticaptcha Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Shows captcha image based on parameters/default configuration.  
+ <a href="class_o_s_o_l_c_c_c_1_1_extra_classes_1_1_o_s_o_lmulticaptcha.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for OSOLmulticaptcha:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="class_o_s_o_l_c_c_c_1_1_extra_classes_1_1_o_s_o_lmulticaptcha.png" alt=""/>
- </div></div>
+  <img src="class_o_s_o_l_c_c_c_1_1_extra_classes_1_1_o_s_o_lmulticaptcha.png" usemap="#OSOLmulticaptcha_map" alt=""/>
+  <map id="OSOLmulticaptcha_map" name="OSOLmulticaptcha_map">
+<area href="class_o_s_o_l_c_c_c_1_1_singleton_parent.html" title="Parent class to initiate and return singleton instances for any subclass. ." alt="SingletonParent" shape="rect" coords="0,0,117,24"/>
+  </map>
+</div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a586a2109df0b0011ff2d0f0183a62c81"><td class="memItemLeft" align="right" valign="top"><a id="a586a2109df0b0011ff2d0f0183a62c81" name="a586a2109df0b0011ff2d0f0183a62c81"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>setCaptchaEncryptionKey</b> ($captchaEncryptionKey='YourUniqueEncryptionKey')</td></tr>
 <tr class="separator:a586a2109df0b0011ff2d0f0183a62c81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1b276748eb7ec71ae92c6e41be7d92d"><td class="memItemLeft" align="right" valign="top"><a id="ac1b276748eb7ec71ae92c6e41be7d92d" name="ac1b276748eb7ec71ae92c6e41be7d92d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>displayCaptcha</b> ($returnImgObj=false)</td></tr>
+<tr class="memitem:ac1b276748eb7ec71ae92c6e41be7d92d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_s_o_l_c_c_c_1_1_extra_classes_1_1_o_s_o_lmulticaptcha.html#ac1b276748eb7ec71ae92c6e41be7d92d">displayCaptcha</a> ($returnImgObj=false)</td></tr>
 <tr class="separator:ac1b276748eb7ec71ae92c6e41be7d92d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac56238adb3ec93f33f38df62cceaa075"><td class="memItemLeft" align="right" valign="top"><a id="ac56238adb3ec93f33f38df62cceaa075" name="ac56238adb3ec93f33f38df62cceaa075"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>getEncryptedCaptchaString</b> ()</td></tr>
@@ -169,6 +174,8 @@ Data Fields</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
+<tr class="memitem:a095c5d389db211932136b53f25f39685"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_s_o_l_c_c_c_1_1_extra_classes_1_1_o_s_o_lmulticaptcha.html#a095c5d389db211932136b53f25f39685">__construct</a> ()</td></tr>
+<tr class="separator:a095c5d389db211932136b53f25f39685"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5223f7cb7361195332e81856d25014fb"><td class="memItemLeft" align="right" valign="top"><a id="a5223f7cb7361195332e81856d25014fb" name="a5223f7cb7361195332e81856d25014fb"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>createKeyString</b> ()</td></tr>
 <tr class="separator:a5223f7cb7361195332e81856d25014fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -212,6 +219,121 @@ Protected Attributes</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>$OSOL_Captcha_CONFIG</b></td></tr>
 <tr class="separator:a4aaadca38e07d52b5c3eadb4fbfec4c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >Shows captcha image based on parameters/default configuration. </p>
+<p >This comes in <a class="el" href="namespace_o_s_o_l_c_c_c_1_1_extra_classes.html" title="Holds OSOLmulticaptcha which shows captcha.">OSOLCCC::ExtraClasses</a><br  />
+. Class that handles the functionality to display captcha. Important for displaying captcha.</p>
+<dl class="section user"><dt>System requirements: </dt><dd>PHP 5.3.1 + w/ GD Open <code>previewCaptcha.php</code> in browser for customization</dd></dl>
+<dl class="section user"><dt>instantiation </dt><dd><div class="fragment"><div class="line">\OSOLCCC\ExtraClasses\OSOLmulticaptcha::getInstance()   </div>
+</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>For captcha with Cookie</dt><dd>Use the following code <div class="fragment"><div class="line"><span class="comment">//simplest way to show captcha</span></div>
+<div class="line">session_start();</div>
+<div class="line">$captcha = \OSOLCCC\ExtraClasses\OSOLmulticaptcha::getInstance();</div>
+<div class="line">$captcha-&gt;displayCaptcha();</div>
+<div class="line">$_SESSION[<span class="stringliteral">&#39;OSOLmulticaptcha_keystring&#39;</span>] = $captcha-&gt;keystring;</div>
+</div><!-- fragment --> </dd></dl>
+<dl class="section user"><dt>For captcha without Cookie</dt><dd>Use the following code <div class="fragment"><div class="line">$captcha = \OSOLCCC\ExtraClasses\OSOLmulticaptcha::getInstance();</div>
+<div class="line">$captchaEncryptionKey = <span class="stringliteral">&quot;SomeRandomKey&quot;</span>;<span class="comment">// IMPORTANT  YOU MUST SET A CUSTOM VALUE FOR YOUR SITE</span></div>
+<div class="line">$captcha-&gt;setCaptchaEncryptionKey($captchaEncryptionKey);</div>
+<div class="line">$returnImgObj = <span class="keyword">true</span>;</div>
+<div class="line">$captchaImgObj = $captcha-&gt;displayCaptcha($returnImgObj);</div>
+<div class="line">ob_start();</div>
+<div class="line">imagepng($captchaImgObj);</div>
+<div class="line">$imageContent = ob_get_contents();</div>
+<div class="line">ob_end_clean();</div>
+<div class="line">$var2Display = <span class="keyword">new</span> stdClass();</div>
+<div class="line">$var2Display-&gt;captchaEncypted = $captcha-&gt;getEncryptedCaptchaString();</div>
+<div class="line">$var2Display-&gt;imageContent = base64_encode($imageContent);</div>
+<div class="line">die(json_encode($var2Display));</div>
+</div><!-- fragment --></dd></dl>
+<p><em>The above json variable is received by frontend via AJAX and used to set the following</em> <br  />
+echo '<img src="data:image/png;base64,&#39; . $imageContent . &#39;" alt="" class="inline"/>'; &lt;input type="hidden" name="captchaEncypted" id="captchaEncypted" value="" &gt;</p>
+<dl class="section user"><dt>To verify Catpcha </dt><dd><div class="fragment"><div class="line">$captcha = \OSOLCCC\ExtraClasses\OSOLmulticaptcha::getInstance();</div>
+<div class="line">$captchaText2Check = isset($_POST[<span class="stringliteral">&#39;keystring&#39;</span>])?$_POST[<span class="stringliteral">&#39;keystring&#39;</span>]:<span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line">$encryptedCaptchaString = isset($_POST[<span class="stringliteral">&#39;captchaEncypted&#39;</span>])?$_POST[<span class="stringliteral">&#39;captchaEncypted&#39;</span>]:<span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><span class="keywordflow">if</span>(trim($captchaText2Check) != <span class="stringliteral">&quot;&quot;</span> &amp;&amp; $captcha-&gt;isCaptchaCorrect($captchaText2Check, $encryptedCaptchaString))</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">//chaptcha text entered is correct</span></div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">else</span></div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">//chaptcha text entered is not correct</span></div>
+<div class="line">}</div>
+</div><!-- fragment --> </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Sreekanth Dayanand </dd>
+<dd>
+<a href="https://www.outsource-online.net">Outsource Online Internet Solutions</a> </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>0.0.1 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2022-2032 </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd><ol type="1">
+<li>PHP 7+ is required</li>
+<li>If not autoloaded, Class Files must be explicitly included</li>
+</ol>
+</dd></dl>
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000001">Bug:</a></b></dt><dd>No bugs found till July,2022. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Improper use can crash your application<br  />
+ $captchaEncryptionKey = "SomeRandomKey";// IMPORTANT YOU MUST SET A CUSTOM VALUE FOR YOUR SITE </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>GNU Public License. </dd></dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a095c5d389db211932136b53f25f39685" name="a095c5d389db211932136b53f25f39685"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a095c5d389db211932136b53f25f39685">&#9670;&nbsp;</a></span>__construct()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">__construct </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >Returns Singleton instance </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">none</td><td>no input parameter </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void test description </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ac1b276748eb7ec71ae92c6e41be7d92d" name="ac1b276748eb7ec71ae92c6e41be7d92d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1b276748eb7ec71ae92c6e41be7d92d">&#9670;&nbsp;</a></span>displayCaptcha()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">displayCaptcha </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$returnImgObj</em> = <code>false</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >displays captcha based on paramenter passed</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">boolean</td><td>returnImgObj </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>string (captcha value if with cookie/ json string if without cookie) </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>MVC/ExtraClasses/OSOLmulticaptcha.php</li>
 </ul>
@@ -220,7 +342,7 @@ Protected Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>OSOLCCC</b></li><li class="navelem"><b>ExtraClasses</b></li><li class="navelem"><a class="el" href="class_o_s_o_l_c_c_c_1_1_extra_classes_1_1_o_s_o_lmulticaptcha.html">OSOLmulticaptcha</a></li>
+    <li class="navelem"><a class="el" href="namespace_o_s_o_l_c_c_c.html">OSOLCCC</a></li><li class="navelem"><a class="el" href="namespace_o_s_o_l_c_c_c_1_1_extra_classes.html">ExtraClasses</a></li><li class="navelem"><a class="el" href="class_o_s_o_l_c_c_c_1_1_extra_classes_1_1_o_s_o_lmulticaptcha.html">OSOLmulticaptcha</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
   </ul>
 </div>

@@ -39,49 +39,72 @@ var NAVTREE =
       ] ]
     ] ],
     [ "documentationPipeline", "md_documentation_pipeline.html", null ],
-    [ "wordpressPluginDevelopment", "md_wordpress_plugin_development.html", [
-      [ "Wordpress Plugin Development", "md_wordpress_plugin_development.html#autotoc_md19", [
-        [ "Short Description", "md_wordpress_plugin_development.html#autotoc_md20", null ],
-        [ "Detailed Description", "md_wordpress_plugin_development.html#autotoc_md21", [
-          [ "Types of extensions possible", "md_wordpress_plugin_development.html#autotoc_md22", null ]
+    [ "readme4Doxygen", "md_doxy_props_readme4_doxygen.html", [
+      [ "README", "md_doxy_props_readme4_doxygen.html#autotoc_md13", [
+        [ "Author", "md_doxy_props_readme4_doxygen.html#autotoc_md14", null ],
+        [ "Contributors", "md_doxy_props_readme4_doxygen.html#autotoc_md15", null ],
+        [ "Synopsis", "md_doxy_props_readme4_doxygen.html#autotoc_md16", null ],
+        [ "Description", "md_doxy_props_readme4_doxygen.html#autotoc_md17", [
+          [ "Plugin to add captcha to core wordpress forms and additional option for contact us page.", "md_doxy_props_readme4_doxygen.html#autotoc_md18", null ],
+          [ "Use Case Diagrams", "md_doxy_props_readme4_doxygen.html#autotoc_md19", null ]
         ] ],
-        [ "How system identifies extension", "md_wordpress_plugin_development.html#autotoc_md23", null ],
-        [ "Frontend", "md_wordpress_plugin_development.html#autotoc_md24", [
-          [ "Detecting activation", "md_wordpress_plugin_development.html#autotoc_md25", null ],
-          [ "Interaction with system", "md_wordpress_plugin_development.html#autotoc_md26", null ],
-          [ "Display Errors", "md_wordpress_plugin_development.html#autotoc_md27", null ],
-          [ "Handling AJAX", "md_wordpress_plugin_development.html#autotoc_md28", null ],
-          [ "Using DB", "md_wordpress_plugin_development.html#autotoc_md29", null ],
-          [ "Getting User Details", "md_wordpress_plugin_development.html#autotoc_md30", null ],
-          [ "Pagination", "md_wordpress_plugin_development.html#autotoc_md31", null ],
-          [ "Mailing", "md_wordpress_plugin_development.html#autotoc_md32", null ],
-          [ "Javascript builtin options availavle", "md_wordpress_plugin_development.html#autotoc_md33", null ],
-          [ "Relative URLs", "md_wordpress_plugin_development.html#autotoc_md34", null ],
-          [ "Multilanguage implementation", "md_wordpress_plugin_development.html#autotoc_md35", null ],
-          [ "Adding 'adsense'", "md_wordpress_plugin_development.html#autotoc_md36", null ]
-        ] ],
-        [ "Backend", "md_wordpress_plugin_development.html#autotoc_md37", [
-          [ "Adding configuration pages", "md_wordpress_plugin_development.html#autotoc_md38", null ],
-          [ "Additional options to interact with plugin", "md_wordpress_plugin_development.html#autotoc_md39", null ],
-          [ "Identifying User Levels", "md_wordpress_plugin_development.html#autotoc_md40", null ]
-        ] ],
-        [ "Crons", "md_wordpress_plugin_development.html#autotoc_md41", [
-          [ "Disable from DB", "md_wordpress_plugin_development.html#autotoc_md42", null ]
-        ] ],
-        [ "Disabling extensions without removing settings", "md_wordpress_plugin_development.html#autotoc_md43", null ],
-        [ "Show \"Briefly unavailable for scheduled maintenance. Check back in a minute\"", "md_wordpress_plugin_development.html#autotoc_md44", null ],
-        [ "Debugging", "md_wordpress_plugin_development.html#autotoc_md45", null ],
-        [ "Troubleshooting", "md_wordpress_plugin_development.html#autotoc_md46", null ],
-        [ "Templating", "md_wordpress_plugin_development.html#autotoc_md47", null ]
+        [ "Prerequisites", "md_doxy_props_readme4_doxygen.html#autotoc_md20", null ],
+        [ "Installation", "md_doxy_props_readme4_doxygen.html#autotoc_md21", null ],
+        [ "Extending / Installing Addons", "md_doxy_props_readme4_doxygen.html#autotoc_md22", null ],
+        [ "Contributing", "md_doxy_props_readme4_doxygen.html#autotoc_md23", null ],
+        [ "License / Copyright Info", "md_doxy_props_readme4_doxygen.html#autotoc_md24", null ],
+        [ "Citation", "md_doxy_props_readme4_doxygen.html#autotoc_md25", null ],
+        [ "Contact", "md_doxy_props_readme4_doxygen.html#autotoc_md26", null ]
       ] ]
     ] ],
+    [ "wordpressPluginDevelopment", "md_wordpress_plugin_development.html", [
+      [ "Wordpress Plugin Development", "md_wordpress_plugin_development.html#autotoc_md33", [
+        [ "Short Description", "md_wordpress_plugin_development.html#autotoc_md34", null ],
+        [ "Detailed Description", "md_wordpress_plugin_development.html#autotoc_md35", [
+          [ "Types of extensions possible", "md_wordpress_plugin_development.html#autotoc_md36", null ]
+        ] ],
+        [ "How system identifies extension", "md_wordpress_plugin_development.html#autotoc_md37", null ],
+        [ "Frontend", "md_wordpress_plugin_development.html#autotoc_md38", [
+          [ "Detecting activation", "md_wordpress_plugin_development.html#autotoc_md39", null ],
+          [ "Interaction with system", "md_wordpress_plugin_development.html#autotoc_md40", null ],
+          [ "Display Errors", "md_wordpress_plugin_development.html#autotoc_md41", null ],
+          [ "Handling AJAX", "md_wordpress_plugin_development.html#autotoc_md42", null ],
+          [ "Using DB", "md_wordpress_plugin_development.html#autotoc_md43", null ],
+          [ "Getting User Details", "md_wordpress_plugin_development.html#autotoc_md44", null ],
+          [ "Pagination", "md_wordpress_plugin_development.html#autotoc_md45", null ],
+          [ "Mailing", "md_wordpress_plugin_development.html#autotoc_md46", null ],
+          [ "Javascript builtin options availavle", "md_wordpress_plugin_development.html#autotoc_md47", null ],
+          [ "Relative URLs", "md_wordpress_plugin_development.html#autotoc_md48", null ],
+          [ "Multilanguage implementation", "md_wordpress_plugin_development.html#autotoc_md49", null ],
+          [ "Adding 'adsense'", "md_wordpress_plugin_development.html#autotoc_md50", null ]
+        ] ],
+        [ "Backend", "md_wordpress_plugin_development.html#autotoc_md51", [
+          [ "Adding configuration pages", "md_wordpress_plugin_development.html#autotoc_md52", null ],
+          [ "Additional options to interact with plugin", "md_wordpress_plugin_development.html#autotoc_md53", null ],
+          [ "Identifying User Levels", "md_wordpress_plugin_development.html#autotoc_md54", null ]
+        ] ],
+        [ "Crons", "md_wordpress_plugin_development.html#autotoc_md55", [
+          [ "Disable from DB", "md_wordpress_plugin_development.html#autotoc_md56", null ]
+        ] ],
+        [ "Disabling extensions without removing settings", "md_wordpress_plugin_development.html#autotoc_md57", null ],
+        [ "Show \"Briefly unavailable for scheduled maintenance. Check back in a minute\"", "md_wordpress_plugin_development.html#autotoc_md58", null ],
+        [ "Debugging", "md_wordpress_plugin_development.html#autotoc_md59", null ],
+        [ "Troubleshooting", "md_wordpress_plugin_development.html#autotoc_md60", null ],
+        [ "Templating", "md_wordpress_plugin_development.html#autotoc_md61", null ]
+      ] ]
+    ] ],
+    [ "Bug List", "bug.html", null ],
     [ "Namespaces", "namespaces.html", [
-      [ "Namespace List", "namespaces.html", null ]
+      [ "Namespace List", "namespaces.html", "namespaces_dup" ]
     ] ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
-      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ]
+      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
+      [ "Data Fields", "functions.html", [
+        [ "All", "functions.html", null ],
+        [ "Functions", "functions_func.html", null ]
+      ] ]
     ] ],
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
