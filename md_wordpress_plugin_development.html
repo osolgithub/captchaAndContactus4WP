@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.4"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Captcha and Contact Us Forms for Wordpress: wordpressPluginDevelopment</title>
+<title>Captcha and Contact Us Forms for Wordpress: Wordpress Plugin Development</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -92,24 +92,22 @@ $(document).ready(function(){initNavTree('md_wordpress_plugin_development.html',
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">wordpressPluginDevelopment </div></div>
+  <div class="headertitle"><div class="title">Wordpress Plugin Development </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md33"></a>
-Wordpress Plugin Development</h1>
-<h2><a class="anchor" id="autotoc_md34"></a>
-Short Description</h2>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md34"></a>
+Short Description</h1>
 <p >Wordpress is prefered CMS for sites with <code>Pages</code> and <code>Blogs</code></p>
-<h2><a class="anchor" id="autotoc_md35"></a>
-Detailed Description</h2>
-<h3><a class="anchor" id="autotoc_md36"></a>
-Types of extensions possible</h3>
+<h1><a class="anchor" id="autotoc_md35"></a>
+Detailed Description</h1>
+<h2><a class="anchor" id="autotoc_md36"></a>
+Types of extensions possible</h2>
 <p >Wordpress extensions are called <code>plugins</code>. Plugins can</p><ol type="1">
 <li>Show Custom Functionalities in <code>Pages</code> and <code>Blogs</code>. See <code>add_shortcode</code> below</li>
 <li>Extend/Replace Core funtionalities with <code>hooks</code></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md37"></a>
-How system identifies extension</h2>
+<h1><a class="anchor" id="autotoc_md37"></a>
+How system identifies extension</h1>
 <p ><a href="https://developer.wordpress.org/plugins/plugin-basics/header-requirements/">Header Requirements</a> </p><div class="fragment"><div class="line">/**</div>
 <div class="line"> * Plugin Name</div>
 <div class="line"> *</div>
@@ -133,10 +131,10 @@ How system identifies extension</h2>
 <div class="line"> * Update URI:        https://example.com/my-plugin/</div>
 <div class="line"> */</div>
 <div class="line"> // short code for this plugin will be &#39;osolwpccc&#39;.This line is not mandatory but useful for future reference for developers , while modifying the plugin</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md38"></a>
-Frontend</h2>
-<h3><a class="anchor" id="autotoc_md39"></a>
-Detecting activation</h3>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md38"></a>
+Frontend</h1>
+<h2><a class="anchor" id="autotoc_md39"></a>
+Detecting activation</h2>
 <p ><em>register_activation_hook and register_deactivation_hook</em> <a href="https://developer.wordpress.org/reference/functions/register_activation_hook/">register_activation_hook</a> </p><div class="fragment"><div class="line">/* Main Plugin File */</div>
 <div class="line">function my_plugin_activate() {</div>
 <div class="line">  add_option( &#39;Activated_Plugin&#39;, &#39;Plugin-Slug&#39; );</div>
@@ -152,8 +150,8 @@ Detecting activation</h3>
 <div class="line">    }</div>
 <div class="line">}</div>
 <div class="line">add_action( &#39;admin_init&#39;, &#39;load_plugin&#39; );</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md40"></a>
-Interaction with system</h3>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md40"></a>
+Interaction with system</h2>
 <ol type="1">
 <li><em>add_action and add_filter</em></li>
 </ol>
@@ -203,13 +201,13 @@ Interaction with system</h3>
 <div class="line">    echo &#39;&lt;/pre&gt;&#39;;</div>
 <div class="line">    exit;</div>
 <div class="line">});</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md41"></a>
-Display Errors</h3>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md41"></a>
+Display Errors</h2>
 <p ><a href="https://developer.wordpress.org/reference/classes/wp_error/">WP_Error class</a> </p><div class="fragment"><div class="line">$errors = new WP_Error();</div>
 <div class="line">$errors-&gt;add(&#39;error code&#39;, &#39;detailed error&#39;);</div>
 </div><!-- fragment --><p> <b>System generated Errors</b> are available in <code>add_filter</code> functions, $errors is passed as an argument, which should be returned back <code>return($errors);</code></p>
-<h3><a class="anchor" id="autotoc_md42"></a>
-Handling AJAX</h3>
+<h2><a class="anchor" id="autotoc_md42"></a>
+Handling AJAX</h2>
 <p ><a href="https://developer.wordpress.org/reference/hooks/wp_ajax_action/">reference</a></p><ol type="1">
 <li>wp_ajax_$action</li>
 <li>wp_ajax_nopriv_$action</li>
@@ -219,8 +217,8 @@ Handling AJAX</h3>
 <div class="line">// depending on wether logged in or not, the following hooks gets triggered when calling url contains action=cccontact_cccontact_display_captcha</div>
 <div class="line">add_action(&#39;wp_ajax_cccontact_display_captcha&#39;, [$OSOLCCC_CommonClass_inst,&#39;cust_captcha_display_captcha&#39;]);// executed when logged in</div>
 <div class="line">add_action(&#39;wp_ajax_nopriv_cccontact_display_captcha&#39;, [$OSOLCCC_CommonClass_inst,&#39;cust_captcha_display_captcha&#39;]);// executed when logged out</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md43"></a>
-Using DB</h3>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md43"></a>
+Using DB</h2>
 <p ><a href="https://developer.wordpress.org/reference/classes/wpdb/">refer</a></p>
 <p ><em>DB Class:</em> <code>$wpdb</code>/&lsquo;$GLOBALS['wpdb&rsquo;]<code> *DB Class File:*</code>wp-includes/wp-db.php<code> *Table Prefix:*</code>$wpdb-&gt;prefix&lt;tt&gt;(prefix to table names). *Last Insert Id*:$wpdb-&gt;insert_id<code> *Affected Rows*:</code>$wpdb-&gt;rows_affected`</p>
 <p ><em>Main Methods:</em></p><ol type="1">
@@ -281,8 +279,8 @@ Using DB</h3>
 <div class="line">?&gt;</div>
 </div><!-- fragment --><p> <em>Get Row</em> </p><div class="fragment"><div class="line">&lt;?php $wpdb-&gt;get_row(&#39;query&#39;, output_type, row_offset); ?&gt; </div>
 </div><!-- fragment --><p ><em>Get Col</em> </p><div class="fragment"><div class="line">get_col( &#39;query&#39;, column_offset ); ?&gt;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md44"></a>
-Getting User Details</h3>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md44"></a>
+Getting User Details</h2>
 <p ><a href="https://developer.wordpress.org/reference/functions/get_userdata/">refer</a> <code>get_userdata( int $user_id )</code> Example </p><div class="fragment"><div class="line">&lt;?php $user_info = get_userdata(1);</div>
 <div class="line">      echo &#39;Username: &#39; . $user_info-&gt;user_login . &quot;\n&quot;;</div>
 <div class="line">      echo &#39;User roles: &#39; . implode(&#39;, &#39;, $user_info-&gt;roles) . &quot;\n&quot;;</div>
@@ -296,8 +294,8 @@ Getting User Details</h3>
 <div class="line">      $display_name = $user_info-&gt;display_name;</div>
 <div class="line">      $user_email = $user_info-&gt;user_email;</div>
 <div class="line">?&gt;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md45"></a>
-Pagination</h3>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md45"></a>
+Pagination</h2>
 <p ><a href="https://developer.wordpress.org/themes/functionality/pagination/">refer</a> In posts use the tag <code>&lt;!--nextpage--&gt;</code> <em>Incorporating Pagination in <code>Template</code></em> </p><div class="fragment"><div class="line">&lt;?php if ( have_posts() ) : ?&gt; </div>
 <div class="line">    &lt;!-- Add the pagination functions here. --&gt; </div>
 <div class="line">    &lt;!-- Start of the main loop. --&gt;</div>
@@ -311,21 +309,21 @@ Pagination</h3>
 <div class="line">&lt;?php else : ?&gt;     </div>
 <div class="line">&lt;?php _e(&#39;Sorry, no posts matched your criteria.&#39;); ?&gt; </div>
 <div class="line">&lt;?php endif; ?&gt;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md46"></a>
-Mailing</h3>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md46"></a>
+Mailing</h2>
 <p ><code>wp_mail</code> function.</p>
-<h3><a class="anchor" id="autotoc_md47"></a>
-Javascript builtin options availavle</h3>
+<h2><a class="anchor" id="autotoc_md47"></a>
+Javascript builtin options availavle</h2>
 <ol type="1">
 <li>Show Modal</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md48"></a>
-Relative URLs</h3>
+<h2><a class="anchor" id="autotoc_md48"></a>
+Relative URLs</h2>
 <ol type="1">
 <li>plugins_url()</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md49"></a>
-Multilanguage implementation</h3>
+<h2><a class="anchor" id="autotoc_md49"></a>
+Multilanguage implementation</h2>
 <p >Call hook <code>load_plugin_textdomain</code> for internationalising. <a href="https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/">refer</a></p>
 <div class="fragment"><div class="line">load_plugin_textdomain(&#39;your-plugin-short-code&#39;, false, dirname( plugin_basename(__FILE__)).&#39;/languages&#39;);</div>
 </div><!-- fragment --><p >For more info <a href="https://wordpress.org/support/article/multilingual-wordpress/">refer</a> Wordpress uses <a href="https://www.gnu.org/software/gettext/">gettext Library</a> Language files must be saved as <code>.mo (Machine Object)files</code> , create .mo files from <code>.po</code> files with <a href="https://poedit.net/download">poedit</a>, <code>.pot</code> is <code>PO Template files( POT files are the template files for PO files. They will have all the translation strings left empty)</code>. So the workflow is <code>POT (original strings) to PO (original strings and their translation to a specific language) to MO (compiled binary result)</code> texts should be called like &lsquo;echo __( 'WordPress is the best!&rsquo;, 'my-plugin' );` OR</p>
@@ -344,7 +342,7 @@ printf(
         );
 @endcode
 
-@subsubsection autotoc_md50 Adding 'adsense'
+@subsection autotoc_md50 Adding 'adsense'
 
 Simplest method is to use &lt;tt&gt;Head, Footer and Post Injections&lt;/tt&gt; plugin.
 To install,go to Plugins → Add New from your admin dashboard, then searching for &lt;tt&gt;Head, Footer and Post Injections&lt;/tt&gt;. 
@@ -364,23 +362,23 @@ urchinTracker();
 &lt;/script&gt;
 @endcode
 
-@subsection autotoc_md51 Backend
+@section autotoc_md51 Backend
 
-@subsubsection autotoc_md52 Adding configuration pages
+@subsection autotoc_md52 Adding configuration pages
 
 1. /* Hook to initalize the admin menu */
 @code 
 add_action('admin_menu',
 @endcode
 
-@subsubsection autotoc_md53 Additional options to interact with plugin
+@subsection autotoc_md53 Additional options to interact with plugin
 
-@subsubsection autotoc_md54 Identifying User Levels
+@subsection autotoc_md54 Identifying User Levels
 
 1. is_admin()
 2. is_super_admin()
 
-@subsection autotoc_md55 Crons
+@section autotoc_md55 Crons
 
 &lt;a href="<a href="https://developer.wordpress.org/plugins/cron/">https://developer.wordpress.org/plugins/cron/</a>" &gt;refer&lt;/a&gt;
  With WP-Cron, all scheduled tasks are put into a queue and will run at the next opportunity (meaning the next page load). So while you can’t be 100% sure when your task will run, you can be 100% sure that it will run eventually.
@@ -404,21 +402,21 @@ and schedule cron &lt;a href="<a href="https://developer.wordpress.org/plugins/c
 @endcode
 
 
-@subsubsection autotoc_md56 Disable from DB
+@subsection autotoc_md56 Disable from DB
 Use phpMyAdmin to deactivate all plugins with the following steps.
 1. In the table wp_options, under the option_name column (field) find the active_plugins row
 2. Change the option_value field to: a:0:{}
 
-@subsection autotoc_md57 Disabling extensions without removing settings
+@section autotoc_md57 Disabling extensions without removing settings
 
 1. Rename &lt;tt&gt;plugins&lt;/tt&gt; folder to &lt;tt&gt;plugins.hold&lt;/tt&gt;
 2. Login to Admin &gt;&gt; Plugins . This will disable all plugins.
 
-@subsection autotoc_md58 Show "Briefly unavailable for scheduled maintenance. Check back in a minute"
+@section autotoc_md58 Show "Briefly unavailable for scheduled maintenance. Check back in a minute"
 
 Place a file named &lt;tt&gt;.maintenance&lt;/tt&gt; in the blog base folder (folder that contains the wp-admin folder)
 
-@subsection autotoc_md59 Debugging
+@section autotoc_md59 Debugging
 
 &lt;a href="<a href="https://wordpress.org/support/article/debugging-in-wordpress/">https://wordpress.org/support/article/debugging-in-wordpress/</a>" &gt;Debugging&lt;/a&gt;
 
@@ -441,11 +439,11 @@ if(!defined('WP_DEBUG'))
 }
 @endcode
 
-@subsection autotoc_md60 Troubleshooting
+@section autotoc_md60 Troubleshooting
 
 &lt;a href="<a href="https://wordpress.org/support/article/faq-troubleshooting/">https://wordpress.org/support/article/faq-troubleshooting/</a>" &gt;Troubleshooting</p>
-<h2><a class="anchor" id="autotoc_md61"></a>
-Templating</h2>
+<h1><a class="anchor" id="autotoc_md61"></a>
+Templating</h1>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

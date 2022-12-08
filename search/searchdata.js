@@ -1,11 +1,11 @@
 var indexSectionsWithContent =
 {
-  0: "$_bcdforsw",
-  1: "cos",
+  0: "$_abcdfgorsw",
+  1: "acfos",
   2: "o",
-  3: "cf",
-  4: "_do",
-  5: "$",
+  3: "c",
+  4: "_acdgos",
+  5: "$c",
   6: "bcdrw"
 };
 
