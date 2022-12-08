@@ -156,7 +156,7 @@ spl_autoload_register(function ($class) {
 	}
 });
 
-require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'OSOLmulticaptcha.php');
+//require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'OSOLmulticaptcha.php');
 $OSOLCCC_Frontend_inst = \OSOLCCC\Hooks\Frontend::getInstance();
 $OSOLCCC_Admin_inst = \OSOLCCC\Hooks\Admin::getInstance();
 $OSOLCCC_CommonClass_inst = \OSOLCCC\Hooks\Common::getInstance();
