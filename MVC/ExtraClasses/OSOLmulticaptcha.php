@@ -1,8 +1,8 @@
 <?php
 /**
-* \class OSOLCCC::ExtraClasses::OSOLmulticaptcha
-*  \brief     Shows captcha image based on parameters/default configuration
-*\details This comes in OSOLCCC::ExtraClasses\n.
+ \class OSOLCCC::ExtraClasses::OSOLmulticaptcha
+  \brief     Shows captcha image based on parameters/default configuration
+\details This comes in OSOLCCC::ExtraClasses\n.
 Class that handles the functionality to display captcha. Important for displaying captcha.
 
 \par System requirements: 
@@ -70,7 +70,10 @@ echo '<img src="data:image/png;base64,' . $imageContent . '" />';
  2. If not autoloaded, Class Files must be explicitly included
  
  *  \bug       No bugs found till July,2022.
- *  \warning   Improper use can crash your application\n
+ *  \warning   
+ To generate documentation of this class. Make sure you do the following
+ 1. Documentation for namespace <em>Nampespace of this class</em>  should be made prior to documenting this class
+ 2. The class should be declared in lower case ie **<em>class</em>** and not <em>`Class</em>
  $captchaEncryptionKey = "SomeRandomKey";// IMPORTANT  YOU MUST SET A CUSTOM VALUE FOR YOUR SITE
  *  \copyright GNU Public License.
 */

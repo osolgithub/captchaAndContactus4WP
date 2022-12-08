@@ -1,6 +1,12 @@
 <?php
 /**
-* @class ContactusHelper
+* @class OSOLCCC::Helpers::ContactusHelper
+*  @brief \OSOLCCC\ContactusHelper\ContactusHelper: Used for handling Contact us functionality
+*  @details  
+ This class is the helper class for contact us module. \n
+ 
+\par instantiation 
+\OSOLCCC\Helpers\ContactusHelper::getInstance() 
 * @author
 * Name: Sreekanth Dayanand, www.outsource-online.net
 * Email: joomla@outsource-online.net
@@ -12,25 +18,11 @@
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation.
 * If you use this software as a part of own sofware, you must leave copyright notices intact or add OSOLMulticaptcha copyright notices to own.
-*
-*
-*/
 
-/**
-*  @brief \OSOLCCC\ContactusHelper\ContactusHelper: Used for handling Contact us functionality
-*
-*
-*  @author Sreekanth
 *  @date 23rd June 2022
-*  @details  
- This class is the helper class for contact us module. \n
- 
-instantiation 
-\OSOLCCC\Helpers\ContactusHelper::getInstance() 
-
  */
 namespace OSOLCCC\Helpers;
-Class ContactusHelper extends \OSOLCCC\SingletonParent{
+class ContactusHelper extends \OSOLCCC\SingletonParent{
 	function verifyOSOLMultiCaptcha()
 	{
 		//die("<pre>".print_r($_SESSION['OSOLmulticaptcha_keystring'],true)."</pre>");

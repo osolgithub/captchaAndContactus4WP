@@ -1,6 +1,13 @@
 <?php
 /**
-* @class ContactusView
+* @class OSOLCCC::Views::ContactusView
+
+*  @brief \OSOLCCC\Views\ContactusView: Used for handling Contact us functionality
+*  @details  
+ This class is the view class for contact us module. \n
+ 
+\par instantiation 
+\OSOLCCC\Views\ContactusView::getInstance() 
 * @author
 * Name: Sreekanth Dayanand, www.outsource-online.net
 * Email: joomla@outsource-online.net
@@ -14,23 +21,14 @@
 * If you use this software as a part of own sofware, you must leave copyright notices intact or add OSOLMulticaptcha copyright notices to own.
 *
 *
-*/
 
-/**
-*  @brief \OSOLCCC\Views\ContactusView: Used for handling Contact us functionality
-*
-*
-*  @author Sreekanth
+
+
 *  @date 23rd June 2022
-*  @details  
- This class is the view class for contact us module. \n
- 
-instantiation 
-\OSOLCCC\Views\ContactusView::getInstance() 
 
  */
 namespace OSOLCCC\Views;
-Class ContactusView extends \OSOLCCC\SingletonParent{
+class ContactusView extends \OSOLCCC\SingletonParent{
 	/**
      *  @brief getCaptchaBlockHTML : to get HTML for showing the entire captcha block. 
      *

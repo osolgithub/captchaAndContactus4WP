@@ -1,6 +1,5 @@
-<!-- Replace ^[^#]([\r\n]*) with blank to make a template. In note pad you can also use `negative lookahead` ^(?!") -->
 # Wordpress Plugin Development
-
+<!-- Replace ^[^#]([\r\n]*) with blank to make a template. In note pad you can also use `negative lookahead` ^(?!") -->
 ## Short Description
 
 Wordpress is prefered CMS for sites with `Pages` and `Blogs`

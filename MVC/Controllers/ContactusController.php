@@ -1,6 +1,14 @@
 <?php
 /**
-* @class ContactusController
+* \class OSOLCCC::Controllers::ContactusController
+
+*  \brief \OSOLCCC\Controllers\ContactusController: Used for handling Contact us functionality
+*  \details  
+ This class is the controller class for contact us module. \n
+ 
+\par instantiation 
+\OSOLCCC\Controllers\ContactusController::getInstance()\n
+
 * @author
 * Name: Sreekanth Dayanand, www.outsource-online.net
 * Email: joomla@outsource-online.net
@@ -13,24 +21,15 @@
 * the Free Software Foundation.
 * If you use this software as a part of own sofware, you must leave copyright notices intact or add OSOLMulticaptcha copyright notices to own.
 *
-*
-*/
 
-/**
-*  @brief \OSOLCCC\Controllers\Contactus: Used for handling Contact us functionality
-*
-*
-*  @author Sreekanth
 *  @date 23rd June 2022
-*  @details  
- This class is the controller class for contact us module. \n
- 
-instantiation 
-\OSOLCCC\Controllers\ContactusController::getInstance() 
 
  */
+ 
+ 
+ 
 namespace OSOLCCC\Controllers;
-Class ContactusController extends \OSOLCCC\SingletonParent{
+class ContactusController extends \OSOLCCC\SingletonParent{
 	/**
      *  @brief cust_captcha_contact_validate_and_mail : called in \OSOLCCC\Hooks\Frontend->cust_captcha_contact_func() 
      *

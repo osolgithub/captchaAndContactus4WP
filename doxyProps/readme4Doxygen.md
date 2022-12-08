@@ -1,6 +1,7 @@
-<!-- Replace ^[^#]([\r\n]*) with blank to make a template. In note pad you can also use `negative lookahead` ^(?!") -->
 # README
 
+This documentation is in **doxyProps/readme4Doxygen.md** folder
+<!-- Replace ^[^#]([\r\n]*) with blank to make a template. In note pad you can also use `negative lookahead` ^(?!") -->
 
 ## Author
 

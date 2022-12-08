@@ -1,7 +1,20 @@
 <?php
 /**
-* @file FrontEnd.php
-* \OSOLCCC\Helpers\Frontend class: Used for OOPfying the plugin
+* @class OSOLCCC::Hooks::Frontend
+@brief OSOL_CCC_Handler class: Used for OOPfying the frontend operations of wp plugin
+*  @details  
+ This class encapsulates all custom methods for for frontend of the plugin. \n
+ This class also  encapsulates all frontend hooks for the plugin. \n
+ - This class deals with
+	1. display captcha 
+	2. generate captcha html for wordpress forms (login, register, lost password, post, comment)
+	2. validate captcha on submission
+	3. display contact us form
+	4. process contact us form submission 
+instantiation 
+\OSOLCCC\Hooks\Frontend::getInstance() 
+	
+
 * @author
 * Name: Sreekanth Dayanand, www.outsource-online.net
 * Email: joomla@outsource-online.net
@@ -17,29 +30,9 @@
 *
 */
 
-/**
-*  @brief OSOL_CCC_Handler class: Used for OOPfying the pluiugin
-*
-*
-*  @author Sreekanth
-*  @date 23rd June 2022
-*  @details  
- This class encapsulates all custom methods for for frontend of the plugin. \n
- This class also  encapsulates all frontend hooks for the plugin. \n
- - This class deals with
-	1. display captcha 
-	2. generate captcha html for wordpress forms (login, register, lost password, post, comment)
-	2. validate captcha on submission
-	3. display contact us form
-	4. process contact us form submission 
-instantiation 
-\OSOLCCC\Hooks\Frontend::getInstance() 
-	
-
- */
 namespace OSOLCCC\Hooks;
 defined('CUST_CAPTCHA_FOLDER') or die('Direct access not permitted');
-Class Frontend extends \OSOLCCC\SingletonParent{
+class Frontend extends \OSOLCCC\SingletonParent{
 	
 	
 	//declare variables pertinant to the functionality

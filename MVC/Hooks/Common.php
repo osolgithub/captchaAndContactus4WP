@@ -1,7 +1,18 @@
 <?php
 /**
-* @class Common
-* \OSOLCCC\Helpers\Frontend class: Used for OOPfying the plugin
+* \class OSOLCCC::Hooks::Common 
+*  \brief OSOL_CCC_Handler class: Used for OOPfying the wordpress plugin
+*  \details  
+ This class encapsulates all custom methods for for backend of the plugin. \n
+ This class also  encapsulates all backend hooks for the plugin. \n
+ - This class deals with
+	1. Adding Plugin Configuration link in admin side
+	3. display configuration options of captcha
+	3. display "contact us" form configuration options
+	4. Save/Update configuration forms submissions
+ 
+instantiation 
+\OSOLCCC\Hooks\Common::getInstance()
 * @author
 * Name: Sreekanth Dayanand, www.outsource-online.net
 * Email: joomla@outsource-online.net
@@ -17,27 +28,8 @@
 *
 */
 
-/**
-*  @brief OSOL_CCC_Handler class: Used for OOPfying the pluiugin
-*
-*
-*  @author Sreekanth
-*  @date 23rd June 2022
-*  @details  
- This class encapsulates all custom methods for for backend of the plugin. \n
- This class also  encapsulates all backend hooks for the plugin. \n
- - This class deals with
-	1. Adding Plugin Configuration link in admin side
-	3. display configuration options of captcha
-	3. display "contact us" form configuration options
-	4. Save/Update configuration forms submissions
- 
-instantiation 
-\OSOLCCC\Hooks\Common::getInstance() 
-
- */
 namespace OSOLCCC\Hooks;
-Class Common extends \OSOLCCC\SingletonParent{
+class Common extends \OSOLCCC\SingletonParent{
 	
 	
 	//declare variables pertinant to the functionality

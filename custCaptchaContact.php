@@ -92,7 +92,17 @@ hooks are extracted with
 */
 
 //replace all wpcaptchadomain
+/*! 
+ *  \brief constant holding file path of this plugin.
+ * @details this constant is defined for ease of usage in all classes.\n
+ This is used in autoloader and for loading template files
+ */
 define('CUST_CAPTCHA_FOLDER',dirname(__FILE__));
+/*! 
+ *  \brief constant holding URL path of this plugin.
+ * @details this constant is defined for ease of usage in all classes.\n
+ This is used in autoloader and for loading public assets of this plugin.
+ */
 define('CUST_CAPTCHA_DIR_URL', plugin_dir_url(__FILE__));
 // auto load Helpers/Frontend.php while calling new \OSOLCCC\Helpers\Frontend()
 /*! \fn osolAutoLoadRegisterCalled() 
