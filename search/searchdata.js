@@ -1,12 +1,13 @@
 var indexSectionsWithContent =
 {
-  0: "$_abcdfgorsw",
+  0: "$_abcdfgorsvw",
   1: "acfos",
   2: "o",
   3: "c",
   4: "_acdgos",
   5: "$c",
-  6: "bcdrw"
+  6: "v",
+  7: "bcdrw"
 };
 
 var indexSectionNames =
@@ -17,7 +18,8 @@ var indexSectionNames =
   3: "files",
   4: "functions",
   5: "variables",
-  6: "pages"
+  6: "groups",
+  7: "pages"
 };
 
 var indexSectionLabels =
@@ -28,6 +30,7 @@ var indexSectionLabels =
   3: "Files",
   4: "Functions",
   5: "Variables",
-  6: "Pages"
+  6: "Modules",
+  7: "Pages"
 };
 

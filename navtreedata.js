@@ -90,6 +90,7 @@ var NAVTREE =
       [ "Templating", "md_wordpress_plugin_development.html#autotoc_md61", null ]
     ] ],
     [ "Bug List", "bug.html", null ],
+    [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ]
     ] ],
