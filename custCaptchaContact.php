@@ -90,6 +90,10 @@ hooks are extracted with
 * Also no global variables will be documented
 *
 */
+/**
+ \defgroup jsfiles Vanilla JS
+ This group is for holding non class JS files
+*/
 
 //replace all wpcaptchadomain
 /*! 

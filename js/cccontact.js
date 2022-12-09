@@ -1,3 +1,22 @@
+/** @file
+ *  @ingroup jsfiles
+ *  @brief this file in jsfiles
+ */
+/** @addtogroup jsfiles
+ *  
+ *  Documentation of vanilla js functions.
+ *  @{
+ */ 
+ 
+ 
+/**
+ * Validates Contact Us form submission via AJAX
+ * Validates email, captcha and other mandatory fields\n
+ * Submits contact us form via AJAX
+ * \fn boolean cccontact_validate_ajax()
+ * \param none
+ * \return boolean false if validation failed.
+ */
 function cccontact_validate_ajax()
 {
  
@@ -80,28 +99,52 @@ function cccontact_validate_ajax()
 	return false;
 }
 var cccontactFormAJAXified = false;
+
+/**
+ * Disables form submission button\n
+ * Called in jQuery(document).ready\n
+ * Submits contact us form via AJAX
+ * \fn boolean ajaxifyCccontactForm()
+ * \param none
+ * \return void
+ */
 function ajaxifyCccontactForm(){
 	 if(!cccontactFormAJAXified)
 	{
 		
 		//jQuery('form#cccontact_form').attr('onsubmit', 'return cccontact_validate_ajax()');
 		//for some reason the above line somestimes doesnt work
+		/// \cond
+		/* code that must be skipped by doxygen */
 		jQuery('form#cccontact_form').unbind('submit').submit(function(e) {
 															e.preventDefault();/* for IE8 */
 															//alert("default prevented");
 															return cccontact_validate_ajax()
 															});
+		
 		//alert(jQuery('form#cccontact_form').attr('onsubmit'));
 		
 		cccontactFormAJAXified = true;
 	}
 }
+/** @} */ // end of jsfiles
+
+
+		/// \cond
+		/* code that must be skipped by doxygen */
 jQuery(document).ready(function() {
 // Handler for .ready() called.
 	ajaxifyCccontactForm();
 	
 });//jQuery(document).ready
+/// \endcond
+/// \cond
+
+ /* code that must be skipped by doxygen */
+
+
 if(cccontact_form_in_tb_show)//if called in thickbox
 {
 	//ajaxifyCccontactForm();
 }//if(cccontact_form_in_tb_show)
+/// \endcond
