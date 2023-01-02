@@ -1,13 +1,13 @@
 var indexSectionsWithContent =
 {
-  0: "$_abcdfgorsvw",
+  0: "$_abcdfgorsv",
   1: "acfos",
   2: "o",
   3: "c",
   4: "_acdgos",
   5: "$c",
   6: "v",
-  7: "bcdrw"
+  7: "bcdr"
 };
 
 var indexSectionNames =

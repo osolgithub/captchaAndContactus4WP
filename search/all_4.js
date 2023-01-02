@@ -5,7 +5,7 @@ var searchData=
   ['cccontact_5ftb_5fshow_5fcall_2',['cccontact_tb_show_call',['../class_o_s_o_l_c_c_c_1_1_views_1_1_contactus_view.html#a994c90a5271713ae879276c5551e9478',1,'OSOLCCC::Views::ContactusView']]],
   ['cccontact_5fvalidate_5fajax_3',['cccontact_validate_ajax',['../group__jsfiles.html#ga5a2fe5c96eee41dd9cff75e3fa905724',1,'cccontact.js']]],
   ['cccontact_5fvalidate_5fnotify_5fform_4',['cccontact_validate_notify_form',['../class_o_s_o_l_c_c_c_1_1_controllers_1_1_contactus_controller.html#a3e84d6a0da546b5bb15b1f3aba0fc1bd',1,'OSOLCCC::Controllers::ContactusController']]],
-  ['change_20log_5',['Change Log',['../md_change_log.html',1,'']]],
+  ['change_20log_5',['Change Log',['../md_doxy_props_change_log.html',1,'']]],
   ['common_6',['Common',['../class_o_s_o_l_c_c_c_1_1_hooks_1_1_common.html',1,'OSOLCCC::Hooks']]],
   ['contactuscontroller_7',['ContactusController',['../class_o_s_o_l_c_c_c_1_1_controllers_1_1_contactus_controller.html',1,'OSOLCCC::Controllers']]],
   ['contactushelper_8',['ContactusHelper',['../class_o_s_o_l_c_c_c_1_1_helpers_1_1_contactus_helper.html',1,'OSOLCCC::Helpers']]],
