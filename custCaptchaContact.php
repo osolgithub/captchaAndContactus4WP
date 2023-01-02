@@ -40,6 +40,7 @@ safe mode must be turned off
 
 The above requirements are default settings in most PHP hosts.however if the captcha isnt showing up you need to check those settings
 
+	
 @date 21st October 2022
 @copyright {This project is released under the GNU Public License.}
 @author Sreekanth Dayanand
@@ -323,7 +324,7 @@ add_action("admin_enqueue_scripts", [$OSOLCCC_CommonClass_inst,"cccontact_jquery
 
 //***********************************************display captcha hooks 
 //https://developer.wordpress.org/reference/hooks/wp_ajax_action/ 
-// depending on wether logged in or not, the following hooks gets triggered when calling url contains action=cccontact_cccontact_display_captcha
+// depending on wether logged in or not, the following hooks gets triggered when calling url contains action=cccontact_display_captcha
 add_action('wp_ajax_cccontact_display_captcha', [$OSOLCCC_CommonClass_inst,'cust_captcha_display_captcha']);// executed when logged in
 add_action('wp_ajax_nopriv_cccontact_display_captcha', [$OSOLCCC_CommonClass_inst,'cust_captcha_display_captcha']);// executed when logged out
 

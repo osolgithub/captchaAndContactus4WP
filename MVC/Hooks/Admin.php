@@ -87,13 +87,13 @@ class Admin extends \OSOLCCC\SingletonParent{
 	}//function cust_captcha_contact_plugin_menu() {
 	function show_cust_captcha_settings()
 	{
-		require_once(CUST_CAPTCHA_FOLDER."/captcha-customization-options.php");
+		require_once(CUST_CAPTCHA_FOLDER."/MVC/templates/admin/captcha-customization-options.php");
 		
 	}
 	
 	function show_cust_captcha_contact_settings()
 	{
-		require_once(CUST_CAPTCHA_FOLDER."/contact-customization-options.php");
+		require_once(CUST_CAPTCHA_FOLDER."/MVC/templates/admin/contact-customization-options.php");
 		/* ?>
 		<a href="javascript:<?php echo \OSOLCCC\Helpers\Frontend::getInstance()->cccontact_tb_show_call("hello","test Subject");?>">Show Contact us In Modal</a>
 		<?php */

@@ -3,8 +3,8 @@ $output_string = "
 <script \">
 var cccontact_form_in_tb_show = ".(isset($_REQUEST['action']) && $_REQUEST['action']=='cccontact_tb_show_modal'?'true':'false').";
 </script>
-<script src=\"".plugins_url("/js/cccontact.js",__FILE__)."\"></script>
-<link rel=\"stylesheet\"  type=\"text/css\" media=\"screen, projection\" href=\"".plugins_url("/css/cccontact.css",__FILE__)."\"></link>
+<script src=\"".CUST_CAPTCHA_DIR_URL."public/js/cccontact.js" ."\"></script>
+<link rel=\"stylesheet\"  type=\"text/css\" media=\"screen, projection\" href=\"".CUST_CAPTCHA_DIR_URL."public/css/cccontact.css"."\"></link>
 <form id=\"cccontact_form\" name=\"form1\" method=\"post\" action=\"\">
   <p>
     <label>Your email :
@@ -41,7 +41,7 @@ var cccontact_form_in_tb_show = ".(isset($_REQUEST['action']) && $_REQUEST['acti
 		'<input id="OSOLmulticaptcha_keystring" name="OSOLmulticaptcha_keystring" size="15" type="text" />'.'<input type="hidden" name="OSOLmulticaptcha_captchaEncypted" id="OSOLmulticaptcha_captchaEncypted" value="" >'."
 		</p>
   <div>
-     <div id=\"cccontact_submit_loader\" style=\"float:left;display:none\"><img src=\"".CUST_CAPTCHA_DIR_URL."/utils/ajax-loader-big.gif\" /></div>
+     <div id=\"cccontact_submit_loader\" style=\"float:left;display:none\"><img src=\"".CUST_CAPTCHA_DIR_URL."public/images/ajax-loader-big.gif\" /></div>
       <input type=\"submit\" name=\"cccontact_submit\" id=\"cccontact_submit\" value=\"Submit\" />
     
     

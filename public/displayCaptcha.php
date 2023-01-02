@@ -1,4 +1,8 @@
 <?php
+/**
+This file is no longer needed.
+The functionality of this file is moved to  OSOLCCC\Views\ContactusView->displayCaptcha()
+*/
 defined('CUST_CAPTCHA_FOLDER') or die('Direct access not permitted');
 
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'OSOLmulticaptcha.php');

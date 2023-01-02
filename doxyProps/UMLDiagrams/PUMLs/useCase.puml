@@ -1,8 +1,9 @@
+'Use first editor in https://plantuml.com/ to generate image
 @startuml wp_captcha_contact_plugin
 left to right direction
 skinparam packageStyle rectangle
 actor user
-user<|--admin:<<extends>>
+user--|>admin:<<extends>>
 
 rectangle wordpress{
   usecase "plugin" as UC1

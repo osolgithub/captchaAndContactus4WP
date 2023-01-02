@@ -1,8 +1,8 @@
 <?php
 defined('CUST_CAPTCHA_FOLDER') or die('Direct access not permitted');
 
-require_once('OSOLmulticaptcha.php');
-$captcha = new OSOLmulticaptcha();
+//require_once('OSOLmulticaptcha.php');
+$captcha = \OSOLCCC\Helpers\ContactusHelper::getInstance();//new OSOLmulticaptcha();
 //$captcha->displayCaptcha();
 
 ?>
@@ -125,7 +125,7 @@ $captcha = new OSOLmulticaptcha();
 <?php $OSOLMulticaptcha_fontFile = get_option('OSOLMulticaptcha_fontFile') != ''?get_option('OSOLMulticaptcha_fontFile'):$captcha->font_ttf;?>
 <?php
 		    $defaultFont = $OSOLMulticaptcha_fontFile;//$captcha->font_ttf;//'AdLibBT.TTF';
-			$ttfPath =dirname(__FILE__)."/utils/ttfs"."/";
+			$ttfPath =CUST_CAPTCHA_FOLDER."/MVC/utils/ttfs"."/";
 			$ttfsAvailable = "";
 			if ($handle = opendir($ttfPath)) {
 				

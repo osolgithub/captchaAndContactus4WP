@@ -114,8 +114,8 @@ class Common extends \OSOLCCC\SingletonParent{
 	?>
 		<script type="text/javascript"> //<![CDATA[
 			var ajaxurl = '<?php echo admin_url( 'admin-ajax.php'); ?>';
-			static_refresh_image = '<?php echo CUST_CAPTCHA_DIR_URL;?>/utils/refresh.gif';
-			animated_refresh_image = '<?php echo CUST_CAPTCHA_DIR_URL;?>/utils/refresh-animated.gif';
+			static_refresh_image = '<?php echo CUST_CAPTCHA_DIR_URL;?>public/images/refresh.gif';
+			animated_refresh_image = '<?php echo CUST_CAPTCHA_DIR_URL;?>public/images/refresh-animated.gif';
 			function getOSOLMultiCaptchaURL()
 			{
 				

@@ -78,7 +78,7 @@ class ContactusView extends \OSOLCCC\SingletonParent{
 			$GLOBALS['OSOLMultiCaptcha_inst'] = -1;			 
 		}
 		$GLOBALS['OSOLMultiCaptcha_inst']++;
-			return '<a class="osol_cccaptcha_a" href="http://www.outsource-online.net/osolmulticaptcha-simplest-php-captcha-for-html-forms.html"><img class="osol_cccaptcha" src="'.admin_url( 'admin-ajax.php').'?action=cccontact_display_captcha&rand='.rand().'&OSOLmulticaptcha_inst='.$GLOBALS['OSOLMultiCaptcha_inst'].'" /></a> &nbsp;<a href="javascript:refreshOSOLMultiCaptchaImage('.$GLOBALS['OSOLMultiCaptcha_inst'].');"><img src="'.CUST_CAPTCHA_DIR_URL.'/utils/refresh.gif" onmouseover="this.src=animated_refresh_image" onmouseout="this.src=static_refresh_image" title="Refresh" /></a> ';
+			return '<a class="osol_cccaptcha_a" href="http://www.outsource-online.net/osolmulticaptcha-simplest-php-captcha-for-html-forms.html"><img class="osol_cccaptcha" src="'.admin_url( 'admin-ajax.php').'?action=cccontact_display_captcha&rand='.rand().'&OSOLmulticaptcha_inst='.$GLOBALS['OSOLMultiCaptcha_inst'].'" /></a> &nbsp;<a href="javascript:refreshOSOLMultiCaptchaImage('.$GLOBALS['OSOLMultiCaptcha_inst'].');"><img src="'.CUST_CAPTCHA_DIR_URL.'public/images/refresh.gif" onmouseover="this.src=animated_refresh_image" onmouseout="this.src=static_refresh_image" title="Refresh" /></a> ';
 	}//function cust_catcha_html()
 	/**
      *  @brief cccontact_tb_show_call : to show contact us form in thickbox modal, use the following line

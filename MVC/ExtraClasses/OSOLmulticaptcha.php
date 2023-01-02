@@ -119,7 +119,7 @@ class OSOLmulticaptcha extends \OSOLCCC\SingletonParent{
 		$this->imageFunction = ((!method_exists($this,$imageFunction)))?'create_imageAdv':$imageFunction;
 		
 		$this->DS = DIRECTORY_SEPARATOR;
-		$this->fontPNGLocation = realpath(dirname(__FILE__).$this->DS.'..'.$this->DS.'..'.$this->DS) . $this->DS.'utils';
+		$this->fontPNGLocation = realpath(dirname(__FILE__).$this->DS.'..'.$this->DS) . $this->DS.'utils';
 		$font_ttf  = $this->fontPNGLocation.$this->DS.'ttfs'.$this->DS.((isset($_REQUEST['osolcaptcha_font_ttf']) && $_REQUEST['osolcaptcha_font_ttf'] !='')?$_REQUEST['osolcaptcha_font_ttf']:$this->font_ttf);
 		 $this->fontPNGFile = (isset($_REQUEST['previewCaptcha']) && $_REQUEST['previewCaptcha'] == 'True')?'temp.png':$this->fontPNGFile;
 		 $this->fontMetaFile = (isset($_REQUEST['previewCaptcha']) && $_REQUEST['previewCaptcha'] == 'True')?'temp.meta':$this->fontMetaFile;

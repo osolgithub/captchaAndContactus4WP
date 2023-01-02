@@ -264,7 +264,7 @@ class Frontend extends \OSOLCCC\SingletonParent{
 		//ob_start();
 		\OSOLCCC\Controllers\ContactusController::getInstance()->cust_captcha_contact_validate_and_mail();
 		
-		include(CUST_CAPTCHA_FOLDER.'/cccontact_form.php');
+		include(CUST_CAPTCHA_FOLDER.'/MVC/templates/frontend/cccontact_form.php');
 		//$output_string=ob_get_contents();
 		//ob_end_clean();
 		return $output_string;//"cccontact :".$toemail." , ".$linktomodal." ,$toMailSessionVar";

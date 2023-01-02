@@ -5,7 +5,15 @@
 *  \brief \OSOLCCC\Controllers\ContactusController: Used for handling Contact us functionality
 *  \details  
  This class is the controller class for contact us module. \n
- 
+\par Doxygen Tip
+Use this regexp to get methods
+```
+([^\}\r\n\/\$]+)function([^\(\r\n]+)\(
+```
+Use named anchors where required
+```
+<a name="git_html_pages"></a>
+```
 \par instantiation 
 \OSOLCCC\Controllers\ContactusController::getInstance()\n
 
@@ -31,14 +39,27 @@
 namespace OSOLCCC\Controllers;
 class ContactusController extends \OSOLCCC\SingletonParent{
 	/**
-     *  @brief cust_captcha_contact_validate_and_mail : called in \OSOLCCC\Hooks\Frontend->cust_captcha_contact_func() 
+     *  @brief Validates Contact us form Submission
      *
      *  @param [in] no input paramaeters
      *  @return array $validation_result
      *  @author Sreekanth Dayanand
      *  @date 23rd June 2022
      *  @details 
-		Validates Contact us form Submission
+	   
+		Checks $_REQUEST['action'], executed if value is either 'cust_captcha_contact_submit' or 'cccontact_validate_ajax'.@n
+		
+		\par Called in 
+		
+		1. \OSOLCCC\Hooks\Frontend->cust_captcha_contact_func() @n
+		Which in turn is called from add_shortcode( 'cccontact', [$OSOLCCC_Frontend_inst,'cust_captcha_contact_func'] ); in custCaptchaContact.php
+		
+		2.  \OSOLCCC\Hooks\Frontend->cust_captcha_contact_validate_contact_ajax()@n
+		Which in turn is called from add_action('wp_ajax_cccontact_validate_ajax', [$OSOLCCC_Frontend_inst,'cust_captcha_contact_validate_contact_ajax']); & add_action('wp_ajax_nopriv_cccontact_validate_ajax', [$OSOLCCC_Frontend_inst,'cust_captcha_contact_validate_contact_ajax']); in custCaptchaContact.php@n
+		
+		
+		\par Uses Methods
+		calls $this->cccontact_validate_notify_form(); for backend validation of 'subject','message','name' & 'email'
 		
      */
 	function cust_captcha_contact_validate_and_mail()
@@ -106,14 +127,15 @@ class ContactusController extends \OSOLCCC\SingletonParent{
 	}//function cust_captcha_contact_validate_and_mail()
 	
 	/**
-     *  @brief cccontact_validate_notify_form : called in \OSOLCCC\Controllers\ContactusController->cust_captcha_contact_validate_and_mail() 
+     *  @brief Validates 'subject','message','name' & 'email' in  Contact us form
      *
      *  @param [in] no input paramaeters
      *  @return array $validation_result
      *  @author Sreekanth Dayanand
      *  @date 23rd June 2022
      *  @details 
-		Validates 'subject','message','name' & 'email' un  Contact us form
+		Called in $this->cust_captcha_contact_validate_and_mail().
+		
 		
      */
 	function cccontact_validate_notify_form()

@@ -29,7 +29,7 @@ class ContactusHelper extends \OSOLCCC\SingletonParent{
 		$verificationResult = false;
 		if($GLOBALS['OSOLMulticaptcha_gdprCompliantNoCookie'])
 		{
-			$captcha = new \OSOLmulticaptcha();
+			$captcha = \OSOLCCC\ExtraClasses\OSOLmulticaptcha::getInstance();
 			$captchaEncryptionKey = get_option('OSOLCaptchaEncryptionKey');// IMPORTANT ****** YOU MUST SET A CUSTOM VALUE FOR YOUR SITE from admin panel
 			$captcha->setCaptchaEncryptionKey($captchaEncryptionKey);
 			$captchaText2Check = isset($_POST['OSOLmulticaptcha_keystring'])?$_POST['OSOLmulticaptcha_keystring']:"";

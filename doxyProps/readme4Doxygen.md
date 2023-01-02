@@ -45,9 +45,27 @@ Ajax isused via `add_action('wp_ajax_nopriv_` & `add_action('wp_ajax_`
 ***Autoloading in PHP***
 Autoloading is enabled with *spl_autoload_register* function in index.php
 
-### Use Case Diagrams
+### UML Diagrams
 
-UML diagrams are stored in `documentation/UMLDiagrams` folder
+[UML](https://www.javatpoint.com/uml) [diagrams](https://www.javatpoint.com/uml-diagrams) are stored in `documentation/UMLDiagrams` folder@n
+Commonly used UML diagrams for small projects are
+
+1. [Use Case Diagram](https://plantuml.com/use-case-diagram)
+2. [Sequence Diagram](https://plantuml.com/sequence-diagram)
+3. Extended Use Case Diagram
+4. [Activity Diagram](https://plantuml.com/activity-diagram-beta). This is Different from flow chart
+5. [Class Diagram](https://plantuml.com/class-diagram)
+6. [Collaboration Diagram](https://www.javatpoint.com/uml-collaboration-diagram)
+
+PS: Additionally [Flow charts](https://github.com/adrai/flowchart.js) also must be used for complex class methods
+
+use [Plant UML](https://plantuml.com/) for generating UMLs@n
+Eg: 
+**Use Case Diagram**@n
+
+\image html doxyProps/UMLDiagrams/images/wp_captcha_contact_plugin_1_use_case.png
+
+
 
 ## Prerequisites
 
@@ -80,3 +98,11 @@ the following will shortly come
 ## Contact
 
 [Contact Us](https://outsource-online.net/contact-us.html)
+
+## References
+
+[Work flow](http://www.outsource-online.net/blog/demos/doxygenComments/)@n
+[Documentation from scratch](http://www.outsource-online.net/blog/2022/10/17/documentation-from-scratch/)@n
+[Documentation steps](http://www.outsource-online.net/blog/2022/07/13/doxygen-basics/)@n
+[Wordpress plugin development and related steps](http://www.outsource-online.net/blog/2022/07/02/developing-wordpress-plugin/)@n
+[Git](http://www.outsource-online.net/blog/2022/06/13/git-command-line-tutorials/#git_html_pages)@n
