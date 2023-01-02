@@ -153,8 +153,10 @@ Variables</h2></td></tr>
  This file bootstraps the operations of this project<br  />
  This documentation is shown because <em>file</em> tag is used.<br  />
  This will appear under Main Project &gt;&gt; Files &gt;&gt; File List &gt;&gt; thisFileName <br  />
-</p><dl class="section user"><dt>Hooks Used:</dt><dd>hooks are extracted with add_action('([^']+)',\s*'([^']+)' replace with add_action('\1',[$OSOL_CCC_HandlerFrontEnd_inst,'\2'] add_action('([^']+)',([^/\r<br  />
-]+) add_action hooks**<ol type="1">
+</p><dl class="section user"><dt>Hooks Used:</dt><dd>Two Types of WordPress Hooks: <b>Actions</b> and <b>Filters</b>. WordPress includes two types of hooks called Actions and Filters. Actions let you do something at certain predefined points in the WordPress runtime, while Filters let you modify any data processed by WordPress and return it.<br  />
+hooks are extracted with <div class="fragment"><div class="line"><span class="comment">//add_action\&zwj;(&#39;([^&#39;]+)&#39;,\s*&#39;([^&#39;]+)&#39;  replace with add_action(&#39;\1&#39;,[$OSOL_CCC_HandlerFrontEnd_inst,&#39;\2&#39;]</span></div>
+<div class="line"><span class="comment">//add_action\&zwj;(&#39;([^&#39;]+)&#39;,([^/\r\n]+)</span></div>
+</div><!-- fragment --> <b>add_action hooks</b><ol type="1">
 <li>add_action('wp', function () { // see all functions hooked to 'wp_footer' <br  />
 </li>
 <li>add_action('init',// init for admin is 'admin_init' hook <br  />
@@ -201,17 +203,17 @@ Variables</h2></td></tr>
 </li>
 <li>add_action'wp_ajax_cccontact_validate_ajax',// executed when logged in <br  />
 </li>
-<li>add_action'wp_ajax_nopriv_cccontact_validate_ajax',// executed when logged out <br  />
- add_filter hooks **</li>
+<li>add_action'wp_ajax_nopriv_cccontact_validate_ajax',// executed when logged out</li>
 </ol>
-<ol type="1">
+</dd></dl>
+<p><b>add_filter hooks</b><br  />
+</p><ol type="1">
 <li>add_filter('login_errors',[$OSOLCCC_Frontend_inst,'cust_captcha_login_errors']);</li>
 <li>add_filter( 'login_redirect', [$OSOLCCC_Frontend_inst,'include_cust_captcha_login_redirect'], 10, 3 ); <br  />
 </li>
 <li>add_filter( 'preprocess_comment', [$OSOLCCC_Frontend_inst,'include_cust_captcha_comment_post'] );</li>
-<li>add_filter( 'wpmu_validate_user_signup', [$OSOLCCC_Frontend_inst,'include_cust_captcha_register_validate'] );// perform validation of captcha </li>
+<li>add_filter( 'wpmu_validate_user_signup', [$OSOLCCC_Frontend_inst,'include_cust_captcha_register_validate'] );// perform validation of captcha</li>
 </ol>
-</dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>without <em>file</em> tag, non class files are not documented<br  />
  Also no global variables will be documented </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
