@@ -45,6 +45,13 @@ The above requirements are default settings in most PHP hosts.however if the cap
 @copyright {This project is released under the GNU Public License.}
 @author Sreekanth Dayanand
 @note short code for this plugin will be 'osolwpccc'. To be used in 'load_plugin_textdomain' and text translation functions. This line is not mandatory but useful for future reference for developers , while modifying the plugin
+
+@par Git Info
+
+[code repo](https://github.com/osolgithub/captchaAndContactus4WP/tree/OOP)@n
+[documentation](https://osolgithub.github.io/captchaAndContactus4WP/)@n
+[documentation repo](https://github.com/osolgithub/captchaAndContactus4WP/tree/gh-pages)@n
+
 */
 /**
 * @file custCaptchaContact.php
@@ -54,10 +61,13 @@ The above requirements are default settings in most PHP hosts.however if the cap
 * This documentation is shown because *file* tag is used.\n
 * This will appear under  Main Project &gt;&gt; Files &gt;&gt; File List &gt;&gt; thisFileName \n
 \par Hooks Used:
+Two Types of WordPress Hooks: <b>Actions</b> and <b>Filters</b>. WordPress includes two types of hooks called Actions and Filters. Actions let you do something at certain predefined points in the WordPress runtime, while Filters let you modify any data processed by WordPress and return it.@n
 hooks are extracted with
+```
 //add_action\('([^']+)',\s*'([^']+)'  replace with add_action('\1',[$OSOL_CCC_HandlerFrontEnd_inst,'\2']
 //add_action\('([^']+)',([^/\r\n]+)
-**add_action hooks**
+```
+<b>add_action hooks</b>
 	1. add_action('wp', function () {	// see all functions hooked to 'wp_footer'			
 	2. add_action('init',// init for admin is 'admin_init' hook				
 	3. add_action'wp_head',				
@@ -81,12 +91,14 @@ hooks are extracted with
 	21. add_action('wp_ajax_cccontact_tb_show_modal' , [$OSOLCCC_Frontend_inst,'cccontact_tb_show_modal']);// executed when logged in				
 	22. add_action'wp_ajax_nopriv_cccontact_tb_show_modal',// executed when logged out				
 	23. add_action'wp_ajax_cccontact_validate_ajax',// executed when logged in				
-	24. add_action'wp_ajax_nopriv_cccontact_validate_ajax',// executed when logged out	
-**add_filter hooks **
+	24. add_action'wp_ajax_nopriv_cccontact_validate_ajax',// executed when logged out
+	
+	<b>add_filter hooks</b>@n
 	1. add_filter('login_errors',[$OSOLCCC_Frontend_inst,'cust_captcha_login_errors']);
 	2. add_filter( 'login_redirect', [$OSOLCCC_Frontend_inst,'include_cust_captcha_login_redirect'], 10, 3 );	
 	3. add_filter( 'preprocess_comment', [$OSOLCCC_Frontend_inst,'include_cust_captcha_comment_post'] );
 	4. add_filter( 'wpmu_validate_user_signup', [$OSOLCCC_Frontend_inst,'include_cust_captcha_register_validate'] );// perform validation of captcha
+	
 * @warning without *file* tag, non class files are not documented\n
 * Also no global variables will be documented
 *

@@ -16,7 +16,11 @@ Description: Plugin to add captcha to core wordpress forms and additional option
 
 Thanks for downloading and installing my plugin. You can show your appreciation and support future development by donating.
 
-For more info visit: 
+To see the documentation of this plugin , visit:
+
+https://osolgithub.github.io/captchaAndContactus4WP/
+
+For more info about developer, visit: 
 https://wordpress.org/plugins/customizable-captcha-and-contact-us-form/
 and
 http://www.outsource-online.net/osolmulticaptcha-simplest-php-captcha-for-html-forms.html
@@ -43,7 +47,7 @@ An answer to that question.
 4. screenshot-4-lost-password.png
 5. screenshot-5-contact-us-form.png
 6. screenshot-6-admin-captcha-settings.png
-7. screenshot-6-admin-contact-form-settings.png
+7. screenshot-7-admin-contact-form-settings.png
 
 == Changelog ==
 
