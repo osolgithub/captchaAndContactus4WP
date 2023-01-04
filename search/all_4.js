@@ -11,8 +11,8 @@ var searchData=
   ['contactushelper_8',['ContactusHelper',['../class_o_s_o_l_c_c_c_1_1_helpers_1_1_contactus_helper.html',1,'OSOLCCC::Helpers']]],
   ['contactusview_9',['ContactusView',['../class_o_s_o_l_c_c_c_1_1_views_1_1_contactus_view.html',1,'OSOLCCC::Views']]],
   ['cust_5fcaptcha_5fcontact_5fvalidate_5fand_5fmail_10',['cust_captcha_contact_validate_and_mail',['../class_o_s_o_l_c_c_c_1_1_controllers_1_1_contactus_controller.html#a6600705dae518def51fe75f995365072',1,'OSOLCCC::Controllers::ContactusController']]],
-  ['cust_5fcaptcha_5fdir_5furl_11',['CUST_CAPTCHA_DIR_URL',['../cust_captcha_contact_8php.html#a7f3355c74774c9c0439e0bbb80e836ac',1,'custCaptchaContact.php']]],
-  ['cust_5fcaptcha_5ffolder_12',['CUST_CAPTCHA_FOLDER',['../cust_captcha_contact_8php.html#a8f9d2d9d6516cb7b2e6022031673aed9',1,'custCaptchaContact.php']]],
+  ['cust_5fcaptcha_5ffolder_11',['CUST_CAPTCHA_FOLDER',['../cust_captcha_contact_8php.html#a8f9d2d9d6516cb7b2e6022031673aed9',1,'custCaptchaContact.php']]],
+  ['cust_5fcaptcha_5fmvc_5froot_5ffolder_12',['CUST_CAPTCHA_MVC_ROOT_FOLDER',['../cust_captcha_contact_8php.html#ad0ff9b102b7fa3a480be4258c6de33a5',1,'custCaptchaContact.php']]],
   ['cust_5fcatcha_5fhtml_13',['cust_catcha_html',['../class_o_s_o_l_c_c_c_1_1_views_1_1_contactus_view.html#ab5cf8c0559826e9d8d5b6010edcc7cf0',1,'OSOLCCC::Views::ContactusView']]],
   ['custcaptchacontact_2ephp_14',['custCaptchaContact.php',['../cust_captcha_contact_8php.html',1,'']]]
 ];
