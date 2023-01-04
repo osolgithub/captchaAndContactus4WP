@@ -116,6 +116,12 @@ hooks are extracted with
  */
 define('CUST_CAPTCHA_FOLDER',dirname(__FILE__));
 /*! 
+ *  \brief constant holding file root of  MVC(private folder) this plugin.
+ * @details this constant is defined for ease of usage in all classes.\n
+ This is used in autoloader and for loading template files
+ */
+define('CUST_CAPTCHA_MVC_ROOT_FOLDER',/*dirname( plugin_basename(__FILE__))*/dirname(__FILE__)."/MVC");
+/*
  *  \brief constant holding URL path of this plugin.
  * @details this constant is defined for ease of usage in all classes.\n
  This is used in autoloader and for loading public assets of this plugin.
@@ -223,8 +229,10 @@ register_activation_hook(__FILE__, [$OSOLCCC_Admin_inst,'on_cust_captcha_enabled
 register_deactivation_hook(__FILE__, [$OSOLCCC_Admin_inst,'on_cust_captcha_disabled']);
 
 /*Hook to internationalize*/
-load_plugin_textdomain('osolwpccc', false, dirname( plugin_basename(__FILE__)).'/languages');
-
+load_plugin_textdomain('osolwpccc', false, CUST_CAPTCHA_MVC_ROOT_FOLDER .'/languages');//dirname( plugin_basename(__FILE__))
+//die(" plugin_basename is " . plugin_basename(__FILE__). " dir name is " . dirname( plugin_basename(__FILE__)));
+//plugin_basename is captchaAndContactus4WP-OOP/custCaptchaContact.php dir name is captchaAndContactus4WP-OOP
+//die(CUST_CAPTCHA_MVC_ROOT_FOLDER);
 /* 
 // see all functions hooked to 'wp_footer'
 add_action('wp', function () {
