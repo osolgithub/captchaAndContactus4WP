@@ -61,9 +61,20 @@ PS: Additionally [Flow charts](https://github.com/adrai/flowchart.js) also must 
 
 use [Plant UML](https://plantuml.com/) for generating UMLs@n
 Eg: 
-**Use Case Diagram**@n
+<table>
+	<tr>
+		<td valign="top">
+			**Use Case Diagram**@n
 
-\image html doxyProps/UMLDiagrams/images/wp_captcha_contact_plugin_1_use_case.png
+			\image html doxyProps/UMLDiagrams/images/wp_captcha_contact_plugin_1_use_case.png
+			
+		</td>
+		<td>
+		**Flow chart for Captcha in WP Page**@n
+		\image html doxyProps/UMLDiagrams/images/flowChartCaptchaInWPPages.png
+		</td>
+	</tr>
+</table>
 
 
 

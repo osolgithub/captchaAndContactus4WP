@@ -1,0 +1,20 @@
+st=>start: Start:>http://www.google.com[blank]
+e=>end:>http://www.google.com
+op1=>operation: User Visits a
+Catcha Page 
+op2=>operation: call method 
+registered with 
+"add_action" hook
+op3=>operation: insert captcha in form
+based on "add_action" hook
+op4=>operation: show form
+
+cond=>condition: Plugin active?
+Yes or No?:>http://www.google.com
+
+
+st->op1->cond
+cond(yes)->op3
+cond(no)->op4
+op3->op4
+op4->e
