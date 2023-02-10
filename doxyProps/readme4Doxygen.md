@@ -116,4 +116,4 @@ the following will shortly come
 [Documentation from scratch](http://www.outsource-online.net/blog/2022/10/17/documentation-from-scratch/)@n
 [Documentation steps](http://www.outsource-online.net/blog/2022/07/13/doxygen-basics/)@n
 [Wordpress plugin development and related steps](http://www.outsource-online.net/blog/2022/07/02/developing-wordpress-plugin/)@n
-[Git](http://www.outsource-online.net/blog/2022/06/13/git-command-line-tutorials/#git_html_pages)@n
+[Git HTML Pages](http://www.outsource-online.net/blog/2022/06/13/git-command-line-tutorials/#git_html_pages)@n
