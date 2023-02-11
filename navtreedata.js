@@ -47,20 +47,22 @@ var NAVTREE =
     ] ],
     [ "README", "md_doxy_props_readme4_doxygen.html", [
       [ "Author", "md_doxy_props_readme4_doxygen.html#autotoc_md15", null ],
-      [ "Contributors", "md_doxy_props_readme4_doxygen.html#autotoc_md16", null ],
-      [ "Synopsis", "md_doxy_props_readme4_doxygen.html#autotoc_md17", null ],
-      [ "Description", "md_doxy_props_readme4_doxygen.html#autotoc_md18", [
-        [ "Plugin to add captcha to core wordpress forms and additional option for contact us page.", "md_doxy_props_readme4_doxygen.html#autotoc_md19", null ],
-        [ "UML Diagrams", "md_doxy_props_readme4_doxygen.html#autotoc_md20", null ]
+      [ "Contributors", "md_doxy_props_readme4_doxygen.html#autotoc_md16", [
+        [ "Date", "md_doxy_props_readme4_doxygen.html#autotoc_md17", null ]
       ] ],
-      [ "Prerequisites", "md_doxy_props_readme4_doxygen.html#autotoc_md21", null ],
-      [ "Installation", "md_doxy_props_readme4_doxygen.html#autotoc_md22", null ],
-      [ "Extending / Installing Addons", "md_doxy_props_readme4_doxygen.html#autotoc_md23", null ],
-      [ "Contributing", "md_doxy_props_readme4_doxygen.html#autotoc_md24", null ],
-      [ "License / Copyright Info", "md_doxy_props_readme4_doxygen.html#autotoc_md25", null ],
-      [ "Citation", "md_doxy_props_readme4_doxygen.html#autotoc_md26", null ],
-      [ "Contact", "md_doxy_props_readme4_doxygen.html#autotoc_md27", null ],
-      [ "References", "md_doxy_props_readme4_doxygen.html#autotoc_md28", null ]
+      [ "Synopsis", "md_doxy_props_readme4_doxygen.html#autotoc_md18", null ],
+      [ "Description", "md_doxy_props_readme4_doxygen.html#autotoc_md19", [
+        [ "Plugin to add captcha to core wordpress forms and additional option for contact us page.", "md_doxy_props_readme4_doxygen.html#autotoc_md20", null ],
+        [ "UML Diagrams", "md_doxy_props_readme4_doxygen.html#autotoc_md21", null ]
+      ] ],
+      [ "Prerequisites", "md_doxy_props_readme4_doxygen.html#autotoc_md22", null ],
+      [ "Installation", "md_doxy_props_readme4_doxygen.html#autotoc_md23", null ],
+      [ "Extending / Installing Addons", "md_doxy_props_readme4_doxygen.html#autotoc_md24", null ],
+      [ "Contributing", "md_doxy_props_readme4_doxygen.html#autotoc_md25", null ],
+      [ "License / Copyright Info", "md_doxy_props_readme4_doxygen.html#autotoc_md26", null ],
+      [ "Citation", "md_doxy_props_readme4_doxygen.html#autotoc_md27", null ],
+      [ "Contact", "md_doxy_props_readme4_doxygen.html#autotoc_md28", null ],
+      [ "References", "md_doxy_props_readme4_doxygen.html#autotoc_md29", null ]
     ] ],
     [ "Bug List", "bug.html", null ],
     [ "Modules", "modules.html", "modules" ],
