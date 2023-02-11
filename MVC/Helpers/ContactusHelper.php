@@ -73,7 +73,10 @@ class ContactusHelper extends \OSOLCCC\SingletonParent{
      *  @author Sreekanth Dayanand
      *  @date 23rd June 2022
      *  @details 
-		Validates 'subject','message','name' & 'email' in  Contact us form
+		Validates 'subject','message','name' & 'email' in  Contact us form@n
+		@see \OSOLCCC\Controllers\ContactusController->cust_captcha_contact_validate_and_mail()\n
+		@ref \OSOLCCC\Controllers\ContactusController::cust_captcha_contact_validate_and_mail()
+		
 		
      */
 	function sendMail()
